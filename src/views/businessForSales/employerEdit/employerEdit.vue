@@ -8,13 +8,13 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--公司名称-->
-            <span class="formItemSpan">Company Name</span>
-            <el-input v-model="formDataEn.company" placeholder="Tag Name" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.companyName')}}</span>
+            <el-input v-model="formDataEn.company" placeholder="Company Name" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--编号-->
-            <span class="formItemSpan">Listing</span>
+            <span class="formItemSpan">{{$t('employeeEdit.Listing')}}</span>
             <el-input v-model="formDataEn.listing" placeholder="Listing" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
@@ -22,14 +22,14 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--标题-->
-            <span class="formItemSpan">Title</span>
+            <span class="formItemSpan">{{$t('employeeEdit.title')}}</span>
             <el-input v-model="formDataEn.title" placeholder="Title" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--标价-->
-            <span class="formItemSpan">Price</span>
-            <el-input placeholder="price" v-model="formDataEn.price" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Price')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="price" v-model="formDataEn.price" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -38,7 +38,7 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--是否盈利-->
-            <span class="formItemSpan">Profitability</span>
+            <span class="formItemSpan">{{$t('employeeEdit.Profitability')}}</span>
             <el-select v-model="formDataEn.profitability" placeholder="Select" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
               <el-option label="Yes" :value="1"/>
@@ -47,7 +47,7 @@
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--是否包含房地产-->
-            <span class="formItemSpan">Real Estate</span>
+            <span class="formItemSpan">{{$t('employeeEdit.RealEstate')}}</span>
             <el-select v-model="formDataEn.real_estate" placeholder="Select" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
               <el-option label="Yes" :value="1"/>
@@ -66,8 +66,8 @@
           <!--</div>-->
           <div class="formItem filter-item el-select--medium">
             <!--营业面积-->
-            <span class="formItemSpan">Building SF</span>
-            <el-input placeholder="Building SF" v-model="formDataEn.building_sf" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.BuildingSF')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="Building SF" v-model="formDataEn.building_sf" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="append">m<sup>2</sup></template>
             </el-input>
@@ -76,14 +76,13 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--员工人数-->
-            <span class="formItemSpan">Employee Count</span>
-            <el-input-number v-model="formDataEn.employee_count" :min="0" :precision="0" :step="1"
-                             style="width: 70%;margin-bottom: 20px;"></el-input-number>
+            <span class="formItemSpan">{{$t('employeeEdit.EmployeeCount')}}</span>
+            <el-input-number v-model="formDataEn.employee_count" :min="0" :max="100000" :precision="0" :step="1" style="width: 70%;margin-bottom: 20px;"></el-input-number>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--毛利润-->
-            <span class="formItemSpan">Gross Income</span>
-            <el-input placeholder="Gross Income" v-model="formDataEn.gross_income"
+            <span class="formItemSpan">{{$t('employeeEdit.GrossIncome')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="Gross Income" v-model="formDataEn.gross_income"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
               <template slot="append">/ month</template>
@@ -93,16 +92,16 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--税息折旧及摊销前利润-->
-            <span class="formItemSpan">EBITDA(Earning Before Interest, Tax, Depreciation & Amortization)</span>
-            <el-input placeholder="EBITDA" v-model="formDataEn.ebitda" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.EBITDA')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="EBITDA" v-model="formDataEn.ebitda" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--硬件资产价值-->
-            <span class="formItemSpan">FF&E(Furniture, Fixture, & Equipment)</span>
-            <el-input placeholder="FF&E" v-model="formDataEn.ff_e" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.FFandE')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="FF&E" v-model="formDataEn.ff_e" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -111,14 +110,14 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--库存-->
-            <span class="formItemSpan">Inventory</span>
-            <el-input v-model="formDataEn.inventory" placeholder="Inventory" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Inventory')}}</span>
+            <el-input v-enter-number maxlength="10" v-model="formDataEn.inventory" placeholder="Inventory" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--净利润-->
-            <span class="formItemSpan">Net Income</span>
-            <el-input placeholder="Net Income" v-model="formDataEn.net_income" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.NetIncome')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="Net Income" v-model="formDataEn.net_income" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
               <template slot="append">/ month</template>
@@ -128,15 +127,15 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--租金-->
-            <span class="formItemSpan">Lease</span>
-            <el-input placeholder="Lease" v-model="formDataEn.lease" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Lease')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="Lease" v-model="formDataEn.lease" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--租约有效期-->
-            <span class="formItemSpan">Lease Term</span>
+            <span class="formItemSpan">{{$t('employeeEdit.LeaseTerm')}}</span>
             <el-date-picker v-model="formDataEn.lease_term" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                             placeholder="Lease Term" style="width: 70%;margin-bottom: 20px;"></el-date-picker>
           </div>
@@ -144,16 +143,16 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--房地产估价-->
-            <span class="formItemSpan">Est. Value of Real Estate</span>
-            <el-input placeholder="Est. Value of Real Estate" v-model="formDataEn.value_of_real_estate"
+            <span class="formItemSpan">{{$t('employeeEdit.Est')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="Est. Value of Real Estate" v-model="formDataEn.value_of_real_estate"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--佣金-->
-            <span class="formItemSpan">Commission</span>
-            <el-input placeholder="Commission" v-model="formDataEn.commission" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Commission')}}</span>
+            <el-input v-enter-number maxlength="2" placeholder="Commission" v-model="formDataEn.commission" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="append">%</template>
             </el-input>
@@ -162,8 +161,8 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--卖家融资-->
-            <span class="formItemSpan">Buyer Financing</span>
-            <el-input placeholder="Buyer Financing" v-model="formDataEn.buyer_financing"
+            <span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="Buyer Financing" v-model="formDataEn.buyer_financing"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -177,13 +176,13 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--美国中介-->
-            <span class="formItemSpan">US Broker</span>
+            <span class="formItemSpan">{{$t('employeeEdit.USBroker')}}</span>
             <el-input v-model="formDataEn.us_broker" placeholder="US Broker" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--美国中介联系方式-->
-            <span class="formItemSpan">US Broker Contact Info</span>
+            <span class="formItemSpan">{{$t('employeeEdit.USBrokerContactInfo')}}</span>
             <el-input v-model="formDataEn.us_broker_contact_info" placeholder="US Broker Contact Info"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item"/>
           </div>
@@ -191,44 +190,44 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--待售开始日期-->
-            <span class="formItemSpan">Listing Date</span>
+            <span class="formItemSpan">{{$t('employeeEdit.ListingDate')}}</span>
             <el-date-picker v-model="formDataEn.listing_date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                             placeholder="Listing Date" style="width: 70%;margin-bottom: 20px;"></el-date-picker>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--出售原因-->
-            <span class="formItemSpan">Reason for Selling</span>
+            <span class="formItemSpan">{{$t('employeeEdit.ReasonForSelling')}}</span>
             <el-input v-model="formDataEn.reason_for_selling" placeholder="Reason for Selling"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item"/>
           </div>
         </div>
-
         <div class="filter-item el-select--medium address">
-          <span class="formItemSpan" style="margin-right: -5px;">Location</span>
-          <el-select v-model="formDataEn.country" placeholder="Select" id="country"
+          <!--地理位置-->
+          <span class="formItemSpan" style="margin-right: -5px;">{{$t('employeeEdit.Location')}}</span>
+          <el-select v-model="formDataEn.country" id="country"
                      @change="getlocation('country',formDataEn.country)"
                      style="width: 130px;margin: 0 5px;" class="filter-item">
-            <el-option label="China" value="1000"/>
-            <el-option label="USA" value="USA"/>
+            <el-option :label="$t('China')" value="1000"/>
+            <el-option :label="$t('UnitedStates')" value="USA"/>
           </el-select>
-          <el-select v-model="formDataEn.states" placeholder="Select" style="width: 130px;margin: 0 5px;" id="provinces"
+          <el-select v-model="formDataEn.states" style="width: 130px;margin: 0 5px;" id="provinces"
                      :disabled="locationLoading"
                      @change="getlocation('provinces',formDataEn.states)"
                      class="filter-item">
             <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
           </el-select>
-          <el-select v-model="formDataEn.city" placeholder="Select" style="width: 130px;margin: 0 5px;" id="city"
+          <el-select v-model="formDataEn.city" style="width: 130px;margin: 0 5px;" id="city"
                      :disabled="locationLoading"
                      class="filter-item">
             <el-option v-for="item in cities" :label="item.name" :value="item.code"/>
           </el-select>
-          <el-input v-model="formDataEn.address" placeholder="Detail Address" style="width: 50%;" class="filter-item"/>
+          <el-input v-model="formDataEn.address":placeholder="$t('address')" style="width: 50%;" class="filter-item"/>
         </div>
         <!--主体部分-->
         <div class="formContainer">
           <!--商业描述-->
           <div class="itemBox">
-            <div class="formTitle">BUSINESS DESCRIPTIO</div>
+            <div class="formTitle">{{$t('employeeEdit.business_description')}}</div>
             <div>
               <el-input
                 type="textarea"
@@ -240,7 +239,7 @@
           </div>
           <!--财务绩效-->
           <div class="itemBox">
-            <div class="formTitle">FINANCIAL PERFORMANCE</div>
+            <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
             <div>
               <el-input
                 type="textarea"
@@ -264,7 +263,7 @@
           <!--</div>-->
           <!--商业资产-->
           <div class="itemBox">
-            <div class="formTitle">BUSINESS ASSETS</div>
+            <div class="formTitle">{{$t('employeeEdit.business_assets')}}</div>
             <div>
               <el-input
                 type="textarea"
@@ -335,25 +334,24 @@
           <!--</div>-->
 
           <div style="text-align: center;margin: 50px 0;">
-            <el-button size="medium" type="primary" @click="formSave">Save</el-button>
-            <el-button size="medium" @click="cancelBtn">Cancel</el-button>
+            <el-button size="medium" type="primary" @click="formSave">{{$t('save')}}</el-button>
+            <el-button size="medium" @click="cancelBtn">{{$t('cancel')}}</el-button>
           </div>
         </div>
 
       </el-tab-pane>
-
       <!--中文tab-->
       <el-tab-pane :label="$t('chinese')" id="tabzh">
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--公司名称-->
-            <span class="formItemSpan">公司名称</span>
+            <span class="formItemSpan">{{$t('employeeEdit.companyName')}}</span>
             <el-input v-model="formDataZh.company" placeholder="标签名称" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--编号-->
-            <span class="formItemSpan">编号</span>
+            <span class="formItemSpan">{{$t('employeeEdit.Listing')}}</span>
             <el-input v-model="formDataZh.listing" placeholder="编号" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
@@ -361,14 +359,14 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--标题-->
-            <span class="formItemSpan">标题</span>
+            <span class="formItemSpan">{{$t('employeeEdit.title')}}</span>
             <el-input v-model="formDataZh.title" placeholder="标题" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--标价-->
-            <span class="formItemSpan">标价</span>
-            <el-input placeholder="标价" v-model="formDataZh.price" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Price')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="标价" v-model="formDataZh.price" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -377,7 +375,7 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--是否盈利-->
-            <span class="formItemSpan">是否盈利</span>
+            <span class="formItemSpan">{{$t('employeeEdit.Profitability')}}</span>
             <el-select v-model="formDataZh.profitability" placeholder="请选择" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
               <el-option label="是" :value="1"/>
@@ -386,7 +384,7 @@
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--是否包含房地产-->
-            <span class="formItemSpan">是否包含房地产</span>
+            <span class="formItemSpan">{{$t('employeeEdit.RealEstate')}}</span>
             <el-select v-model="formDataZh.real_estate" placeholder="请选择" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
               <el-option label="是" :value="1"/>
@@ -405,8 +403,8 @@
           <!--</div>-->
           <div class="formItem filter-item el-select--medium">
             <!--营业面积-->
-            <span class="formItemSpan">营业面积</span>
-            <el-input placeholder="营业面积" v-model="formDataZh.building_sf" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.BuildingSF')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="营业面积" v-model="formDataZh.building_sf" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="append">m<sup>2</sup></template>
             </el-input>
@@ -415,14 +413,14 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--员工人数-->
-            <span class="formItemSpan">员工人数</span>
+            <span class="formItemSpan">{{$t('employeeEdit.EmployeeCount')}}</span>
             <el-input-number v-model="formDataZh.employee_count" :min="0"
                              style="width: 70%;margin-bottom: 20px;"></el-input-number>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--毛利润-->
-            <span class="formItemSpan">毛利润</span>
-            <el-input placeholder="毛利润" v-model="formDataZh.gross_income" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.GrossIncome')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="毛利润" v-model="formDataZh.gross_income" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
               <template slot="append">/ 月</template>
@@ -432,16 +430,16 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--税息折旧及摊销前利润-->
-            <span class="formItemSpan">税息折旧及摊销前利润</span>
-            <el-input placeholder="税息折旧及摊销前利润" v-model="formDataZh.ebitda" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.EBITDA')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="税息折旧及摊销前利润" v-model="formDataZh.ebitda" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--硬件资产价值-->
-            <span class="formItemSpan">硬件资产价值</span>
-            <el-input placeholder="硬件资产价值" v-model="formDataEn.ff_e" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.FFandE')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="硬件资产价值" v-model="formDataZh.ff_e" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -450,14 +448,14 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--库存-->
-            <span class="formItemSpan">库存</span>
-            <el-input v-model="formDataZh.inventory" placeholder="库存" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Inventory')}}</span>
+            <el-input v-enter-number maxlength="10" v-model="formDataZh.inventory" placeholder="库存" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--净利润-->
-            <span class="formItemSpan">净利润</span>
-            <el-input placeholder="净利润" v-model="formDataZh.net_income" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.NetIncome')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="净利润" v-model="formDataZh.net_income" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
               <template slot="append">/ 月</template>
@@ -467,15 +465,15 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--租金-->
-            <span class="formItemSpan">租金</span>
-            <el-input placeholder="租金" v-model="formDataZh.lease" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Lease')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="租金" v-model="formDataZh.lease" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--租约有效期-->
-            <span class="formItemSpan">租约有效期</span>
+            <span class="formItemSpan">{{$t('employeeEdit.LeaseTerm')}}</span>
             <el-date-picker v-model="formDataZh.lease_term" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                             placeholder="租约有效期" style="width: 70%;margin-bottom: 20px;"></el-date-picker>
           </div>
@@ -483,16 +481,16 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--房地产估价-->
-            <span class="formItemSpan">房地产估价</span>
-            <el-input placeholder="房地产估价" v-model="formDataZh.value_of_real_estate"
+            <span class="formItemSpan">{{$t('employeeEdit.Est')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="房地产估价" v-model="formDataZh.value_of_real_estate"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--佣金-->
-            <span class="formItemSpan">佣金</span>
-            <el-input placeholder="佣金" v-model="formDataZh.commission" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.Commission')}}</span>
+            <el-input v-enter-number maxlength="2" placeholder="佣金" v-model="formDataZh.commission" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="append">%</template>
             </el-input>
@@ -501,8 +499,8 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--卖家融资-->
-            <span class="formItemSpan">卖家融资</span>
-            <el-input placeholder="卖家融资" v-model="formDataZh.buyer_financing" style="width: 70%;margin-bottom: 20px;"
+            <span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>
+            <el-input v-enter-number maxlength="10" placeholder="卖家融资" v-model="formDataZh.buyer_financing" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -511,13 +509,13 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--美国中介-->
-            <span class="formItemSpan">美国中介</span>
+            <span class="formItemSpan">{{$t('employeeEdit.USBroker')}}</span>
             <el-input v-model="formDataZh.us_broker" placeholder="美国中介" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--美国中介联系方式-->
-            <span class="formItemSpan">美国中介联系方式</span>
+            <span class="formItemSpan">{{$t('employeeEdit.USBrokerContactInfo')}}</span>
             <el-input v-model="formDataZh.us_broker_contact_info" placeholder="美国中介联系方式"
                       style="width: 70%;margin-bottom: 20px;" class="filter-item"/>
           </div>
@@ -525,45 +523,44 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--待售开始日期-->
-            <span class="formItemSpan">待售开始日期</span>
+            <span class="formItemSpan">{{$t('employeeEdit.ListingDate')}}</span>
             <el-date-picker v-model="formDataZh.listing_date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                             placeholder="待售开始日期" style="width: 70%;margin-bottom: 20px;"></el-date-picker>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--出售原因-->
-            <span class="formItemSpan">出售原因</span>
+            <span class="formItemSpan">{{$t('employeeEdit.ReasonForSelling')}}</span>
             <el-input v-model="formDataZh.reason_for_selling" placeholder="出售原因" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
         </div>
-
         <div class="filter-item el-select--medium address">
           <span
-            style="color: #717171;font-size: 14px;display: inline-block;text-align: right;line-height: 40px;padding-right: 20px;width: 160px;">地址</span>
-          <el-select v-model="formDataZh.country" placeholder="Select" id="country"
+            style="color: #717171;font-size: 14px;display: inline-block;text-align: right;line-height: 40px;padding-right: 20px;width: 160px;">{{$t('employeeEdit.Location')}}</span>
+          <el-select v-model="formDataZh.country" id="country"
                      @change="getlocation('country',formDataZh.country)"
                      style="width: 130px;margin: 0 5px;" class="filter-item">
-            <el-option label="China" value="1000"/>
-            <el-option label="USA" value="USA"/>
+            <el-option :label="$t('China')" value="1000"/>
+            <el-option :label="$t('UnitedStates')" value="USA"/>
           </el-select>
-          <el-select v-model="formDataZh.states" placeholder="Select" style="width: 130px;margin: 0 5px;" id="provinces"
+          <el-select v-model="formDataZh.states" style="width: 130px;margin: 0 5px;" id="provinces"
                      :disabled="locationLoading"
                      @change="getlocation('provinces',formDataZh.states)"
                      class="filter-item">
             <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
           </el-select>
-          <el-select v-model="formDataZh.city" placeholder="Select" style="width: 130px;margin: 0 5px;" id="city"
+          <el-select v-model="formDataZh.city" style="width: 130px;margin: 0 5px;" id="city"
                      :disabled="locationLoading"
                      class="filter-item">
             <el-option v-for="item in cities" :label="item.name" :value="item.code"/>
           </el-select>
-          <el-input v-model="formDataZh.address" placeholder="详细地址" style="width: 50%;" class="filter-item"/>
+          <el-input v-model="formDataZh.address" :placeholder="$t('address')" style="width: 50%;" class="filter-item"/>
         </div>
         <!--主体部分-->
         <div class="formContainer">
           <!--商业描述-->
           <div class="itemBox">
-            <div class="formTitle">商业描述</div>
+            <div class="formTitle">{{$t('employeeEdit.business_description')}}</div>
             <div>
               <el-input
                 type="textarea"
@@ -575,7 +572,7 @@
           </div>
           <!--财务绩效-->
           <div class="itemBox">
-            <div class="formTitle">财务绩效</div>
+            <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
             <div>
               <el-input
                 type="textarea"
@@ -599,7 +596,7 @@
           <!--</div>-->
           <!--商业资产-->
           <div class="itemBox">
-            <div class="formTitle">商业资产</div>
+            <div class="formTitle">{{$t('employeeEdit.business_assets')}}</div>
             <div>
               <el-input
                 type="textarea"
@@ -670,13 +667,12 @@
           <!--</div>-->
 
           <div style="text-align: center;margin: 50px 0;">
-            <el-button size="medium" type="primary" @click="formSave">保 存</el-button>
-            <el-button size="medium" @click="cancelBtn">取 消</el-button>
+            <el-button size="medium" type="primary" @click="formSave">{{$t('save')}}</el-button>
+            <el-button size="medium" @click="cancelBtn">{{$t('cancel')}}</el-button>
           </div>
         </div>
       </el-tab-pane>
     </el-tabs>
-
     <!--雇员编辑弹窗-->
     <el-dialog :title="EmployeeEdit.position?$t('employeeEdit.emploteesEdit'):$t('employeeEdit.emploteesAdd')"
                :visible.sync="dialogFormVisible" width="700px" :before-close="dialogClose">
@@ -723,7 +719,8 @@
     delBusiness,
     showBusinessEn,
     showBusinessZh,
-    getLocation
+    getLocation,
+    editBusinessZh
   } from '@/api/business'
 
   export default {
@@ -734,11 +731,15 @@
         listLoading: false,
         tablang: 'en',
 
+        businessId:'',
+        business_broker:'',
+
         provinces: [],//省份
         cities: [],//城市
         locationLoading: false,//
 
         formDataEn: {
+          lang:'en',
           company: '',//
           title: '',//
           listing: '',//
@@ -772,6 +773,7 @@
           financial_performance: '',//
         },
         formDataZh: {
+          lang:'zh',
           company: '',//
           title: '',//
           listing: '',//
@@ -827,18 +829,18 @@
       }
     },
     mounted() {
-      this.getBusinessEn()
+      this.businessId=this.$route.query.id;
+      this.getBusinessEn();
     },
     methods: {
       // 获取地址三级联动数据
       getlocation(type, value) {
-        console.log('获取地址',type, value)
         let that = this;
         return new Promise(function (resolve, reject) {
           if (type && value) {
-            let params = {code: value, lang: that.tablang};
+            let paramsData = {code: value, lang: that.$store.getters.language};
             that.locationLoading = true;
-            getLocation(params).then(response => {
+            getLocation(paramsData).then(response => {
               if (type == 'country') {
                 that.provinces = response.data;
                 that.cities = [];
@@ -849,6 +851,8 @@
                 resolve();
               } else if (type == 'provinces') {
                 that.cities = response.data;
+                that.formDataEn.city = '';
+                that.formDataZh.city = '';
                 that.formDataEn.states = value;
                 that.formDataZh.states = value;
                 resolve();
@@ -864,15 +868,16 @@
       getBusinessEn() {
         let that = this;
         this.listLoading = true;
-        if (this.$route.params.id == '0' || !this.$route.params.id) {
+        if (this.$route.query.id == '0' || !this.$route.query.id) {
           that.listLoading = false;
           return
         }
-        showBusinessEn(this.$route.params.id).then(response => {
+        showBusinessEn(this.$route.query.id).then(response => {
           that.listLoading = false;
           console.log('getBusinessEn', response);
           let data = Object.assign({}, response.data);
           that.formDataEn =  response.data;
+          that.business_broker =  response.data.business_broker;
             that.getlocation('country', data.country).then(_ => {
               that.formDataEn.country = data.country;
               that.getlocation('provinces', data.states).then(_ => {
@@ -880,6 +885,7 @@
               })
             })
         }).catch(err => {
+          that.listLoading = false;
           console.log(err);
         })
       },
@@ -887,22 +893,25 @@
       getBusinessZh() {
         let that = this;
         this.listLoading = true;
-        if (this.$route.params.id == '0' || !this.$route.params.id) {
+        if (this.$route.query.id == '0' || !this.$route.query.id) {
           that.listLoading = false;
           return
         }
-        showBusinessZh(this.$route.params.id).then(response => {
+        showBusinessZh(this.$route.query.id).then(response => {
           that.listLoading = false;
           console.log('getBusinessZh', response);
           let data = Object.assign({}, response.data);
-          that.formDataZh =  response.data;
-          that.getlocation('country', data.country).then(_ => {
-            that.formDataZh.country = data.country;
-            that.getlocation('provinces', data.states).then(_ => {
-              that.formDataZh.city = data.city;
+          if(data.length!=0){
+            that.formDataZh =  response.data;
+            that.getlocation('country', data.country).then(_ => {
+              that.formDataZh.country = data.country;
+              that.getlocation('provinces', data.states).then(_ => {
+                that.formDataZh.city = data.city;
+              })
             })
-          })
+          }
         }).catch(err => {
+          that.listLoading = false;
           console.log(err);
         })
       },
@@ -970,22 +979,38 @@
       formSave() {
         let that = this;
         let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
-
-        console.log(123123, formData)
-        if (this.$route.params.id != '0' && this.$route.params.id) {
-          editBusiness(formData).then(response => {
-            console.log('editBusiness', response);
-            that.formDataEn = {};
-            that.formDataZh = {};
-            that.$router.push('/businessForSales/index');
-            that.$notify({
-              showClose: true,
-              message: that.$t('Successful'),
-              type: 'success'
-            });
-          }).catch(err => {
-            console.log(err);
-          })
+        if (this.businessId != '0' && this.businessId) {
+          formData.id=this.businessId;
+          formData.business_broker=this.business_broker;
+          if(that.tablang == 'en'){
+            editBusiness(formData).then(response => {
+              console.log('editBusiness', response);
+              that.formDataEn = {};
+              that.formDataZh = {};
+              that.$router.push('/businessForSales/index');
+              that.$notify({
+                showClose: true,
+                message: that.$t('Successful'),
+                type: 'success'
+              });
+            }).catch(err => {
+              console.log(err);
+            })
+          }else if(that.tablang == 'zh'){
+            editBusinessZh(formData).then(response => {
+              console.log('editBusinessZh', response);
+              that.formDataEn = {};
+              that.formDataZh = {};
+              that.$router.push('/businessForSales/index');
+              that.$notify({
+                showClose: true,
+                message: that.$t('Successful'),
+                type: 'success'
+              });
+            }).catch(err => {
+              console.log(err);
+            })
+          }
         } else {
           addBusiness(formData).then(response => {
             console.log('addBusiness', response);

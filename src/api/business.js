@@ -57,10 +57,18 @@ export function addBusiness (data) {
     data
   })
 }
-// 修改待售企业
+// 修改待售企业-英文
 export function editBusiness (data) {
   return request({
     url: '/api/business/update',
+    method: 'post',
+    data
+  })
+}
+// 修改待售企业-中文
+export function editBusinessZh (data) {
+  return request({
+    url: '/api/business/zh/update',
     method: 'post',
     data
   })
@@ -76,7 +84,7 @@ export function showBusinessEn (id) {
 // 查看待售企业信息-中文
 export function showBusinessZh (id) {
   return request({
-    url: '/api/business/show',
+    url: '/api/business/zh/show',
     method: 'post',
     params: { id }
   })

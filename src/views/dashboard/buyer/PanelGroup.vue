@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             {{$t('route.businessForSales')}}
           </div>
-          <count-to :start-val="0" :end-val="102" :duration="1000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="PanelData.business" :duration="1000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             {{$t('panelGroup.Buyer')}}
           </div>
-          <count-to :start-val="0" :end-val="81" :duration="2000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="PanelData.buyers" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -33,36 +33,55 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{$t('panelGroup.SaledEnterprises')}}
+            <!--意向企业-->
+            {{$t('panelGroup.attentionBusiness')}}
           </div>
-          <count-to :start-val="0" :end-val="28" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="PanelData.attentions" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="chengjiao" class-name="card-panel-icon" style="width: 80px;"/>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            {{$t('panelGroup.TotalTurnover')}}
-          </div>
-          <count-to :start-val="0" :end-val="2368" :duration="2000" prefix="$ " suffix=" K" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
+    <!--<el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">-->
+      <!--<div class="card-panel">-->
+        <!--<div class="card-panel-icon-wrapper icon-shopping">-->
+          <!--<svg-icon icon-class="chengjiao" class-name="card-panel-icon" style="width: 80px;"/>-->
+        <!--</div>-->
+        <!--<div class="card-panel-description">-->
+          <!--<div class="card-panel-text">-->
+            <!--{{$t('panelGroup.TotalTurnover')}}-->
+          <!--</div>-->
+          <!--<count-to :start-val="0" :end-val="2368" :duration="2000" prefix="$ " suffix=" K" class="card-panel-num" />-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</el-col>-->
   </el-row>
 </template>
 
 <script>
 import CountTo from 'vue-count-to'
 
+import { getPanelDataApi } from '@/api/account'
 export default {
   components: {
     CountTo
   },
+  data(){
+    return{
+      PanelData:''
+    }
+  },
+  mounted(){
+    this.getPanelData();
+  },
   methods: {
+    getPanelData(){
+      let that=this;
+      getPanelDataApi ().then(response => {
+        console.log('getPanelDataApi',response);
+        that.PanelData=response.data;
+      }).catch(err => {
+        console.log(err);
+      })
+    }
     // handleSetLineChartData(type) {
     //   this.$emit('handleSetLineChartData', type)
     // }

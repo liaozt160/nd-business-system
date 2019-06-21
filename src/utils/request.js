@@ -9,7 +9,7 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.ylbservices.com', // url = base url + request url
   baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.newdreamservices.com', // url = base url + request url
-  timeout: 8000 // request timeout
+  timeout: 30000 // request timeout
 })
 // request interceptor
 service.interceptors.request.use(

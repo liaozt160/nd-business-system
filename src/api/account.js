@@ -81,4 +81,11 @@ export function setAssignList (data) {
     data
   })
 }
+// 获取首页汇总数据
+export function getPanelDataApi () {
+  return request({
+    url: '/api/dashboard/index',
+    method: 'post',
+  })
+}
 

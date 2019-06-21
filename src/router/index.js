@@ -128,7 +128,7 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index/:id',
+        path: 'index',
         component: () => import('@/views/businessForSales/employerEdit/employerEdit'),
         name: 'employerEdit',
         hidden: true,
@@ -300,7 +300,7 @@ export const businessRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index/:id',
+        path: 'index',
         component: () => import('@/views/businessForSales/employerEdit/employerEdit'),
         name: 'employerEdit',
         hidden: true,

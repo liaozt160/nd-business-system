@@ -26,11 +26,11 @@ export function editBuyer (data) {
   })
 }
 // 查看买家信息
-export function showBuyer (data) {
+export function showBuyer (id) {
   return request({
     url: '/api/buyer/show',
     method: 'post',
-    data
+    params: { id }
   })
 }
 // 删除买家

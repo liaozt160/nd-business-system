@@ -340,11 +340,17 @@
       // },
 
       handleEdit(index, row) {
+        let that=this;
         console.log(index, row);
         this.dialogFormVisible=true;
-        let newObj = Object.assign({}, row.row);
-        this.userEdit=newObj;
-        this.userEdit.phone=parseInt(this.userEdit.phone);
+        showBuyer (row.row.id).then(response => {
+          console.log('showBuyer',response);
+          that.userEdit=response.data;
+          that.userEdit.phone=parseInt(this.userEdit.phone);
+        }).catch(err => {
+          console.log(err);
+        })
+
       },
       handleEnable(index, row) {
         console.log(index, row);
@@ -358,6 +364,7 @@
         }).then(() => {
           delBuyer (row.row.id).then(response => {
             console.log('delBuyer',response);
+            that.listQuery.page=1;
             that.getList();
             that.$notify({
               showClose: true,

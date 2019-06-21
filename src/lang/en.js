@@ -3,12 +3,14 @@ export default {
   chinese:'Chinese',
   China:'China',
   UnitedStates:'USA',
+  address:'Detail Address',//详细地址
   Confirmation:'Confirmation Information',//确认信息
   confirm:'Confirm',//确认
   save:'Save',//保 存
   cancel:'Cancel',//取消
   deleted:'Deleted!',//已删除！
   delMsg:'This operation is not recoverable. Are you sure you want to delete it?',//该操作不可恢复，确定要删除吗？
+  changeMsg:'Are you sure you want to modify the current status?',//确定要修改当前状态吗？
   desiredTransactionAmount:'Desired Transaction Amount',//期望的交易金额
   fundsAvailable:'Funds Available',//可用资金
   fundsVerified:'Funds Verified',//资金核实
@@ -57,6 +59,8 @@ export default {
     SaledEnterprises:'Saled Business',//已售企业
     TotalTurnover:'Total Turnover',//总成交额
     newEnterprises:'Latest Increase in Business for Sale',//最新增加的并购企业资源
+    attentionBuyer:'Attention Buyer',//意向买家
+    attentionBusiness:'Attention Business',//意向企业
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -186,7 +190,9 @@ export default {
     USBrokerContactInfo:'US Broker Contact Info',//美国中介联系方式
     ListingDate:'Listing Date',//待售开始日期
     ReasonForSelling:'Reason for Selling',//出售原因
-
+    business_description:'BUSINESS DESCRIPTIO',//商业描述
+    financial_performance:'FINANCIAL PERFORMANCE',//财务绩效
+    business_assets:'BUSINESS ASSETS',//商业资产
 
     emploteesEdit:'Emplotees Edit',//雇员编辑
     emploteesAdd:'Emplotees Add',//增加雇员

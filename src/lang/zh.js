@@ -1,14 +1,16 @@
 export default {
   english:'英文',
+  chinese:'中文',
   China:'中国',
   UnitedStates:'美国',
-  chinese:'中文',
+  address:'详细地址',//详细地址
   Confirmation:'确认信息',//确认信息
   confirm:'确认',//确认
   save:'保存',//保 存
   cancel:'取消',//取消
   deleted:'已删除！',//已删除！
   delMsg:'该操作不可恢复，确定要删除吗？',//该操作不可恢复，确定要删除吗？
+  changeMsg:'确定要修改当前状态吗？',//确定要修改当前状态吗？
   desiredTransactionAmount:'期望的交易金额',//期望的交易金额
   fundsAvailable:'可用资金',//可用资金
   fundsVerified:'资金核实',//资金核实
@@ -20,6 +22,7 @@ export default {
   detail:'详情',//详情
   Successful:'成功！',//成功！
   AddAttention:'添加到意向企业',//添加到意向企业
+
 
   AttentionBuyer:'有意向买家',//有意向买家
   ChooseAttentionBuyer:'选择当前有意向的买家',//选择当前有意向的买家
@@ -56,6 +59,8 @@ export default {
     SaledEnterprises:'已售企业',//已售企业
     TotalTurnover:'总成交额',//总成交额
     newEnterprises:'最新增加的并购企业资源',//最新增加的并购企业资源
+    attentionBuyer:'意向买家',//意向买家
+    attentionBusiness:'意向企业',//意向企业
   },
   navbar: {
     dashboard: '首页',
@@ -183,6 +188,9 @@ export default {
     USBrokerContactInfo:'美国中介联系方式',//美国中介联系方式
     ListingDate:'待售开始日期',//待售开始日期
     ReasonForSelling:'出售原因',//出售原因
+    business_description:'商业描述',//商业描述
+    financial_performance:'财务绩效',//财务绩效
+    business_assets:'商业资产',//商业资产
 
 
     emploteesEdit:'雇员编辑',//雇员编辑

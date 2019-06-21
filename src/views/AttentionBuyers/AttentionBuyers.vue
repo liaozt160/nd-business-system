@@ -39,7 +39,7 @@
         stripe
         style="width: 100%">
         <el-table-column
-          prop="companyName"
+          prop="company"
           align="center"
           :label="$t('route.attentionBusiness')"
           min-width="150">

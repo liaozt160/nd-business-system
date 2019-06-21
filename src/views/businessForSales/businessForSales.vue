@@ -48,10 +48,10 @@
                 <!--标价-->
                 <span>$ {{ toThousands(props.row.price) }}</span>
               </el-form-item>
-              <el-form-item :label="$t('employeeEdit.Location')">
-                <!--地理位置-->
-                <span>{{ props.row.address }}</span>
-              </el-form-item>
+              <!--<el-form-item :label="$t('employeeEdit.Location')">-->
+                <!--&lt;!&ndash;地理位置&ndash;&gt;-->
+                <!--<span>{{ props.row.address }}</span>-->
+              <!--</el-form-item>-->
               <el-form-item :label="$t('employeeEdit.Profitability')">
                 <!--是否盈利-->
                 <span>{{ props.row.profitability==1?$t('yes'):$t('no') }}</span>
@@ -60,10 +60,10 @@
                 <!--是否包含房地产-->
                 <span>{{ props.row.real_estate ==1?$t('yes'):$t('no')}}</span>
               </el-form-item>
-              <el-form-item :label="$t('employeeEdit.Franchise')">
-                <!--是否连锁店-->
-                <span>{{ props.row.real_estate==1?$t('yes'):$t('no') }}</span>
-              </el-form-item>
+              <!--<el-form-item :label="$t('employeeEdit.Franchise')">-->
+                <!--&lt;!&ndash;是否连锁店&ndash;&gt;-->
+                <!--<span>{{ props.row.real_estate==1?$t('yes'):$t('no') }}</span>-->
+              <!--</el-form-item>-->
               <el-form-item :label="$t('employeeEdit.BuildingSF')">
                 <!--营业面积-->
                 <span>{{ props.row.building_sf }} m<sup>2</sup></span>
@@ -241,7 +241,7 @@
           this.getList(this.listQuery);
         },
         handleCreate() {
-          this.$router.push({path: `/employerEdit/index/0`});
+          this.$router.push({path: `/employerEdit/index`});
         },
 
         // 获取待售企业列表
@@ -260,19 +260,30 @@
         },
 
         handleEdit(index, row) {
-          console.log(index, row);
-          this.$router.push({path: `/employerEdit/index/${row.row.id}`});
+          console.log(123123,row);
+          this.$router.push({path: '/employerEdit/index',query: {id: row.row.id}});
         },
         handleChangeStatus(row) {
           let that = this;
-          this.listLoading = true;
           let data={id:row.row.id,status:row.row.status==1?2:1};
+          that.$confirm(that.$t('changeMsg'), that.$t('Confirmation'), {
+            distinguishCancelAndClose: true,
+            confirmButtonText: that.$t('confirm'),
+            cancelButtonText: that.$t('cancel')
+          }).then(() => {
+            this.listLoading = true;
             changeStatus (data).then(response => {
               console.log('changeStatus',response);
               that.getList();
+              that.$notify({
+                showClose: true,
+                message: that.$t('Successful'),
+                type: 'success'
+              });
             }).catch(err => {
               console.log(err);
             })
+          }).catch(action => {});
         },
         handleDelete(index, row) {
           let that = this;
@@ -284,6 +295,7 @@
             delBusiness (row.row.id).then(response => {
               console.log('delBuyer',response);
               that.getList();
+              that.listQuery.page=1;
               that.$notify({
                 showClose: true,
                 message: that.$t('deleted'),

@@ -230,19 +230,30 @@
       },
 
       handleEdit(index, row) {
-        console.log(index, row);
-        this.$router.push({path: `/employerEdit/index/${row.row.id}`});
+        console.log(123123,row);
+        this.$router.push({path: '/employerEdit/index',query: {id: row.row.id}});
       },
       handleChangeStatus(row) {
         let that = this;
-        this.listLoading = true;
         let data={id:row.row.id,status:row.row.status==1?2:1};
-        changeStatus (data).then(response => {
-          console.log('changeStatus',response);
-          that.getList();
-        }).catch(err => {
-          console.log(err);
-        })
+        that.$confirm(that.$t('changeMsg'), that.$t('Confirmation'), {
+          distinguishCancelAndClose: true,
+          confirmButtonText: that.$t('confirm'),
+          cancelButtonText: that.$t('cancel')
+        }).then(() => {
+          this.listLoading = true;
+          changeStatus (data).then(response => {
+            console.log('changeStatus',response);
+            that.getList();
+            that.$notify({
+              showClose: true,
+              message: that.$t('Successful'),
+              type: 'success'
+            });
+          }).catch(err => {
+            console.log(err);
+          })
+        }).catch(action => {});
       },
       handleDelete(index, row) {
         let that = this;
@@ -253,6 +264,7 @@
         }).then(() => {
           delBusiness (row.row.id).then(response => {
             console.log('delBuyer',response);
+            that.listQuery.page=1;
             that.getList();
             that.$notify({
               showClose: true,
