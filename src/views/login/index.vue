@@ -157,7 +157,7 @@
           if (valid) {
             this.loading = true;
             this.$store.dispatch('user/login', this.loginForm).then((res) => {
-               console.log(123123,res);
+               // console.log(123123,res);
               this.$router.push({path: '/', query: this.otherQuery});
                // if(res.role==1){
                //   this.$router.push({path: '/', query: this.otherQuery});

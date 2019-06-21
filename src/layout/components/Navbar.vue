@@ -181,6 +181,9 @@
       }
     },
     computed: {
+      visitedViews() {
+        return this.$store.state.tagsView.visitedViews
+      },
       name() {
         return this.$store.getters.name
       },
@@ -253,9 +256,10 @@
         this.$store.dispatch('app/toggleSideBar')
       },
       async logout() {
+        this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {});//清除tabview
         await this.$store.dispatch('user/logout');
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-      }
+      },
     }
   }
 </script>

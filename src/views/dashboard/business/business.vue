@@ -32,7 +32,7 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Location')">
                 <!--地理位置-->
-                <span>{{ attentionData.location }}</span>
+                <span>{{ props.row.location }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Profitability')">
                 <!--是否盈利-->
