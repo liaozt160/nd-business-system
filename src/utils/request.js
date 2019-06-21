@@ -4,7 +4,7 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 import qs from 'qs'
 
-axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.ylbservices.com', // url = base url + request url
@@ -14,15 +14,15 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
-    config.data = qs.stringify(config.data)
+    config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    config.data = qs.stringify(config.data);
     if (store.getters.token) {
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }
     return config
   },
   error => {
-    console.log(error) // for debug
+    console.log(error); // for debug
     return Promise.reject(error)
   }
 )
