@@ -32,6 +32,7 @@ import * as filters from './filters' // global filters
 // if (process.env.NODE_ENV === 'production') {
 //   mockXHR()
 // }
+// 数字添加千分数
 Vue.prototype.toThousands=function(num) {
   let nums = (num || 0).toString(), result = '';
   while (nums.length > 3) {

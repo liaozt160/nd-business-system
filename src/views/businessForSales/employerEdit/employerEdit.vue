@@ -211,12 +211,14 @@
             <el-option label="China" value="1000"/>
             <el-option label="USA" value="USA"/>
           </el-select>
-          <el-select v-model="formDataEn.states" placeholder="Select" style="width: 130px;margin: 0 5px;" id="provinces" :disabled="locationLoading"
+          <el-select v-model="formDataEn.states" placeholder="Select" style="width: 130px;margin: 0 5px;" id="provinces"
+                     :disabled="locationLoading"
                      @change="getlocation('provinces',formDataEn.states)"
                      class="filter-item">
             <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
           </el-select>
-          <el-select v-model="formDataEn.city" placeholder="Select" style="width: 130px;margin: 0 5px;" id="city" :disabled="locationLoading"
+          <el-select v-model="formDataEn.city" placeholder="Select" style="width: 130px;margin: 0 5px;" id="city"
+                     :disabled="locationLoading"
                      class="filter-item">
             <el-option v-for="item in cities" :label="item.name" :value="item.code"/>
           </el-select>
@@ -544,12 +546,14 @@
             <el-option label="China" value="1000"/>
             <el-option label="USA" value="USA"/>
           </el-select>
-          <el-select v-model="formDataZh.states" placeholder="Select" style="width: 130px;margin: 0 5px;" id="provinces" :disabled="locationLoading"
+          <el-select v-model="formDataZh.states" placeholder="Select" style="width: 130px;margin: 0 5px;" id="provinces"
+                     :disabled="locationLoading"
                      @change="getlocation('provinces',formDataZh.states)"
                      class="filter-item">
             <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
           </el-select>
-          <el-select v-model="formDataZh.city" placeholder="Select" style="width: 130px;margin: 0 5px;" id="city" :disabled="locationLoading"
+          <el-select v-model="formDataZh.city" placeholder="Select" style="width: 130px;margin: 0 5px;" id="city"
+                     :disabled="locationLoading"
                      class="filter-item">
             <el-option v-for="item in cities" :label="item.name" :value="item.code"/>
           </el-select>
@@ -828,22 +832,25 @@
     methods: {
       // 获取地址三级联动数据
       getlocation(type, value) {
+        console.log('获取地址',type, value)
         let that = this;
         return new Promise(function (resolve, reject) {
           if (type && value) {
-            let params = {code: value,lang:that.tablang};
+            let params = {code: value, lang: that.tablang};
             that.locationLoading = true;
             getLocation(params).then(response => {
               if (type == 'country') {
                 that.provinces = response.data;
                 that.cities = [];
-                  that.formDataEn.states = '';
-                  that.formDataZh.states = '';
-                  that.formDataEn.city = '';
-                  that.formDataZh.city = '';
+                that.formDataEn.states = '';
+                that.formDataZh.states = '';
+                that.formDataEn.city = '';
+                that.formDataZh.city = '';
                 resolve();
               } else if (type == 'provinces') {
                 that.cities = response.data;
+                that.formDataEn.states = value;
+                that.formDataZh.states = value;
                 resolve();
               }
               that.locationLoading = false;
@@ -865,14 +872,13 @@
           that.listLoading = false;
           console.log('getBusinessEn', response);
           let data = Object.assign({}, response.data);
-
-          that.formDataEn=response.data;
-          if(response.data.country&&response.data.states){
+          that.formDataEn =  response.data;
             that.getlocation('country', data.country).then(_ => {
-              console.log(123)
-              that.getlocation('provinces', data.states)
+              that.formDataEn.country = data.country;
+              that.getlocation('provinces', data.states).then(_ => {
+                that.formDataEn.city = data.city;
+              })
             })
-          }
         }).catch(err => {
           console.log(err);
         })
@@ -888,8 +894,14 @@
         showBusinessZh(this.$route.params.id).then(response => {
           that.listLoading = false;
           console.log('getBusinessZh', response);
-          let newObj = Object.assign({}, response.data);
-          that.formDataEn=newObj;
+          let data = Object.assign({}, response.data);
+          that.formDataZh =  response.data;
+          that.getlocation('country', data.country).then(_ => {
+            that.formDataZh.country = data.country;
+            that.getlocation('provinces', data.states).then(_ => {
+              that.formDataZh.city = data.city;
+            })
+          })
         }).catch(err => {
           console.log(err);
         })
@@ -959,7 +971,7 @@
         let that = this;
         let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
 
-        console.log(123123,formData)
+        console.log(123123, formData)
         if (this.$route.params.id != '0' && this.$route.params.id) {
           editBusiness(formData).then(response => {
             console.log('editBusiness', response);
