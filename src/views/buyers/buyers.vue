@@ -68,6 +68,16 @@
             <span>{{toThousands(row.funds_available)}}</span>
           </template>
         </el-table-column>
+        <!--<el-table-column-->
+          <!--prop="desired_transaction_amount"-->
+          <!--align="center"-->
+          <!--:label="$t('table.ServiceCharge')"-->
+          <!--min-width="150">-->
+          <!--<template slot-scope="{row}">-->
+            <!--<el-tag type="info" v-if="row.services_pay==1">{{ $t('table.Unpaid') }}</el-tag>-->
+            <!--<el-tag type="primary" v-else>{{ $t('table.Paymented') }}</el-tag>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
         <el-table-column
           prop="funds_verified"
           align="center"
@@ -86,15 +96,19 @@
             <span>{{toThousands(row.desired_transaction_amount)}}</span>
           </template>
         </el-table-column>
-
         <el-table-column
           prop="address"
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="230">
+          min-width="300">
           <template slot-scope="scope">
-            <!--<el-button size="mini" type="primary" @click="handleView(scope.$index,scope)">{{$t('view')}}</el-button>-->
+
+            <el-button size="mini" type="primary" @click="$router.push({path:'/buyerOrder/index',query:{id:scope.row.id}})">{{$t('order.order')}}</el-button>
+
+            <!--<el-button v-if="scope.row.services_pay==1" size="mini" type="primary" @click="ServiceCharge(scope.$index,scope)">{{$t('table.Paymented')}}</el-button>-->
+            <!--<el-button v-else size="mini" type="info" @click="ServiceCharge(scope.$index,scope)">{{$t('table.Unpaid')}}</el-button>-->
+
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
@@ -193,15 +207,13 @@
 
     </el-dialog>
 
-    <!--查看买家信息弹窗-->
-    <!--<el-dialog :title="$t('buyers.BuyerInformation')" :visible.sync="dialogView"></el-dialog>-->
 
   </div>
 </template>
 
 <script>
   import Pagination from '@/components/Pagination'
-  import { getBuyerList,addBuyer,editBuyer,delBuyer,showBuyer } from '@/api/buyers'
+  import { getBuyerList,addBuyer,editBuyer,delBuyer,showBuyer,changeServiceCharge } from '@/api/buyers'
   export default {
     name: "buyers",
     components: {
@@ -256,6 +268,9 @@
       this.getList();
     },
     methods: {
+      clickTest(){
+        console.log('自动点击');
+      },
 
       // 弹出框关闭前
       dialogClose(done) {
@@ -325,7 +340,6 @@
         let that=this;
         this.listLoading = true;
         getBuyerList (data).then(response => {
-          console.log('getBuyerList',response);
           that.listLoading = false;
           that.total=response.data.total;
           that.tableData=response.data.data;
@@ -334,10 +348,32 @@
           that.listLoading = false
         })
       },
-      // handleView(index, row){
-      //   console.log(index, row);
-      //   this.dialogView=true;
-      // },
+
+      //修改是否支付服务费
+      ServiceCharge(index, row){
+        let that = this;
+        let data={id:row.row.id,services_pay:row.row.services_pay==1?2:1};
+        that.$confirm(that.$t('changeMsg'), that.$t('Confirmation'), {
+          distinguishCancelAndClose: true,
+          confirmButtonText: that.$t('confirm'),
+          cancelButtonText: that.$t('cancel')
+        }).then(() => {
+          that.listLoading = true;
+          changeServiceCharge (data).then(response => {
+            console.log('changeStatus',response);
+            that.listLoading = false;
+            that.getList();
+            that.$notify({
+              showClose: true,
+              message: that.$t('Successful'),
+              type: 'success'
+            });
+          }).catch(err => {
+            that.listLoading = false;
+            console.log(err);
+          })
+        }).catch(action => {});
+      },
 
       handleEdit(index, row) {
         let that=this;

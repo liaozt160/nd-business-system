@@ -19,7 +19,7 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Price')">
               <!--标价-->
-              <span>$ {{ toThousands(props.row.price) }}</span>
+              <span>{{ toThousands(props.row.price) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Location')">
               <!--地理位置-->
@@ -39,7 +39,7 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.BuildingSF')">
               <!--营业面积-->
-              <span>{{ props.row.building_sf }} m<sup>2</sup></span>
+              <span>{{ props.row.building_sf }} </span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.EmployeeCount')">
               <!--员工人数-->
@@ -47,11 +47,11 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.GrossIncome')">
               <!--毛利润-->
-              <span>$ {{ toThousands(props.row.gross_income) }}</span>
+              <span>{{ toThousands(props.row.gross_income) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.EBITDA')">
               <!--税息折扣及摊销前利润-->
-              <span>$ {{ toThousands(props.row.ebitda) }}</span>
+              <span>{{ toThousands(props.row.ebitda) }}</span>
             </el-form-item>
             <!--<el-form-item :label="$t('employeeEdit.FFandE')">-->
             <!--&lt;!&ndash;硬件资产价值&ndash;&gt;-->
@@ -63,11 +63,11 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.NetIncome')">
               <!--净利润-->
-              <span>$ {{ toThousands(props.row.net_income) }}</span>
+              <span>{{ toThousands(props.row.net_income) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Lease')">
               <!--租金-->
-              <span>$ {{ toThousands(props.row.lease) }}</span>
+              <span>{{ toThousands(props.row.lease) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.LeaseTerm')">
               <!--租约有效期-->
@@ -75,7 +75,7 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Est')">
               <!--房地产估价-->
-              <span>$ {{ toThousands(props.row.value_of_real_estate) }}</span>
+              <span>{{ toThousands(props.row.value_of_real_estate) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Commission')">
               <!--佣金-->
@@ -83,7 +83,7 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.BuyerFinancing')">
               <!--卖家融资-->
-              <span>$ {{ toThousands(props.row.buyer_financing) }}</span>
+              <span>{{ toThousands(props.row.buyer_financing) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.BusinessDescription')">
               <!--生意介绍信息-->

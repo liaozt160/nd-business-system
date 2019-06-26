@@ -57,3 +57,11 @@ export function delBuyerAttention (id) {
     params: { id }
   })
 }
+// 修改是否支付服务费
+export function changeServiceCharge (data) {
+  return request({
+    url: '/api/account/buyer/services/pay',
+    method: 'post',
+    data
+  })
+}

@@ -29,8 +29,9 @@ export default {
   AttentionBuyerToViewInformation:'分配当前买家中介可查看企业信息',//分配当前买家中介可查看企业信息
   ViewableSection:'可查看部分',//可查看部分
   ViewableAll:'可查看全部',//可查看全部
-  ToTheLeft:'到左边',//到左边
-  ToTheRight:'到右边',//到右边
+  allBusiness:'所有企业',//所有企业
+  selectedBusiness:'选中企业',//选中企业
+  onlyChoose10:'最多只能选择10条.',//最多只能选择10条
 
 
   empty:'不能为空',//不能为空
@@ -53,6 +54,8 @@ export default {
     attentionBusiness: '意向企业',//意向企业
     MoreBusinessInformation: '更多企业信息',//更多企业信息
     AttentionBuyers: '有意向买家',//有意向买家
+    order: '订单',//订单
+    buyerOrder: '买家订单',//买家订单
   },
   panelGroup:{
     Buyer:'买家',//买家
@@ -116,7 +119,11 @@ export default {
     publish: '发布',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    ServiceCharge: '服务费',//服务费
+    Paymented: '已支付',//已支付
+    Unpaid: '未支付',//未支付
+    PaymentStatus: '支付状态',//支付状态
   },
   buyers:{
     buyers: '买家',//买家
@@ -138,6 +145,26 @@ export default {
     assign: '分配',//分配
     assignTo: '分配到',//分配到
     business: '企业',//企业
+
+  },
+
+  order:{
+    order: '订单',//订单
+    addOrder: '添加订单',//添加订单
+    buyerOrder: '买家订单',//买家订单
+    modifyOrder: '订单修改',//订单修改
+    orderNumber:'订单号',//订单号
+    orderAmount:'订单金额',//订单金额
+    auditStatus:'审核状态',//审核状态
+    audited:'已审核',//已审核
+    AuditInProgress:'审核中',//审核中
+    notSubmitted:'未提交',//未提交
+    submitOrder:'提交订单',//提交订单
+    cancelOrder:'取消订单',//取消订单
+    viewOrder:'查看订单',//查看订单
+    remarks:'备注',//备注
+    NumberOfBusinessData:'企业资料数',//企业资料数
+    selectBusinessList:'请选择买家想要购买的企业信息',//请选择买家想要购买的企业信息
   },
 
   userEdit:{

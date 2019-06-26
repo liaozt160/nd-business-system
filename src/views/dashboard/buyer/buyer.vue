@@ -76,7 +76,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Price')+'：'">
           <!--标价-->
-          <span>$ {{ toThousands(attentionData.price) }}</span>
+          <span>{{ toThousands(attentionData.price) }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.EmployeeCount')+'：'">
           <!--员工人数-->
@@ -92,7 +92,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.BuildingSF')+'：'">
           <!--营业面积-->
-          <span>{{ attentionData.building_sf }}m<sup>2</sup></span>
+          <span>{{ attentionData.building_sf }}</span>
         </el-form-item>
         <el-form-item :label="$t('table.status')+'：'">
           <!--状态-->

@@ -104,10 +104,23 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'buyers',
+        path: 'index',
         component: () => import('@/views/buyers/buyers'),
         name: 'buyers',
         meta: { title: 'buyers', icon: 'gerenpay', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/buyerOrder',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyers/buyerOrder/buyerOrder'),
+        name: 'buyerOrder',
+        hidden: true,
+        meta: { title: 'buyerOrder', icon: 'edit', noCache: true }
       }
     ]
   },
@@ -143,88 +156,6 @@ export const asyncRoutes = [
   // nestedRouter,
   // tableRouter,
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/list',
-  //   name: 'Example',
-  //   meta: {
-  //     title: 'example',
-  //     icon: 'example'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'create',
-  //       component: () => import('@/views/example/create'),
-  //       name: 'CreateArticle',
-  //       meta: { title: 'createArticle', icon: 'edit' }
-  //     },
-  //     {
-  //       path: 'edit/:id(\\d+)',
-  //       component: () => import('@/views/example/edit'),
-  //       name: 'EditArticle',
-  //       meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'list',
-  //       component: () => import('@/views/example/list'),
-  //       name: 'ArticleList',
-  //       meta: { title: 'articleList', icon: 'list' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/tab',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/tab/index'),
-  //       name: 'Tab',
-  //       meta: { title: 'tab', icon: 'tab' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/error',
-  //   component: Layout,
-  //   redirect: 'noRedirect',
-  //   name: 'ErrorPages',
-  //   meta: {
-  //     title: 'errorPages',
-  //     icon: '404'
-  //   },
-  //   children: [
-  //     {
-  //       path: '401',
-  //       component: () => import('@/views/error-page/401'),
-  //       name: 'Page401',
-  //       meta: { title: 'page401', noCache: true }
-  //     },
-  //     {
-  //       path: '404',
-  //       component: () => import('@/views/error-page/404'),
-  //       name: 'Page404',
-  //       meta: { title: 'page404', noCache: true }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/error-log',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'log',
-  //       component: () => import('@/views/error-log/index'),
-  //       name: 'ErrorLog',
-  //       meta: { title: 'errorLog', icon: 'bug' }
-  //     }
-  //   ]
-  // },
 
   { path: '*', redirect: '/404', hidden: true }
 ];

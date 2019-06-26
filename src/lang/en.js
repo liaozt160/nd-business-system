@@ -38,8 +38,10 @@ export default {
   AttentionBuyerToViewInformation:'Attention current buyer intermediaries to view business information',//分配当前买家中介可查看企业信息
   ViewableSection:'Viewable section',//可查看部分
   ViewableAll:'Viewable all',//可查看全部
-  ToTheLeft:'To the left',//到左边
-  ToTheRight:'To the right',//到右边
+  allBusiness:'All Business',//所有企业
+  selectedBusiness:'Selected Business',//选中企业
+
+  onlyChoose10:'You can only choose 10 items at most.',//最多只能选择10条
 
 
 
@@ -53,6 +55,8 @@ export default {
     attentionBusiness: 'Attention Business',//意向企业
     MoreBusinessInformation: 'More Business Information',//更多企业信息
     AttentionBuyers: 'Attention buyers',//有意向买家
+    order: 'Order',//订单
+    buyerOrder: 'Buyer Order',//买家订单
   },
   panelGroup:{
     Buyer:'Buyer',//买家
@@ -119,7 +123,11 @@ export default {
     publish: 'Publish',//发布
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    ServiceCharge: 'Service Charge',//服务费
+    Paymented: 'Paymented',//已支付
+    Unpaid: 'Unpaid',//未支付
+    PaymentStatus: 'Payment Status',//支付状态
   },
   buyers:{
     buyers: 'Buyers',//买家
@@ -141,6 +149,24 @@ export default {
     assign: 'assign',//分配
     assignTo: 'assign to',//分配到
     business: 'business',//企业
+  },
+  order:{
+    order: 'Order',//订单
+    addOrder: 'Add Order',//添加订单
+    buyerOrder: 'Buyer Order',//买家订单
+    modifyOrder: 'Modify Order',//修改订单
+    orderNumber:'Order Number',//订单号
+    orderAmount:'Order Amount',//订单金额
+    auditStatus:'Audit Status',//审核状态
+    audited:'Audited',//已审核
+    AuditInProgress:'Audit In Progress',//审核中
+    notSubmitted:'Not Submitted',//未提交
+    submitOrder:'Submit Order',//提交订单
+    cancelOrder:'Cancel Order',//取消订单
+    viewOrder:'View Order',//查看订单
+    remarks:'Remarks',//备注
+    NumberOfBusinessData:'Number of Business Data',//企业资料数
+    selectBusinessList:'Please select the business information that the buyer wants to buy',//请选择买家想要购买的企业信息
   },
   userEdit:{
     userEdit:'User Edit',//用户编辑

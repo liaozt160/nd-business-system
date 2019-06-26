@@ -153,8 +153,7 @@
           v-model="assigned"
           filterable
           :titles="[ $t('ViewableSection'), $t('ViewableAll')]"
-          :button-texts="[$t('ToTheLeft'), $t('ToTheRight')]"
-          @change="handleChange"
+          @left-check-change="leftChoose"
           :data="business">
         </el-transfer>
       </div>
@@ -222,14 +221,23 @@
       this.getList();
     },
     methods: {
-      // 当穿梭框改变时
-      handleChange(value, direction, movedKeys) {
-        console.log(444,value, direction, movedKeys);
+      leftChoose(e) {
+        let canlength=10-this.assigned.length;
+        if(e.length>canlength){
+          if(e.length>=1){
+            this.$notify({
+              showClose: true,
+              message: this.$t('onlyChoose10'),
+              type: 'warning'
+            });
+            e.pop();
+          }
+          return false;
+        }
       },
       //保存分配level
       setAssign(){
         let that=this;
-        console.log(222,this.assigned)
         let data={
           account_id:that.AssignAccountId,
           assigned:JSON.stringify(that.assigned),
@@ -250,7 +258,6 @@
       // 打开分配弹窗
       handleAssign(index, row) {
         let that=this;
-        console.log(index, row);
         that.AssignVisible=true;
         that.assignedLoading=true;
         that.AssignAccountId=row.row.id;

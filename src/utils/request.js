@@ -52,6 +52,8 @@ service.interceptors.response.use(
         })
       }
       return Promise.reject(new Error(res.message || 'Error'))
+    } else if(res.code === 2100){
+      console.log('token已过期')
     } else {
       return res
     }
