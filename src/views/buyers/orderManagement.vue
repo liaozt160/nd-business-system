@@ -2,7 +2,7 @@
 <template>
   <div class="app-container">
     <aside>
-      <h3 style="text-align: center;">{{$t('route.buyerOrder')}}</h3>
+      <h3 style="text-align: center;">{{$t('route.orderManagement')}}</h3>
     </aside>
     <div class="filter-container">
       <div class="filter-item el-select--medium">
@@ -12,9 +12,7 @@
           {{ $t('table.search') }}
         </el-button>
       </div>
-      <el-button v-if="$route.query.role==role" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('order.addOrder') }}</el-button>
     </div>
-
     <!--列表-->
     <div class="companyTable">
       <el-table
@@ -118,26 +116,26 @@
 
             <!--买家中介-->
             <div v-if="role!=1">
-            <!--待提交-->
-            <div v-if="scope.row.status==0">
-              <el-button size="mini" type="success" @click="changeStatus(scope,1)">{{$t('order.submitOrder')}}</el-button>
-              <el-button size="mini" type="primary" :disabled="scope.row.status!=0" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
-              <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
-            </div>
-            <!--审核中-->
-            <div v-if="scope.row.status==1">
-              <el-button size="mini" type="warning" @click="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</el-button>
-              <el-button size="mini" type="primary" :disabled="scope.row.status!=0" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
-              <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
-            </div>
+              <!--待提交-->
+              <div v-if="scope.row.status==0">
+                <el-button size="mini" type="success" @click="changeStatus(scope,1)">{{$t('order.submitOrder')}}</el-button>
+                <el-button size="mini" type="primary" :disabled="scope.row.status!=0" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
+                <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+              </div>
+              <!--审核中-->
+              <div v-if="scope.row.status==1">
+                <el-button size="mini" type="warning" @click="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</el-button>
+                <el-button size="mini" type="primary" :disabled="scope.row.status!=0" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
+                <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+              </div>
               <!--已审核状态-->
               <div v-if="scope.row.status==2">
                 <el-button size="mini" v-if="$route.query.role==role" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
               </div>
-            <!--拒绝状态-->
-            <div v-if="scope.row.status==3">
-              <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
-            </div>
+              <!--拒绝状态-->
+              <div v-if="scope.row.status==3">
+                <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -399,7 +397,7 @@
   import Pagination from '@/components/Pagination'
   import { getOrderList,addOrderApi,updateOrderApi,deleteOrderApi,showOrderApi,getAllBusinessApi,changeStatusApi,changeAuditApi,viewAuditOrderApi } from '@/api/order'
   export default {
-    name: "buyerOrder",
+    name: "orderManagement",
     components: {
       Pagination
     },
@@ -448,7 +446,7 @@
     mounted(){
       this.orderEdit.buyer_id=this.$route.query.id;
       this.listQuery.buyer_id=this.$route.query.id;
-      this.getList({buyer_id:this.$route.query.id,});
+      this.getList();
       this.getAllBusiness();
 
       this.role = store.getters && store.getters.role
@@ -612,7 +610,7 @@
         }).catch(action => {});
       },
 
-      // 获取买家列表
+      // 获取订单列表
       getList(data) {
         let that=this;
         this.listLoading = true;

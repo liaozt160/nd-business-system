@@ -41,7 +41,11 @@
           prop="title"
           align="center"
           :label="$t('employeeEdit.title')"
-          min-width="200">
+          min-width="200"><template slot-scope="scope">
+          <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
+            <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 250px;">{{scope.row.title}}</span>
+          </el-tooltip>
+        </template>
         </el-table-column>
         <el-table-column
           prop="price"

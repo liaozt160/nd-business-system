@@ -42,6 +42,16 @@
         stripe
         style="width: 100%">
         <el-table-column
+          v-if="role==1"
+          prop="name"
+          align="center"
+          :label="$t('userEdit.buyerBroker')"
+          min-width="150">
+          <template slot-scope="{row}">
+            <span>{{row.account.name}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="buyer"
           align="center"
           :label="$t('buyers.Name')"
@@ -68,16 +78,6 @@
             <span>{{toThousands(row.funds_available)}}</span>
           </template>
         </el-table-column>
-        <!--<el-table-column-->
-          <!--prop="desired_transaction_amount"-->
-          <!--align="center"-->
-          <!--:label="$t('table.ServiceCharge')"-->
-          <!--min-width="150">-->
-          <!--<template slot-scope="{row}">-->
-            <!--<el-tag type="info" v-if="row.services_pay==1">{{ $t('table.Unpaid') }}</el-tag>-->
-            <!--<el-tag type="primary" v-else>{{ $t('table.Paymented') }}</el-tag>-->
-          <!--</template>-->
-        <!--</el-table-column>-->
         <el-table-column
           prop="funds_verified"
           align="center"
@@ -103,12 +103,7 @@
           fixed="right"
           min-width="300">
           <template slot-scope="scope">
-
-            <el-button size="mini" type="primary" @click="$router.push({path:'/buyerOrder/index',query:{id:scope.row.id}})">{{$t('order.order')}}</el-button>
-
-            <!--<el-button v-if="scope.row.services_pay==1" size="mini" type="primary" @click="ServiceCharge(scope.$index,scope)">{{$t('table.Paymented')}}</el-button>-->
-            <!--<el-button v-else size="mini" type="info" @click="ServiceCharge(scope.$index,scope)">{{$t('table.Unpaid')}}</el-button>-->
-
+            <el-button size="mini" type="primary" plain @click="$router.push({path:'/buyerOrder/index',query:{id:scope.row.id,role:scope.row.account.role}})">{{$t('order.order')}}</el-button>
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
@@ -142,13 +137,13 @@
           </el-form-item>
           <!--可用资金-->
           <el-form-item :label="$t('buyers.fundsAvailable')" prop="funds_available">
-            <el-input v-model.number="userEdit.funds_available" :placeholder="$t('buyers.fundsAvailable')" style="width:300px;" class="filter-item"><template slot="prepend">$</template></el-input>
+            <el-input v-model="userEdit.funds_available" :placeholder="$t('buyers.fundsAvailable')" style="width:300px;" class="filter-item"></el-input>
           </el-form-item>
         </div>
         <div class="formRow">
           <!--期望的交易金额-->
           <el-form-item :label="$t('buyers.DesiredTransactionAmount')" prop="desired_transaction_amount">
-            <el-input v-model.number="userEdit.desired_transaction_amount" :placeholder="$t('buyers.DesiredTransactionAmount')" style="width:300px;" class="filter-item"><template slot="prepend">$</template></el-input>
+            <el-input v-model="userEdit.desired_transaction_amount" :placeholder="$t('buyers.DesiredTransactionAmount')" style="width:300px;" class="filter-item"></el-input>
           </el-form-item>
           <!--资金验证-->
           <div class="formItem filter-item el-select--medium">
@@ -212,6 +207,7 @@
 </template>
 
 <script>
+  import store from '@/store'
   import Pagination from '@/components/Pagination'
   import { getBuyerList,addBuyer,editBuyer,delBuyer,showBuyer,changeServiceCharge } from '@/api/buyers'
   export default {
@@ -221,6 +217,7 @@
     },
     data() {
       return {
+        role: '',
         business: [],
         assigned: [],
 
@@ -256,8 +253,8 @@
           buyer: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
           email: [{ required: true, message: this.$t('empty')},{ type: 'email', message: this.$t('userEdit.inputEmail')}],
           phone: [{ required: true, message: this.$t('empty')},{ type: 'number', message: this.$t('userEdit.inputPhoneNumber')}],
-          funds_available: [{ required: true, message: this.$t('empty')},{ type: 'number', message: this.$t('userEdit.inputNumber')}],
-          desired_transaction_amount: [{ required: true, message: this.$t('empty')},{ type: 'number', message: this.$t('userEdit.inputNumber')}],
+          funds_available: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
+          desired_transaction_amount: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
           specific_skills_of_buyer: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
           business_management_needs: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
           time_line_to_purchase: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
@@ -265,6 +262,7 @@
       }
     },
     mounted(){
+      this.role = store.getters && store.getters.role
       this.getList();
     },
     methods: {

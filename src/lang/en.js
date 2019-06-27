@@ -11,6 +11,10 @@ export default {
   deleted:'Deleted!',//已删除！
   delMsg:'This operation is not recoverable. Are you sure you want to delete it?',//该操作不可恢复，确定要删除吗？
   changeMsg:'Are you sure you want to modify the current status?',//确定要修改当前状态吗？
+  cancelOrderMsg:'Are you sure you want to cancel the order?',//确定要取消该订单吗？
+  submitOrderMsg:'Are you sure you want to submit the order?',//确定要提交该订单吗？
+  auditedOrderMsg:'Before approval, please confirm whether the order has been paid?',//审核通过前，请确定该订单是否已支付？
+  rejectOrderMsg:'Are you sure you want to reject the order?',//确定要拒绝该订单吗？
   desiredTransactionAmount:'Desired Transaction Amount',//期望的交易金额
   fundsAvailable:'Funds Available',//可用资金
   fundsVerified:'Funds Verified',//资金核实
@@ -57,6 +61,7 @@ export default {
     AttentionBuyers: 'Attention buyers',//有意向买家
     order: 'Order',//订单
     buyerOrder: 'Buyer Order',//买家订单
+    orderManagement: 'Order Management',//订单管理
   },
   panelGroup:{
     Buyer:'Buyer',//买家
@@ -152,6 +157,7 @@ export default {
   },
   order:{
     order: 'Order',//订单
+    orderManagement: 'Order Management',//订单管理
     addOrder: 'Add Order',//添加订单
     buyerOrder: 'Buyer Order',//买家订单
     modifyOrder: 'Modify Order',//修改订单
@@ -159,14 +165,18 @@ export default {
     orderAmount:'Order Amount',//订单金额
     auditStatus:'Audit Status',//审核状态
     audited:'Audited',//已审核
-    AuditInProgress:'Audit In Progress',//审核中
+    Audit:'Audit',//审核
+    AuditInProgress:'Pending',//审核中
+    reject:'Reject',//拒绝
     notSubmitted:'Not Submitted',//未提交
     submitOrder:'Submit Order',//提交订单
     cancelOrder:'Cancel Order',//取消订单
     viewOrder:'View Order',//查看订单
     remarks:'Remarks',//备注
+    creationTime:'Creation Time',//创建时间
     NumberOfBusinessData:'Number of Business Data',//企业资料数
     selectBusinessList:'Please select the business information that the buyer wants to buy',//请选择买家想要购买的企业信息
+    BusinessInformationPurchased:'Business Information Purchased',//购买的企业信息
   },
   userEdit:{
     userEdit:'User Edit',//用户编辑

@@ -11,6 +11,10 @@ export default {
   deleted:'已删除！',//已删除！
   delMsg:'该操作不可恢复，确定要删除吗？',//该操作不可恢复，确定要删除吗？
   changeMsg:'确定要修改当前状态吗？',//确定要修改当前状态吗？
+  cancelOrderMsg:'确定要取消该订单吗？',//确定要取消该订单吗？
+  submitOrderMsg:'确定要提交该订单吗？',//确定要提交该订单吗？
+  auditedOrderMsg:'审核通过前，请确定该订单是否已支付？',//审核通过前，请确定该订单是否已支付？
+  rejectOrderMsg:'确定要拒绝该订单吗？',//确定要拒绝该订单吗？
   desiredTransactionAmount:'期望的交易金额',//期望的交易金额
   fundsAvailable:'可用资金',//可用资金
   fundsVerified:'资金核实',//资金核实
@@ -56,6 +60,7 @@ export default {
     AttentionBuyers: '有意向买家',//有意向买家
     order: '订单',//订单
     buyerOrder: '买家订单',//买家订单
+    orderManagement: '订单管理',//订单管理
   },
   panelGroup:{
     Buyer:'买家',//买家
@@ -150,6 +155,7 @@ export default {
 
   order:{
     order: '订单',//订单
+    orderManagement: '订单管理',//订单管理
     addOrder: '添加订单',//添加订单
     buyerOrder: '买家订单',//买家订单
     modifyOrder: '订单修改',//订单修改
@@ -157,14 +163,18 @@ export default {
     orderAmount:'订单金额',//订单金额
     auditStatus:'审核状态',//审核状态
     audited:'已审核',//已审核
+    Audit:'审核',//审核
     AuditInProgress:'审核中',//审核中
+    reject:'拒绝',//拒绝
     notSubmitted:'未提交',//未提交
     submitOrder:'提交订单',//提交订单
     cancelOrder:'取消订单',//取消订单
     viewOrder:'查看订单',//查看订单
     remarks:'备注',//备注
+    creationTime:'创建时间',//创建时间
     NumberOfBusinessData:'企业资料数',//企业资料数
     selectBusinessList:'请选择买家想要购买的企业信息',//请选择买家想要购买的企业信息
+    BusinessInformationPurchased:'购买的企业信息',//购买的企业信息
   },
 
   userEdit:{

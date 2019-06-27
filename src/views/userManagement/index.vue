@@ -23,12 +23,6 @@
         border
         stripe
         style="width: 100%">
-        <!--<el-table-column-->
-          <!--prop="index"-->
-          <!--align="center"-->
-          <!--:label="$t('table.index')"-->
-          <!--min-width="80">-->
-        <!--</el-table-column>-->
         <el-table-column
           prop="name"
           sortable
@@ -69,7 +63,7 @@
           min-width="100">
           <template slot-scope="{row}">
             <!--已禁用-->
-            <el-tag type="info" v-if="row.status==2">{{ $t('table.isDisabled') }}</el-tag>
+            <el-tag type="danger"  v-if="row.status==2">{{ $t('table.isDisabled') }}</el-tag>
             <!--已启用-->
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.isEnable') }}</el-tag>
           </template>
@@ -79,12 +73,11 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="350">
+          min-width="300">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>
-            <el-button :disabled="scope.row.role!=2" size="mini" type="primary" @click="handleAssign(scope.$index,scope)">{{$t('buyers.assign')}}</el-button>
-            <el-button size="mini" type="primary" @click="handleEnable(1,scope)" v-if="scope.row.status==2">{{$t('table.Enable')}}</el-button>
-            <el-button size="mini" type="info" @click="handleEnable(2,scope)" v-if="scope.row.status==1">{{$t('table.disabled')}}</el-button>
+            <el-button size="mini" type="primary" plain @click="handleEnable(1,scope)" v-if="scope.row.status==2">{{$t('table.Enable')}}</el-button>
+            <el-button size="mini" type="danger" plain @click="handleEnable(2,scope)" v-if="scope.row.status==1">{{$t('table.disabled')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
         </el-table-column>
@@ -125,16 +118,6 @@
         <el-form-item :label="$t('userEdit.UserNotes')">
           <el-input style="width:410px;" type="textarea" :autosize="{ minRows: 2}" :placeholder="$t('userEdit.UserNotes')" v-model="userEdit.remarks"></el-input>
         </el-form-item>
-        <!--<div style="margin: 15px 0;">-->
-          <!--<el-checkbox-group v-model="userEdit.position">-->
-            <!--<el-checkbox :label="$t('userEdit.firstLoginNeedChangePwd')" name="type"></el-checkbox>-->
-          <!--</el-checkbox-group>-->
-        <!--</div>-->
-        <!--<div style="margin: 15px 0;">-->
-          <!--<el-checkbox-group v-model="userEdit.position">-->
-            <!--<el-checkbox :label="$t('userEdit.emailLogin')" name="type"></el-checkbox>-->
-          <!--</el-checkbox-group>-->
-        <!--</div>-->
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -221,56 +204,6 @@
       this.getList();
     },
     methods: {
-      leftChoose(e) {
-        let canlength=10-this.assigned.length;
-        if(e.length>canlength){
-          if(e.length>=1){
-            this.$notify({
-              showClose: true,
-              message: this.$t('onlyChoose10'),
-              type: 'warning'
-            });
-            e.pop();
-          }
-          return false;
-        }
-      },
-      //保存分配level
-      setAssign(){
-        let that=this;
-        let data={
-          account_id:that.AssignAccountId,
-          assigned:JSON.stringify(that.assigned),
-        };
-        setAssignList (data).then(response => {
-          console.log('setAssignList',response);
-          that.AssignVisible=false;
-          that.AssignAccountId='';
-          that.$notify({
-            showClose: true,
-            message: that.$t('Successful'),
-            type: 'success'
-          });
-        }).catch(err => {
-          console.log(err);
-        })
-      },
-      // 打开分配弹窗
-      handleAssign(index, row) {
-        let that=this;
-        that.AssignVisible=true;
-        that.assignedLoading=true;
-        that.AssignAccountId=row.row.id;
-        getAssignList (row.row.id).then(response => {
-          console.log('getAssignList',response);
-          that.business=response.data.business;
-          that.assigned=response.data.assigned;
-          that.assignedLoading=false;
-        }).catch(err => {
-          console.log(err);
-          that.assignedLoading=false;
-        })
-      },
       // 表格角色筛选
       filterHandler(value, row) {
         return row.role == value;

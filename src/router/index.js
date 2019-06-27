@@ -100,6 +100,18 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/orderManagement',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyers/orderManagement'),
+        name: 'orderManagement',
+        meta: { title: 'orderManagement', icon: 'order', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/buyers',
     component: Layout,
     children: [
@@ -170,6 +182,19 @@ export const buyerRoutes = [
         component: () => import('@/views/buyers/buyers'),
         name: 'buyers',
         meta: { title: 'buyers', icon: 'gerenpay', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/buyerOrder',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyers/buyerOrder/buyerOrder'),
+        name: 'buyerOrder',
+        hidden: true,
+        meta: { title: 'buyerOrder', icon: 'edit', noCache: true }
       }
     ]
   },
