@@ -407,7 +407,6 @@
       return {
         role: '',
         business: [],
-        business_ids: [],
         assignedLoading: false,
 
         dialogviewOrder: false,
@@ -456,7 +455,7 @@
     methods: {
       // 穿梭框
       leftChoose(e) {
-        let canlength=10-this.business_ids.length;
+        let canlength=10-this.orderEdit.business_ids.length;
         if(e.length>canlength){
           if(e.length>=1){
             this.$notify({
@@ -685,7 +684,7 @@
   }
   .el-form-item__content{
     line-height: 20px!important;
-    margin: 8px 0;
+    margin: 8px 0!important;
   }
 </style>
 <style scoped>
@@ -699,9 +698,6 @@
     width: 50%;
     display: flex;
     float: left;
-  }
-  .el-form-item__content span{
-    line-height: 20px;
   }
 
   .formRow{

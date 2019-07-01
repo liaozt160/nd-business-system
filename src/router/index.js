@@ -222,18 +222,18 @@ export const buyerRoutes = [
       }
     ]
   },
-  {
-    path: '/businessForSalesLevelTwo',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/buyers/businessForSalesLevelTwo'),
-        name: 'businessForSalesLevelTwo',
-        meta: { title: 'MoreBusinessInformation', icon: 'daishou', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/businessForSalesLevelTwo',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/buyers/businessForSalesLevelTwo'),
+  //       name: 'businessForSalesLevelTwo',
+  //       meta: { title: 'MoreBusinessInformation', icon: 'daishou', noCache: true }
+  //     }
+  //   ]
+  // },
 
   { path: '*', redirect: '/404', hidden: true }
 ];

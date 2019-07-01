@@ -30,6 +30,7 @@
         :data="tableData"
         border
         stripe
+        @sort-change="sortChange"
         style="width: 100%">
         <el-table-column
           prop="listing"
@@ -43,7 +44,7 @@
           :label="$t('employeeEdit.title')"
           min-width="200"><template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
-            <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 250px;">{{scope.row.title}}</span>
+            <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.title}}</span>
           </el-tooltip>
         </template>
         </el-table-column>
@@ -51,10 +52,18 @@
           prop="price"
           align="center"
           :label="$t('table.price')+'($)'"
+          sortable
           min-width="150">
           <template slot-scope="{row}">
             <span>{{toThousands(row.price)}}</span>
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="updated_at"
+          align="center"
+          :label="$t('table.entryTime')"
+          sortable
+          min-width="160">
         </el-table-column>
         <el-table-column
           prop="state"
@@ -171,6 +180,8 @@
           price_from:'',
           price_to:'',
           q:'',
+          order:'',
+          prop:'',
         },
         listLoading: false,
         total: 1,
@@ -183,6 +194,15 @@
       this.getList();
     },
     methods:{
+      // 排序
+      sortChange(e){
+        console.log(e);
+        this.listQuery.page=1;
+        this.listQuery.order=e.order=='ascending'?1:e.order=='descending'?0:'';
+        this.listQuery.prop=e.prop;
+        console.log(this.listQuery);
+        this.getList(this.listQuery);
+      },
       handleFilter() {
         this.listQuery.page = 1;
         this.getList(this.listQuery);

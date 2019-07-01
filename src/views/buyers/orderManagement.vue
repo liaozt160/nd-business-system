@@ -43,11 +43,11 @@
           prop="paid"
           align="center"
           :label="$t('table.PaymentStatus')"
-          min-width="180">
+          min-width="160">
           <!--支付状态-->
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>
-            <el-tag type="info" v-if="scope.row.paid==0">{{ $t('table.Unpaid') }}</el-tag>
+            <el-tag type="success" style="width: 60px" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>
+            <el-tag type="info"    style="width: 60px" v-if="scope.row.paid==0">{{ $t('table.Unpaid') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -683,7 +683,7 @@
   }
   .el-form-item__content{
     line-height: 20px!important;
-    margin: 8px 0;
+    margin: 8px 0!important;
   }
 </style>
 <style scoped>
@@ -697,9 +697,6 @@
     width: 50%;
     display: flex;
     float: left;
-  }
-  .el-form-item__content span{
-    line-height: 20px;
   }
 
   .formRow{

@@ -51,9 +51,9 @@
           :label="$t('userEdit.UserRoles')"
           min-width="150">
           <template slot-scope="{row}">
-            <el-tag type="primary" v-if="row.role==1">{{ $t('userEdit.admin') }}</el-tag>
-            <el-tag type="primary" v-if="row.role==2">{{ $t('userEdit.buyerBroker') }}</el-tag>
-            <el-tag type="primary" v-if="row.role==3">{{ $t('userEdit.businessBroker') }}</el-tag>
+            <el-tag style="width: 110px" v-if="row.role==1">{{ $t('userEdit.admin') }}</el-tag>
+            <el-tag style="width: 110px" v-if="row.role==2">{{ $t('userEdit.buyerBroker') }}</el-tag>
+            <el-tag style="width: 110px" v-if="row.role==3">{{ $t('userEdit.businessBroker') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -63,9 +63,9 @@
           min-width="100">
           <template slot-scope="{row}">
             <!--已禁用-->
-            <el-tag type="danger"  v-if="row.status==2">{{ $t('table.isDisabled') }}</el-tag>
+            <el-tag type="danger" style="width: 80px" v-if="row.status==2">{{ $t('table.isDisabled') }}</el-tag>
             <!--已启用-->
-            <el-tag type="primary" v-if="row.status==1">{{ $t('table.isEnable') }}</el-tag>
+            <el-tag type="success" style="width: 80px" v-if="row.status==1">{{ $t('table.isEnable') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -73,11 +73,11 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="300">
+          min-width="250">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>
-            <el-button size="mini" type="primary" plain @click="handleEnable(1,scope)" v-if="scope.row.status==2">{{$t('table.Enable')}}</el-button>
-            <el-button size="mini" type="danger" plain @click="handleEnable(2,scope)" v-if="scope.row.status==1">{{$t('table.disabled')}}</el-button>
+            <el-button size="mini" style="width: 80px" type="success" plain @click="handleEnable(1,scope)" v-if="scope.row.status==2">{{$t('table.Enable')}}</el-button>
+            <el-button size="mini" style="width: 80px" type="danger" plain @click="handleEnable(2,scope)" v-if="scope.row.status==1">{{$t('table.disabled')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
         </el-table-column>
@@ -126,26 +126,6 @@
       </div>
     </el-dialog>
 
-    <!--买家分配可查看level two信息弹窗-->
-    <el-dialog :title="$t('buyers.assign')" :visible.sync="AssignVisible" width="700px" center>
-      <!--分配当前买家中介可查看企业信息-->
-      <p style="text-align: center; margin: 0 0 20px">{{$t('AttentionBuyerToViewInformation')}}</p>
-      <div style="text-align: center;" v-loading="assignedLoading">
-        <el-transfer
-          style="text-align: left; display: inline-block;margin-bottom: 30px;"
-          v-model="assigned"
-          filterable
-          :titles="[ $t('ViewableSection'), $t('ViewableAll')]"
-          @left-check-change="leftChoose"
-          :data="business">
-        </el-transfer>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="AssignVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="setAssign">{{ $t('table.confirm') }}</el-button>
-      </div>
-
-    </el-dialog>
   </div>
 </template>
 

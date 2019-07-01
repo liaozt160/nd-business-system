@@ -25,10 +25,10 @@ export default {
   view:'查看',//查看
   detail:'详情',//详情
   Successful:'成功！',//成功！
-  AddAttention:'添加到意向企业',//添加到意向企业
+  AddAttention:'添加到推荐企业',//添加到推荐企业
 
 
-  AttentionBuyer:'有意向买家',//有意向买家
+  AttentionBuyer:'有推荐买家',//有推荐买家
   ChooseAttentionBuyer:'选择当前有意向的买家',//选择当前有意向的买家
   AttentionBuyerToViewInformation:'分配当前买家中介可查看企业信息',//分配当前买家中介可查看企业信息
   ViewableSection:'可查看部分',//可查看部分
@@ -55,7 +55,7 @@ export default {
     employerEdit: '企业编辑',//企业编辑
     buyers: '买家',//买家
     buyersManagement: '买家管理',//买家管理
-    attentionBusiness: '意向企业',//意向企业
+    attentionBusiness: '推荐企业',//推荐企业
     MoreBusinessInformation: '更多企业信息',//更多企业信息
     AttentionBuyers: '有意向买家',//有意向买家
     order: '订单',//订单
@@ -68,7 +68,7 @@ export default {
     TotalTurnover:'总成交额',//总成交额
     newEnterprises:'最新增加的并购企业资源',//最新增加的并购企业资源
     attentionBuyer:'意向买家',//意向买家
-    attentionBusiness:'意向企业',//意向企业
+    attentionBusiness:'推荐企业',//推荐企业
   },
   navbar: {
     dashboard: '首页',

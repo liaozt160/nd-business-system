@@ -101,7 +101,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="300">
+          min-width="250">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="$router.push({path:'/buyerOrder/index',query:{id:scope.row.id,role:scope.row.account.role}})">{{$t('order.order')}}</el-button>
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>

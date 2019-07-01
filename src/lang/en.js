@@ -25,7 +25,7 @@ export default {
   view:'View',//查看
   detail:'Detail',//详情
   Successful:'Successful!',//成功！
-  AddAttention:'Add Attention',//添加到意向企业
+  AddAttention:'Add Recommended',//添加到推荐企业
 
   empty:'Can\'t be empty',//不能为空
   changePassword:'Change Password',//修改密码
@@ -37,9 +37,9 @@ export default {
   passwordRepeat:'The password entered twice is different',//两次密码输入不一致
   changeSuccess:'Successful modification!',//修改成功！
 
-  AttentionBuyer:'Attention Buyer',//有意向买家
-  ChooseAttentionBuyer:'Choose the current attention buyer',//选择当前有意向的买家
-  AttentionBuyerToViewInformation:'Attention current buyer intermediaries to view business information',//分配当前买家中介可查看企业信息
+  AttentionBuyer:'Interested Buyer',//有意向买家
+  ChooseAttentionBuyer:'Choose the current interested buyer',//选择当前有意向的买家
+  AttentionBuyerToViewInformation:'Interested current buyer intermediaries to view business information',//分配当前买家中介可查看企业信息
   ViewableSection:'Viewable section',//可查看部分
   ViewableAll:'Viewable all',//可查看全部
   allBusiness:'All Business',//所有企业
@@ -56,20 +56,20 @@ export default {
     employerEdit: 'Business Edit',//企业编辑
     buyers: 'Buyers',//买家
     buyersManagement: 'Buyers Management',//买家管理
-    attentionBusiness: 'Attention Business',//意向企业
+    attentionBusiness: 'Recommended Business',//推荐企业
     MoreBusinessInformation: 'More Business Information',//更多企业信息
-    AttentionBuyers: 'Attention buyers',//有意向买家
+    AttentionBuyers: 'Interested buyers',//有意向买家
     order: 'Order',//订单
     buyerOrder: 'Buyer Order',//买家订单
     orderManagement: 'Order Management',//订单管理
   },
   panelGroup:{
     Buyer:'Buyer',//买家
-    SaledEnterprises:'Saled Business',//已售企业
+    SaledEnterprises:'Sold Business',//已售企业
     TotalTurnover:'Total Turnover',//总成交额
     newEnterprises:'Latest Increase in Business for Sale',//最新增加的并购企业资源
-    attentionBuyer:'Attention Buyer',//意向买家
-    attentionBusiness:'Attention Business',//意向企业
+    attentionBuyer:'Interested Buyer',//意向买家
+    attentionBusiness:'Recommended Business',//推荐企业
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -130,7 +130,7 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm',
     ServiceCharge: 'Service Charge',//服务费
-    Paymented: 'Paymented',//已支付
+    Paymented: 'Paid',//已支付
     Unpaid: 'Unpaid',//未支付
     PaymentStatus: 'Payment Status',//支付状态
   },
@@ -201,7 +201,7 @@ export default {
 
   employeeEdit:{
     TagName:'Tag Name',//标签名称
-    companyName:'Company Name',//企业名称
+    companyName:'Business Name',//企业名称
     title:'Title',//标题
     Listing:'Listing',//编号
     Price:'Price',//标价

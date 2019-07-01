@@ -32,6 +32,7 @@
         :data="tableData"
         border
         stripe
+        @sort-change="sortChange"
         style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -145,12 +146,19 @@
           prop="price"
           align="center"
           :label="$t('table.price')+'($)'"
+          sortable
           min-width="150">
           <template slot-scope="{row}">
             <span>{{toThousands(row.price)}}</span>
           </template>
         </el-table-column>
-
+        <el-table-column
+          prop="updated_at"
+          align="center"
+          :label="$t('table.entryTime')"
+          sortable
+          min-width="160">
+        </el-table-column>
         <el-table-column
           prop="address"
           align="center"
@@ -166,12 +174,6 @@
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
             <el-tag type="info" v-else>{{ $t('table.soldOut') }}</el-tag>
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="updated_at"
-          align="center"
-          :label="$t('table.entryTime')"
-          min-width="160">
         </el-table-column>
         <el-table-column
           prop="address"
@@ -224,6 +226,8 @@
               price_from:'',
               price_to:'',
               q:'',
+              order:'',
+              prop:'',
             },
             listLoading: false,
             total: 1,
@@ -236,6 +240,16 @@
         this.getList();
       },
       methods:{
+          // 排序
+        sortChange(e){
+          console.log(e);
+          this.listQuery.page=1;
+          this.listQuery.order=e.order=='ascending'?1:e.order=='descending'?0:'';
+          this.listQuery.prop=e.prop;
+          console.log(this.listQuery);
+          this.getList(this.listQuery);
+        },
+
         handleFilter() {
           this.listQuery.page=1;
           this.getList(this.listQuery);
@@ -312,6 +326,12 @@
     }
 </script>
 
+<style>
+  .el-form-item__content {
+    line-height: 20px !important;
+    margin: 8px 0!important;
+  }
+</style>
 <style scoped>
   .demo-table-expand {
     font-size: 0;
