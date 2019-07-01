@@ -676,16 +676,6 @@
   }
 </script>
 
-<style>
-  .el-form-item__label{
-    line-height: 20px!important;
-    margin: 8px 0;
-  }
-  .el-form-item__content{
-    line-height: 20px!important;
-    margin: 8px 0!important;
-  }
-</style>
 <style scoped>
   .demo-table-expand {
     overflow: hidden;

@@ -161,12 +161,6 @@
   }
 </script>
 
-<style>
-  .el-form-item__label{
-    line-height: 20px!important;
-    margin: 8px 0;
-  }
-</style>
 <style scoped>
   .demo-table-expand {
     font-size: 0;
