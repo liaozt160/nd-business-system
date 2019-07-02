@@ -45,11 +45,11 @@
           prop="paid"
           align="center"
           :label="$t('table.PaymentStatus')"
-          min-width="180">
+          min-width="130">
           <!--支付状态-->
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>
-            <el-tag type="info" v-if="scope.row.paid==0">{{ $t('table.Unpaid') }}</el-tag>
+            <el-tag type="success" style="width: 60px" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>
+            <el-tag type="info"    style="width: 60px" v-if="scope.row.paid==0">{{ $t('table.Unpaid') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -65,12 +65,12 @@
           prop="status"
           align="center"
           :label="$t('order.auditStatus')"
-          min-width="150">
+          min-width="130">
           <template slot-scope="scope">
-            <el-tag type="danger" v-if="scope.row.status==3">{{ $t('order.reject') }}</el-tag>
-            <el-tag type="success" v-if="scope.row.status==2">{{ $t('order.audited') }}</el-tag>
-            <el-tag type="primary" v-if="scope.row.status==1">{{ $t('order.AuditInProgress') }}</el-tag>
-            <el-tag type="info" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
+            <el-tag type="danger"  style="width: 100px" v-if="scope.row.status==3">{{ $t('order.reject') }}</el-tag>
+            <el-tag type="success" style="width: 100px" v-if="scope.row.status==2">{{ $t('order.audited') }}</el-tag>
+            <el-tag type="primary" style="width: 100px" v-if="scope.row.status==1">{{ $t('order.AuditInProgress') }}</el-tag>
+            <el-tag type="info"    style="width: 100px" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -89,7 +89,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          :min-width="role==1&&$route.query.role==1?550:380">
+          :min-width="role==1&&$route.query.role==1?500:380">
           <template slot-scope="scope">
             <!--管理员-->
             <div v-if="role==1">
@@ -108,6 +108,7 @@
               <!--已审核状态-->
               <div v-if="scope.row.status==2">
                 <el-button size="mini" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
+                <el-button size="mini" type="danger" plain  @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
               </div>
               <!--拒绝状态-->
               <div v-if="scope.row.status==3">
@@ -147,7 +148,7 @@
 
     <!--订单编辑弹窗-->
     <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"  width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center>
-      <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="120px" label-lineHight="30px"  v-loading="assignedLoading">
+      <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="120px" label-lineHight="20px"  v-loading="assignedLoading">
         <div>
           <!--请选择买家想要购买的企业信息-->
           <p style="text-align: center;">{{$t('order.selectBusinessList')}}</p>

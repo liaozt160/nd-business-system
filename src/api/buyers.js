@@ -41,7 +41,7 @@ export function delBuyer (id) {
     params: { id }
   })
 }
-// 买家意向企业列表
+// 买家中介获取买家意向企业列表
 export function buyerAttentionList (data) {
   return request({
     url: '/api/buyer/attention/list',
@@ -61,6 +61,14 @@ export function delBuyerAttention (id) {
 export function changeServiceCharge (data) {
   return request({
     url: '/api/account/buyer/services/pay',
+    method: 'post',
+    data
+  })
+}
+// 管理员获取买家意向企业列表
+export function adminGetBuyerAttentionList (data) {
+  return request({
+    url: '/api/account/attention/list',
     method: 'post',
     data
   })

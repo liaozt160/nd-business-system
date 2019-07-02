@@ -43,7 +43,7 @@
           prop="paid"
           align="center"
           :label="$t('table.PaymentStatus')"
-          min-width="160">
+          min-width="120">
           <!--支付状态-->
           <template slot-scope="scope">
             <el-tag type="success" style="width: 60px" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>
@@ -63,12 +63,12 @@
           prop="status"
           align="center"
           :label="$t('order.auditStatus')"
-          min-width="150">
+          min-width="130">
           <template slot-scope="scope">
-            <el-tag type="danger" v-if="scope.row.status==3">{{ $t('order.reject') }}</el-tag>
-            <el-tag type="success" v-if="scope.row.status==2">{{ $t('order.audited') }}</el-tag>
-            <el-tag type="primary" v-if="scope.row.status==1">{{ $t('order.AuditInProgress') }}</el-tag>
-            <el-tag type="info" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
+            <el-tag type="danger"  style="width: 100px" v-if="scope.row.status==3">{{ $t('order.reject') }}</el-tag>
+            <el-tag type="success" style="width: 100px" v-if="scope.row.status==2">{{ $t('order.audited') }}</el-tag>
+            <el-tag type="primary" style="width: 100px" v-if="scope.row.status==1">{{ $t('order.AuditInProgress') }}</el-tag>
+            <el-tag type="info"    style="width: 100px" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -87,7 +87,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          :min-width="role==1&&$route.query.role==1?550:380">
+          :min-width="role==1&&$route.query.role==1?500:380">
           <template slot-scope="scope">
             <!--管理员-->
             <div v-if="role==1">

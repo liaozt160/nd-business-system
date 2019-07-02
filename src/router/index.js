@@ -161,6 +161,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/attentionBusiness',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyers/attentionBusiness'),
+        name: 'attentionBusiness',
+        meta: { title: 'attentionBusiness', icon: 'daishou', noCache: true }
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
@@ -247,7 +259,7 @@ export const businessRoutes = [
         path: 'index',
         component: () => import('@/views/businessForSales/businessForSales'),
         name: 'businessForSales',
-        meta: { title: 'businessForSales', icon: 'daishou', noCache: true }
+        meta: { title: 'myBusiness', icon: 'daishou', noCache: true }
       }
     ]
   },

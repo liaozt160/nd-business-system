@@ -25,7 +25,18 @@ export default {
   view:'View',//查看
   detail:'Detail',//详情
   Successful:'Successful!',//成功！
+
   AddAttention:'Add Recommended',//添加到推荐企业
+  recommender:'Recommender',//推荐人
+  myRecommendation:'My Recommendation',//我的推荐
+  AttentionBuyer:'Interested Buyer',//有意向买家
+  ChooseAttentionBuyer:'Choose the current interested buyer',//选择当前有意向的买家
+  AttentionBuyerToViewInformation:'Interested current buyer intermediaries to view business information',//分配当前买家中介可查看企业信息
+  ViewableSection:'Viewable section',//可查看部分
+  ViewableAll:'Viewable all',//可查看全部
+  allBusiness:'All Business',//所有企业
+  selectedBusiness:'Selected Business',//选中企业
+  onlyChoose10:'You can only choose 10 items at most.',//最多只能选择10条
 
   empty:'Can\'t be empty',//不能为空
   changePassword:'Change Password',//修改密码
@@ -37,15 +48,6 @@ export default {
   passwordRepeat:'The password entered twice is different',//两次密码输入不一致
   changeSuccess:'Successful modification!',//修改成功！
 
-  AttentionBuyer:'Interested Buyer',//有意向买家
-  ChooseAttentionBuyer:'Choose the current interested buyer',//选择当前有意向的买家
-  AttentionBuyerToViewInformation:'Interested current buyer intermediaries to view business information',//分配当前买家中介可查看企业信息
-  ViewableSection:'Viewable section',//可查看部分
-  ViewableAll:'Viewable all',//可查看全部
-  allBusiness:'All Business',//所有企业
-  selectedBusiness:'Selected Business',//选中企业
-
-  onlyChoose10:'You can only choose 10 items at most.',//最多只能选择10条
 
 
 
@@ -62,6 +64,7 @@ export default {
     order: 'Order',//订单
     buyerOrder: 'Buyer Order',//买家订单
     orderManagement: 'Order Management',//订单管理
+    myBusiness: 'My Business',//我的企业
   },
   panelGroup:{
     Buyer:'Buyer',//买家

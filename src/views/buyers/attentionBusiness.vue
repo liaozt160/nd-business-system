@@ -10,13 +10,17 @@
         <el-option :label="$t('table.forSale')" value="1" />
         <el-option :label="$t('table.soldOut')" value="2" />
       </el-select>
+      <el-select v-if="role==1" v-model="listQuery.recommend_by_me" :placeholder="$t('recommender')" style="width: 130px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
+        <el-option :label="$t('table.all')" value="0" />
+        <el-option :label="$t('myRecommendation')" value="1" />
+      </el-select>
 
-      <div class="filter-item el-select--medium">
-        <span style="color: #717171;font-size: 14px;">{{$t('table.price')}} ($)</span>
-        <el-input v-model="listQuery.price_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
-        ~
-        <el-input v-model="listQuery.price_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
-      </div>
+      <!--<div class="filter-item el-select&#45;&#45;medium">-->
+        <!--<span style="color: #717171;font-size: 14px;">{{$t('table.price')}} ($)</span>-->
+        <!--<el-input v-model="listQuery.price_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>-->
+        <!--~-->
+        <!--<el-input v-model="listQuery.price_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>-->
+      <!--</div>-->
       <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
       <el-button  class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
@@ -58,6 +62,22 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="state"
+          align="center"
+          :label="$t('table.status')"
+          min-width="100">
+          <template slot-scope="{row}">
+            <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
+            <el-tag type="info" v-else>{{ $t('table.soldOut') }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          :label="$t('recommender')"
+          min-width="200">
+        </el-table-column>
+        <el-table-column
           prop="buyer"
           align="center"
           :label="$t('AttentionBuyer')"
@@ -91,8 +111,9 @@
 </template>
 
 <script>
+  import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { buyerAttentionList,delBuyerAttention } from '@/api/buyers'
+  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList } from '@/api/buyers'
   export default {
     name: "attentionBusiness",
     components:{
@@ -100,8 +121,11 @@
     },
     data(){
       return{
+        role: '',
+
         listQuery: {
           page: 1,
+          recommend_by_me: '',
           status: '',
           price_from:'',
           price_to:'',
@@ -115,6 +139,7 @@
     },
     mounted(){
       this.getList();
+      this.role = store.getters && store.getters.role
     },
     methods:{
       handleFilter() {
@@ -147,15 +172,28 @@
       getList(data) {
         let that=this;
         this.listLoading = true;
-        buyerAttentionList (data).then(response => {
-          console.log('buyerAttentionList',response);
-          that.listLoading = false;
-          that.total=response.data.total;
-          that.tableData=response.data.data;
-        }).catch(err => {
-          console.log(err);
-          that.listLoading = false
-        })
+        if(store.getters && store.getters.role==1){
+          adminGetBuyerAttentionList (data).then(response => {
+            console.log('adminGetBuyerAttentionList',response);
+            that.listLoading = false;
+            that.total=response.data.total;
+            that.tableData=response.data.data;
+          }).catch(err => {
+            console.log(err);
+            that.listLoading = false
+          })
+        }else{
+          buyerAttentionList (data).then(response => {
+            console.log('buyerAttentionList',response);
+            that.listLoading = false;
+            that.total=response.data.total;
+            that.tableData=response.data.data;
+          }).catch(err => {
+            console.log(err);
+            that.listLoading = false
+          })
+        }
+
       },
     }
   }

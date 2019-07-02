@@ -28,7 +28,9 @@ export default {
   AddAttention:'添加到推荐企业',//添加到推荐企业
 
 
-  AttentionBuyer:'有推荐买家',//有推荐买家
+  AttentionBuyer:'推荐买家',//推荐买家
+  recommender:'推荐人',//推荐人
+  myRecommendation:'我的推荐',//我的推荐
   ChooseAttentionBuyer:'选择当前有意向的买家',//选择当前有意向的买家
   AttentionBuyerToViewInformation:'分配当前买家中介可查看企业信息',//分配当前买家中介可查看企业信息
   ViewableSection:'可查看部分',//可查看部分
@@ -61,6 +63,7 @@ export default {
     order: '订单',//订单
     buyerOrder: '买家订单',//买家订单
     orderManagement: '订单管理',//订单管理
+    myBusiness: '我的企业',//我的企业
   },
   panelGroup:{
     Buyer:'买家',//买家

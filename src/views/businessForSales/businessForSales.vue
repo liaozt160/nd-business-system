@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <aside>
-      <h3 style="text-align: center;">{{$t('route.businessForSales')}}</h3>
+      <h3 style="text-align: center;">{{role==3?$t('route.myBusiness'):$t('route.businessForSales')}}</h3>
     </aside>
     <div class="filter-container">
       <el-select v-model="listQuery.status" :placeholder="$t('table.status')" style="width: 130px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
@@ -180,8 +180,14 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="300">
+          min-width="350">
           <template slot-scope="scope">
+            <el-button
+              v-if="role!=3"
+              size="mini"
+              type="success"
+              @click="openSelectBuyer(scope)">{{$t('AddAttention')}}
+            </el-button>
             <el-button
               size="mini"
               type="primary"
@@ -207,12 +213,24 @@
       </el-table>
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page"  :pageSize.sync="pageSize" @pagination="getList(listQuery)" />
     </div>
+
+    <!--// 选择买家弹窗-->
+    <el-dialog :title="$t('ChooseAttentionBuyer')" :visible.sync="selectBuyer" width="500px" center>
+      <el-select v-model="selectBuyerId" clearable style="width: 100%" class="filter-item">
+        <el-option v-for="item in buyerList" :label="item.label" :value="item.key" />
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="selectBuyer = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="AddAttention(business_id,selectBuyerId)">{{ $t('AddAttention') }}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+  import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { getBusinessList,addBusiness,editBusiness,delBusiness,showBusiness,changeStatus } from '@/api/business'
+  import { getBusinessList,addBusiness,editBusiness,delBusiness,showBusiness,changeStatus,getBuyers,setAttentionBusiness } from '@/api/business'
     export default {
         name: "CompanyForSales",
       components:{
@@ -220,6 +238,8 @@
       },
       data(){
           return{
+            role: '',
+
             listQuery: {
               page: 1,
               status: '',
@@ -233,13 +253,57 @@
             total: 1,
             pageSize: 15,
             tableData: [],
+
+            selectBuyer:false,
+            buyerList:[],
+            business_id:'',
+            selectBuyerId:'',
           }
       },
       mounted(){
         this.listQuery.page=1;
         this.getList();
+        this.role = store.getters && store.getters.role
       },
       methods:{
+        //打开选择意向buyer弹窗
+        openSelectBuyer(row){
+          let that=this;
+          this.selectBuyer=true;
+          if(row){
+            this.business_id=row.row.id;
+          }
+          getBuyers ().then(response => {
+            console.log('getBuyers',response);
+            that.buyerList=response.data;
+          }).catch(err => {
+            console.log(err);
+          })
+        },
+        // 提交到意向企业
+        AddAttention(business_id,buyer_id){
+          let that=this;
+          if(!buyer_id){
+            that.$notify.error({
+              showClose: true,
+              message: that.$t('ChooseAttentionBuyer'),
+            });
+            return;
+          }
+          setAttentionBusiness ({business_id:business_id,buyer_id:buyer_id}).then(response => {
+            console.log('setAttentionBusiness',response);
+            that.selectBuyer=false;
+            that.$notify({
+              showClose: true,
+              message: that.$t('Successful'),
+              type: 'success'
+            });
+          }).catch(err => {
+            that.selectBuyer=false;
+            console.log(err);
+          })
+        },
+
           // 排序
         sortChange(e){
           console.log(e);

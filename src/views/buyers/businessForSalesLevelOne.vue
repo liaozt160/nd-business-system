@@ -238,6 +238,13 @@
       // 提交到意向企业
       AddAttention(business_id,buyer_id){
         let that=this;
+        if(!buyer_id){
+          that.$notify.error({
+            showClose: true,
+            message: that.$t('ChooseAttentionBuyer'),
+          });
+          return;
+        }
         setAttentionBusiness ({business_id:business_id,buyer_id:buyer_id}).then(response => {
           console.log('setAttentionBusiness',response);
           that.selectBuyer=false;
