@@ -9,6 +9,14 @@ export function getBusinessList (data) {
     data
   })
 }
+// 获取筛选指定经纪人列表
+export function getBusinessbrokersList (data) {
+  return request({
+    url: '/api/business/brokers',
+    method: 'post',
+    data
+  })
+}
 // 买家中介获取待售企业列表-level one
 export function buyerGetBusinessOneList (data) {
   return request({

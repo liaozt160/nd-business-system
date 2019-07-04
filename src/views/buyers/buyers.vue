@@ -75,7 +75,7 @@
           :label="$t('fundsAvailable')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{toThousands(row.funds_available)}}</span>
+            <span>{{row.funds_available}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -93,7 +93,7 @@
           :label="$t('desiredTransactionAmount')+'($)'"
           min-width="230">
           <template slot-scope="{row}">
-            <span>{{toThousands(row.desired_transaction_amount)}}</span>
+            <span>{{row.desired_transaction_amount}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -266,10 +266,6 @@
       this.getList();
     },
     methods: {
-      clickTest(){
-        console.log('自动点击');
-      },
-
       // 弹出框关闭前
       dialogClose(done) {
         this.userEdit =  {};
@@ -384,7 +380,6 @@
         }).catch(err => {
           console.log(err);
         })
-
       },
       handleEnable(index, row) {
         console.log(index, row);

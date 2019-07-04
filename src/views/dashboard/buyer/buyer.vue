@@ -33,7 +33,7 @@
           :label="$t('table.price')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{toThousands(row.price)}}</span>
+            <span>{{row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -80,7 +80,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Price')+'：'">
           <!--标价-->
-          <span>{{ toThousands(attentionData.price) }}</span>
+          <span>{{ attentionData.price }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.EmployeeCount')+'：'">
           <!--员工人数-->

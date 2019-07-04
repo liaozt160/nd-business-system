@@ -54,7 +54,7 @@
           :label="$t('table.price')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{toThousands(row.price)}}</span>
+            <span>{{row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -102,7 +102,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Price')+'：'">
           <!--标价-->
-          <span>{{ toThousands(attentionData.price) }}</span>
+          <span>{{ attentionData.price }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.EmployeeCount')+'：'">
           <!--员工人数-->
@@ -130,15 +130,15 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.GrossIncome')+'：'">
           <!--毛利润-->
-          <span>{{ toThousands(attentionData.gross_income) }}</span>
+          <span>{{ attentionData.gross_income }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.EBITDA')+'：'">
           <!--税息折扣及摊销前利润-->
-          <span>{{ toThousands(attentionData.ebitda) }}</span>
+          <span>{{ attentionData.ebitda }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.FFandE')+'：'">
           <!--硬件资产价值-->
-          <span>{{ toThousands(attentionData.ff_e) }}</span>
+          <span>{{ attentionData.ff_e}}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Inventory')+'：'">
           <!--库存-->
@@ -146,11 +146,11 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.NetIncome')+'：'">
           <!--净利润-->
-          <span>{{ toThousands(attentionData.net_income) }}</span>
+          <span>{{ attentionData.net_income }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Lease')+'：'">
           <!--租金-->
-          <span>{{ toThousands(attentionData.lease) }}</span>
+          <span>{{ attentionData.lease }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.LeaseTerm')+'：'">
           <!--租约有效期-->
@@ -158,7 +158,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Est')+'：'">
           <!--房地产估价-->
-          <span>{{ toThousands(attentionData.value_of_real_estate) }}</span>
+          <span>{{ attentionData.value_of_real_estate }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Commission')+'：'">
           <!--佣金-->
@@ -166,7 +166,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.BuyerFinancing')+'：'">
           <!--卖家融资-->
-          <span>{{ toThousands(attentionData.buyer_financing) }}</span>
+          <span>{{ attentionData.buyer_financing }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.USBroker')+'：'">
           <!--美国中介-->

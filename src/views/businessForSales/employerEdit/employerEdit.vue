@@ -142,9 +142,8 @@
           <div class="formItem filter-item el-select--medium">
             <!--佣金-->
             <span class="formItemSpan">{{$t('employeeEdit.Commission')}}</span>
-            <el-input v-enter-number maxlength="2" placeholder="Commission" v-model="formDataEn.commission" style="width: 70%;margin-bottom: 20px;"
+            <el-input placeholder="Commission" v-model="formDataEn.commission" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
-              <template slot="append">%</template>
             </el-input>
           </div>
         </div>
@@ -472,9 +471,8 @@
           <div class="formItem filter-item el-select--medium">
             <!--佣金-->
             <span class="formItemSpan">{{$t('employeeEdit.Commission')}}</span>
-            <el-input v-enter-number maxlength="2" placeholder="佣金" v-model="formDataZh.commission" style="width: 70%;margin-bottom: 20px;"
+            <el-input placeholder="佣金" v-model="formDataZh.commission" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item">
-              <template slot="append">%</template>
             </el-input>
           </div>
         </div>

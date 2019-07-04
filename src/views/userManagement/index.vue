@@ -4,6 +4,12 @@
       <h3 style="text-align: center;">{{$t('route.userManagement')}}</h3>
     </aside>
     <div class="filter-container">
+      <el-select v-model="listQuery.role" :placeholder="$t('role')" style="width: 160px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
+        <el-option :label="$t('table.all')" value="0" />
+        <el-option :label="$t('userEdit.admin')" value="1" />
+        <el-option :label="$t('userEdit.buyerBroker')" value="2" />
+        <el-option :label="$t('userEdit.businessBroker')" value="3" />
+      </el-select>
       <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item"
                 @keyup.enter.native="handleFilter" clearable/>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -44,9 +50,6 @@
         </el-table-column>
         <el-table-column
           prop="role"
-          :filters="[{text: $t('userEdit.admin'), value: '1'}, {text: $t('userEdit.buyerBroker'), value: '2'}, {text: $t('userEdit.businessBroker'), value: '3'}]"
-          :filter-method="filterHandler"
-          filter-placement="bottom-end"
           align="center"
           :label="$t('userEdit.UserRoles')"
           min-width="150">
@@ -73,7 +76,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="250">
+          min-width="280">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>
             <el-button size="mini" style="width: 80px" type="success" plain @click="handleEnable(1,scope)" v-if="scope.row.status==2">{{$t('table.Enable')}}</el-button>
@@ -167,6 +170,7 @@
         },
 
         listQuery: {
+          role: '',
           q: '',
           page: 1,
         },

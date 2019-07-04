@@ -4,11 +4,21 @@
       <h3 style="text-align: center;">{{role==3?$t('route.myBusiness'):$t('route.businessForSales')}}</h3>
     </aside>
     <div class="filter-container">
-      <el-select v-model="listQuery.status" :placeholder="$t('table.status')" style="width: 130px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
+      <div class="filter-item el-select--medium">
+      <span style="color: #717171;font-size: 14px;">{{$t('table.status')}}</span>
+      <el-select v-model="listQuery.status" :placeholder="$t('table.status')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('table.forSale')" value="1" />
         <el-option :label="$t('table.soldOut')" value="2" />
       </el-select>
+      </div>
+      <div class="filter-item el-select--medium" v-if="businessBrokerList.length>1">
+      <span style="color: #717171;font-size: 14px;">{{$t('broker')}}</span>
+      <el-select v-model="listQuery.broker_id" :placeholder="$t('broker')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
+        <el-option :label="$t('table.all')" value="0" />
+        <el-option v-for="item in businessBrokerList" :label="item.name" :value="item.account_id" />
+      </el-select>
+      </div>
 
       <div class="filter-item el-select--medium">
         <span style="color: #717171;font-size: 14px;">{{$t('table.price')}} ($)</span>
@@ -16,14 +26,10 @@
         ~
         <el-input v-model="listQuery.price_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
       </div>
-      <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
-      <el-button  class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
-      </el-button>
-    </div>
+      <div class="filter-item el-select--medium">
+      <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
+      <el-button  class="filter-item" style="margin-bottom: 0;" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button></div>
+      <el-button class="filter-item"  style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button></div>
 
     <!--列表-->
     <div class="companyTable">
@@ -47,7 +53,7 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Price')">
                 <!--标价-->
-                <span>{{ toThousands(props.row.price) }}</span>
+                <span>{{ props.row.price }}</span>
               </el-form-item>
               <!--<el-form-item :label="$t('employeeEdit.Location')">-->
                 <!--&lt;!&ndash;地理位置&ndash;&gt;-->
@@ -75,15 +81,15 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.GrossIncome')">
                 <!--毛利润-->
-                <span>{{ toThousands(props.row.gross_income) }}</span>
+                <span>{{ props.row.gross_income }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.EBITDA')">
                 <!--税息折扣及摊销前利润-->
-                <span>{{ toThousands(props.row.ebitda) }}</span>
+                <span>{{ props.row.ebitda }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.FFandE')">
                 <!--硬件资产价值-->
-                <span>{{ toThousands(props.row.ff_e) }}</span>
+                <span>{{ props.row.ff_e }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Inventory')">
                 <!--库存-->
@@ -91,11 +97,11 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.NetIncome')">
                 <!--净利润-->
-                <span>{{ toThousands(props.row.net_income) }}</span>
+                <span>{{ props.row.net_income }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Lease')">
                 <!--租金-->
-                <span>{{ toThousands(props.row.lease) }}</span>
+                <span>{{props.row.lease }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.LeaseTerm')">
                 <!--租约有效期-->
@@ -103,7 +109,7 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Est')">
                 <!--房地产估价-->
-                <span>{{ toThousands(props.row.value_of_real_estate) }}</span>
+                <span>{{ props.row.value_of_real_estate }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Commission')">
                 <!--佣金-->
@@ -111,7 +117,7 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.BuyerFinancing')">
                 <!--卖家融资-->
-                <span>{{ toThousands(props.row.buyer_financing) }}</span>
+                <span>{{ props.row.buyer_financing }}</span>
               </el-form-item>
               <!--<el-form-item :label="$t('employeeEdit.BusinessDescription')">-->
                 <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
@@ -137,6 +143,16 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="account.name"
+          align="center"
+          :label="$t('broker')"
+          min-width="200">
+          <template slot-scope="{row}">
+            <span v-if="row.account">{{row.account.name}}</span>
+            <span v-else>{{$t('Unknown')}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="company"
           align="center"
           :label="$t('employeeEdit.companyName')"
@@ -149,7 +165,7 @@
           sortable
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{toThousands(row.price)}}</span>
+            <span>{{row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -180,7 +196,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="350">
+          min-width="450">
           <template slot-scope="scope">
             <el-button
               v-if="role!=3"
@@ -230,7 +246,7 @@
 <script>
   import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { getBusinessList,addBusiness,editBusiness,delBusiness,showBusiness,changeStatus,getBuyers,setAttentionBusiness } from '@/api/business'
+  import { getBusinessList,addBusiness,editBusiness,delBusiness,showBusiness,changeStatus,getBuyers,setAttentionBusiness,getBusinessbrokersList } from '@/api/business'
     export default {
         name: "CompanyForSales",
       components:{
@@ -241,6 +257,7 @@
             role: '',
 
             listQuery: {
+              broker_id: '',
               page: 1,
               status: '',
               price_from:'',
@@ -258,11 +275,13 @@
             buyerList:[],
             business_id:'',
             selectBuyerId:'',
+            businessBrokerList:[],
           }
       },
       mounted(){
         this.listQuery.page=1;
         this.getList();
+        this.getBrokersList();
         this.role = store.getters && store.getters.role
       },
       methods:{
@@ -334,6 +353,16 @@
           }).catch(err => {
             console.log(err);
             that.listLoading = false
+          })
+        },
+        // 获取筛选指定经纪人列表
+        getBrokersList(data) {
+          let that=this;
+          getBusinessbrokersList (data).then(response => {
+            console.log('getBusinessbrokersList',response);
+            that.businessBrokerList=response.data;
+          }).catch(err => {
+            console.log(err);
           })
         },
 

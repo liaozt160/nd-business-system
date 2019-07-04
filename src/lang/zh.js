@@ -32,7 +32,7 @@ export default {
   recommender:'推荐人',//推荐人
   myRecommendation:'我的推荐',//我的推荐
   ChooseAttentionBuyer:'选择当前有意向的买家',//选择当前有意向的买家
-  AttentionBuyerToViewInformation:'分配当前买家中介可查看企业信息',//分配当前买家中介可查看企业信息
+  AttentionBuyerToViewInformation:'分配当前买家经纪人可查看企业信息',//分配当前买家经纪人可查看企业信息
   ViewableSection:'可查看部分',//可查看部分
   ViewableAll:'可查看全部',//可查看全部
   allBusiness:'所有企业',//所有企业
@@ -50,6 +50,26 @@ export default {
   passwordRepeat:'两次密码输入不一致',//两次密码输入不一致
   changeSuccess:'修改成功！',//修改成功！
 
+  selectBuyerBroker:'请选择要添加到该网络的卖家经纪人',//请选择要添加到该网络的卖家经纪人
+  all_Business_brokers:'所有卖家经纪人',//所有卖家经纪人
+  selected_Business_brokers:'已选择的卖家经纪人',//已选择的卖家经纪人
+  netName:'网络名称',//网络名称
+  addNet:'添加网络',//添加网络
+  editNet:'编辑网络',//编辑网络
+  manager:'负责人',//负责人
+  member:'成员',//成员
+  broker:'所属经纪人',//所属经纪人
+  setAsManager:'设置为负责人',//设置为负责人
+  setAsManagerMsg:'设置为负责人将可以查看其他成员的企业信息，确定把该经纪人设置为负责人吗？',//设置为负责人将可以查看其他成员的企业信息，确定把该经纪人设置为负责人吗？
+  setAsMember:'设置为普通成员',//设置为普通成员
+  setAsMemberMsg:'设置为普通成员将不能查看其他成员的企业信息，确定要把该经纪人设置为普通成员吗？',//设置为普通成员将不能查看其他成员的企业信息，确定要把该经纪人设置为普通成员吗？
+  role:'角色',//角色
+  netMembersList:'网络成员列表',//网络成员列表
+  setAsManagerText:'负责人可以查看其他成员的企业信息',//负责人可以查看其他成员的企业信息
+  setAsMemberText:'普通成员不能查看其他成员的企业信息',//普通成员不能查看其他成员的企业信息
+  Unknown:'未知',//未知
+
+
   route: {
     dashboard: '首页',
     businessForSales: '待售企业',//待售企业
@@ -64,6 +84,7 @@ export default {
     buyerOrder: '买家订单',//买家订单
     orderManagement: '订单管理',//订单管理
     myBusiness: '我的企业',//我的企业
+    businessBrokerNet: '商业经纪人网络',//商业经纪人网络
   },
   panelGroup:{
     Buyer:'买家',//买家
@@ -186,8 +207,8 @@ export default {
     permission: '权限角色',//权限角色
     UserRoles: '用户角色',//用户角色
     admin : '管理员',//管理员
-    buyerBroker : '买家中介',//买家中介
-    businessBroker : '卖家中介',//卖家中介
+    buyerBroker : '买家经纪人',//买家经纪人
+    businessBroker : '卖家经纪人',//卖家经纪人
     email: '邮箱',//邮箱
     name: '姓名',//姓名
     phone: '手机',//手机
@@ -224,8 +245,8 @@ export default {
     Commission:'佣金',//佣金
     BuyerFinancing:'卖家融资',//卖家融资
     BusinessDescription:'生意介绍信息',//生意介绍信息
-    USBroker:'美国中介',//美国中介
-    USBrokerContactInfo:'美国中介联系方式',//美国中介联系方式
+    USBroker:'美国经纪人',//美国经纪人
+    USBrokerContactInfo:'美国经纪人联系方式',//美国经纪人联系方式
     ListingDate:'待售开始日期',//待售开始日期
     ReasonForSelling:'出售原因',//出售原因
     business_description:'商业描述',//商业描述

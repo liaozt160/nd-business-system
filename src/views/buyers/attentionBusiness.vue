@@ -58,7 +58,7 @@
           :label="$t('table.price')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{toThousands(row.price)}}</span>
+            <span>{{row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column

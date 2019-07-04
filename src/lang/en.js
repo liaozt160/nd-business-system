@@ -26,12 +26,12 @@ export default {
   detail:'Detail',//详情
   Successful:'Successful!',//成功！
 
-  AddAttention:'Add Recommended',//添加到推荐企业
+  AddAttention:'Add Recommendation',//添加到推荐企业
   recommender:'Recommender',//推荐人
   myRecommendation:'My Recommendation',//我的推荐
   AttentionBuyer:'Interested Buyer',//有意向买家
   ChooseAttentionBuyer:'Choose the current interested buyer',//选择当前有意向的买家
-  AttentionBuyerToViewInformation:'Interested current buyer intermediaries to view business information',//分配当前买家中介可查看企业信息
+  AttentionBuyerToViewInformation:'Interested current buyer intermediaries to view business information',//分配当前买家经纪人可查看企业信息
   ViewableSection:'Viewable section',//可查看部分
   ViewableAll:'Viewable all',//可查看全部
   allBusiness:'All Business',//所有企业
@@ -49,6 +49,25 @@ export default {
   changeSuccess:'Successful modification!',//修改成功！
 
 
+  selectBuyerBroker:'Please select the business broker to add to the net',//请选择要添加到该网络的卖家经纪人
+  all_Business_brokers:'All business Brokers',//所有卖家经纪人
+  selected_Business_brokers:'Selected',//已选择的卖家经纪人
+  netName:'Net Name',//网络名称
+  addNet:'Add Net',//添加网络
+  editNet:'Edit Net',//编辑网络
+  manager:'Manager',//负责人
+  member:'Member',//成员
+  broker:'Broker',//所属经纪人
+  setAsManager:'Set As Manager',//设置为负责人
+  setAsManagerMsg:'Setting as manager will allow you to view the business information of other members, Are you sure that the broker will be set up as a manager?',//设置为负责人将可以查看其他成员的企业信息，确定把该经纪人设置为负责人吗？
+  setAsMember:'Set As Member',//设置为普通成员
+  setAsMemberMsg:'Setting as member will not be able to view the enterprise information of other members, Are you sure that the broker will be set up as a member?',//设置为普通成员将不能查看其他成员的企业信息，确定要把该经纪人设置为普通成员吗？
+  role:'Role',//角色
+  netMembersList:'List Of Net Members',//网络成员列表
+  setAsManagerText:'Manager can view the business information of other members',//负责人可以查看其他成员的企业信息
+  setAsMemberText:'Member cannot view the business information of other members',//普通成员不能查看其他成员的企业信息
+  Unknown:'Unknown',//未知
+
 
 
   route: {
@@ -65,6 +84,7 @@ export default {
     buyerOrder: 'Buyer Order',//买家订单
     orderManagement: 'Order Management',//订单管理
     myBusiness: 'My Business',//我的企业
+    businessBrokerNet: 'Business Broker Net',//商业经纪人网络
   },
   panelGroup:{
     Buyer:'Buyer',//买家
@@ -187,8 +207,8 @@ export default {
     permission: 'permission',//权限角色
     UserRoles: 'User Roles',//用户角色
     admin : 'Admin',//管理员
-    buyerBroker : 'Buyer Broker',//买家中介
-    businessBroker : 'Business Broker',//卖家中介
+    buyerBroker : 'Buyer Broker',//买家经纪人
+    businessBroker : 'Business Broker',//卖家经纪人
     email: 'Email',//邮箱
     name: 'Name',//姓名
     phone: 'Phone',//手机
@@ -225,8 +245,8 @@ export default {
     Commission:'Commission',//佣金
     BuyerFinancing:'Buyer Financing',//卖家融资
     BusinessDescription:'Business Description',//生意介绍信息
-    USBroker:'US Broker',//美国中介
-    USBrokerContactInfo:'US Broker Contact Info',//美国中介联系方式
+    USBroker:'US Broker',//美国经纪人
+    USBrokerContactInfo:'US Broker Contact Info',//美国经纪人联系方式
     ListingDate:'Listing Date',//待售开始日期
     ReasonForSelling:'Reason for Selling',//出售原因
     business_description:'BUSINESS DESCRIPTIO',//商业描述
