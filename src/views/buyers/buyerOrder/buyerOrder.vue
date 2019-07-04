@@ -154,6 +154,7 @@
           <p style="text-align: center;">{{$t('order.selectBusinessList')}}</p>
           <div style="text-align: center;">
             <el-transfer
+              class="transfer"
               style="text-align: left; display: inline-block;margin-bottom: 30px;"
               v-model="orderEdit.business_ids"
               filterable

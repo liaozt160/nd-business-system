@@ -21,4 +21,7 @@ export default {
     line-height: 20px!important;
     margin: 8px 0!important;
   }
+  .transfer .el-transfer-panel,.netTransfer .el-transfer-panel{
+    width: 277px;
+  }
 </style>

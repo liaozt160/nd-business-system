@@ -90,7 +90,6 @@
             <el-input type="textarea" :autosize="{ minRows: 4}" :placeholder="$t('order.remarks')" v-model="netData.remark"></el-input>
           </el-form-item>
         </div>
-
       </el-form>
 
       <div slot="footer" class="dialog-footer">
