@@ -67,6 +67,7 @@ export default {
   setAsManagerText:'Manager can view the business information of other members',//负责人可以查看其他成员的企业信息
   setAsMemberText:'Member cannot view the business information of other members',//普通成员不能查看其他成员的企业信息
   Unknown:'Unknown',//未知
+  netDelMsg:'Clear all members of the net before deleting',//删除前请清空网络内的所以成员
 
 
 

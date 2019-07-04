@@ -353,10 +353,13 @@
       // 穿梭框获取可选企业经纪人列表
       getBusinessBrokerList(data){
         let that=this;
+        this.editBrokerNetLoading=true;
         getBrokerList(data).then(response => {
           console.log('getBrokerList',response);
           that.business_brokers=response.data;
+          that.editBrokerNetLoading=false;
         }).catch(err => {
+          that.editBrokerNetLoading=false;
           console.log(err);
         })
       },

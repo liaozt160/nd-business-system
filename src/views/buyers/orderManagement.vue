@@ -43,7 +43,7 @@
           prop="paid"
           align="center"
           :label="$t('table.PaymentStatus')"
-          min-width="120">
+          min-width="140">
           <!--支付状态-->
           <template slot-scope="scope">
             <el-tag type="success" style="width: 60px" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>

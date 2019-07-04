@@ -68,6 +68,7 @@ export default {
   setAsManagerText:'负责人可以查看其他成员的企业信息',//负责人可以查看其他成员的企业信息
   setAsMemberText:'普通成员不能查看其他成员的企业信息',//普通成员不能查看其他成员的企业信息
   Unknown:'未知',//未知
+  netDelMsg:'删除前请清空网络内的所以成员',//删除前请清空网络内的所以成员
 
 
   route: {
