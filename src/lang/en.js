@@ -194,7 +194,7 @@ export default {
     reject:'Reject',//拒绝
     notSubmitted:'Not Submitted',//未提交
     submitOrder:'Submit Order',//提交订单
-    cancelOrder:'Cancel Order',//取消订单
+    cancelOrder:'Cancel Submit',//取消提交
     viewOrder:'View Order',//查看订单
     remarks:'Remarks',//备注
     creationTime:'Creation Time',//创建时间

@@ -193,7 +193,7 @@ export default {
     reject:'拒绝',//拒绝
     notSubmitted:'未提交',//未提交
     submitOrder:'提交订单',//提交订单
-    cancelOrder:'取消订单',//取消订单
+    cancelOrder:'取消提交',//取消提交
     viewOrder:'查看订单',//查看订单
     remarks:'备注',//备注
     creationTime:'创建时间',//创建时间
