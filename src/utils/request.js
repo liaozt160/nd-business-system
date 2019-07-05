@@ -6,9 +6,17 @@ import qs from 'qs'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // create an axios instance
+let serverUrl = '';
+if (window.location.origin.indexOf('192.168.9.26:8090') != -1) {
+  serverUrl = 'https://dev.newdreamservices.com';
+} else if (window.location.origin.indexOf('dev.newdreamservices.com') != -1) {
+  serverUrl = 'https://dev.newdreamservices.com';
+} else if (window.location.origin.indexOf('business.newdreamservices.com') != -1) {
+  serverUrl = 'https://business.newdreamservices.com';
+}
 const service = axios.create({
-  // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.ylbservices.com', // url = base url + request url
-  baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.newdreamservices.com', // url = base url + request url
+  // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.newdreamservices.com', // url = base url + request url
+  baseURL: process.env.NODE_ENV === 'development'?'api/':serverUrl, // url = base url + request url
   timeout: 30000 // request timeout
 })
 // request interceptor

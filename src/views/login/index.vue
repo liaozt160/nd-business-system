@@ -10,15 +10,15 @@
         <lang-select class="set-language"/>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="email">
         <span class="svg-container">
           <svg-icon icon-class="user"/>
         </span>
         <el-input
-          ref="username"
+          ref="email"
           v-model="loginForm.email"
           :placeholder="$t('login.username')"
-          name="username"
+          name="email"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -64,20 +64,12 @@
 </template>
 
 <script>
-  import {validUsername} from '@/utils/validate'
   import LangSelect from '@/components/LangSelect'
 
   export default {
     name: 'Login',
     components: {LangSelect},
     data() {
-      const validateUsername = (rule, value, callback) => {
-        if (!validUsername(value)) {
-          callback(new Error(this.$t('login.nameError')))
-        } else {
-          callback()
-        }
-      }
       const validatePassword = (rule, value, callback) => {
         if (value.length < 6) {
           callback(new Error(this.$t('login.pwdError')))
@@ -86,13 +78,13 @@
         }
       }
       return {
-        locationOrigin:location.origin,
+        locationOrigin:window.location.origin,
         loginForm: {
           email: '',
           password: ''
         },
         loginRules: {
-          email: [{required: true, trigger: 'blur', validator: validateUsername}],
+          email: [{ required: true, message: this.$t('empty')},{ type: 'email', message: this.$t('userEdit.inputEmail')}],
           password: [{required: true, trigger: 'blur', validator: validatePassword}]
         },
         passwordType: 'password',
@@ -115,19 +107,12 @@
         immediate: true
       }
     },
-    created() {
-      // window.addEventListener('storage', this.afterQRScan)
-    },
     mounted() {
-      console.log(123123,location.origin.indexOf('dev'))
       if (this.loginForm.email === '') {
-        this.$refs.username.focus()
+        this.$refs.email.focus()
       } else if (this.loginForm.password === '') {
         this.$refs.password.focus()
       }
-    },
-    destroyed() {
-      // window.removeEventListener('storage', this.afterQRScan)
     },
     methods: {
       checkCapslock({shiftKey, key} = {}) {
@@ -159,13 +144,6 @@
             this.$store.dispatch('user/login', this.loginForm).then((res) => {
                // console.log(123123,res);
               this.$router.push({path: '/', query: this.otherQuery});
-               // if(res.role==1){
-               //   this.$router.push({path: '/', query: this.otherQuery});
-               // }else if(res.role==2){
-               //   this.$router.push({path: '/buyers/buyers'});
-               // }else if(res.role==3){
-               //   this.$router.push({path: '/businessForSales/index'});
-               // }
                 this.loading = false
               }).catch(() => {
                 this.loading = false
