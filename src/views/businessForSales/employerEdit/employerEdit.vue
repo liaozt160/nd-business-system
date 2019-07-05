@@ -654,7 +654,7 @@
     </el-tabs>
     <!--雇员编辑弹窗-->
     <el-dialog :title="EmployeeEdit.position?$t('employeeEdit.emploteesEdit'):$t('employeeEdit.emploteesAdd')"
-               :visible.sync="dialogFormVisible" width="700px" :before-close="dialogClose">
+               :visible.sync="dialogFormVisible" width="700px" :before-close="dialogClose" :close-on-click-modal="false">
       <el-form ref="dataForm" :model="EmployeeEdit" label-position="left" label-width="150px"
                style="width: 400px; margin-left:50px;">
         <el-form-item :label="$t('employeeEdit.position')">

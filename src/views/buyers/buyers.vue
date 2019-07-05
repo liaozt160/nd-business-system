@@ -114,7 +114,7 @@
 
     <!--买家编辑弹窗-->
     <el-dialog :title="userEdit.id?$t('buyers.buyersEdit'):$t('buyers.addBuyers')" :visible.sync="dialogFormVisible" v-if='dialogFormVisible'
-               width="920px" :before-close="dialogClose" style="padding-bottom: 50px" center>
+               width="920px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
 
       <el-form ref="dataForm" :model="userEdit" :rules="rules" label-position="right" label-width="120px" label-lineHight="30px">
         <div class="formRow">

@@ -68,7 +68,7 @@
       </el-table>
     </div>
     <!--// 打开企业详情弹窗-->
-    <el-dialog :title="$t('detail')" :visible.sync="dialogView" width="800px" center>
+    <el-dialog :title="$t('detail')" :visible.sync="dialogView" width="800px" center :close-on-click-modal="false">
       <el-form label-position="left" inline  class="demo-table-expand"  v-loading="ViewLoading">
         <el-form-item :label="$t('employeeEdit.title')+'：'">
           <!--标题-->
@@ -114,7 +114,7 @@
     </el-dialog>
 
     <!--// 选择买家弹窗-->
-    <el-dialog :title="$t('ChooseAttentionBuyer')" :visible.sync="selectBuyer" width="500px" center>
+    <el-dialog :title="$t('ChooseAttentionBuyer')" :visible.sync="selectBuyer" width="500px" center :close-on-click-modal="false">
       <el-select v-model="selectBuyerId" clearable style="width: 100%" class="filter-item">
         <el-option v-for="item in buyerList" :label="item.label" :value="item.key" />
       </el-select>

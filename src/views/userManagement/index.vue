@@ -90,7 +90,7 @@
 
     <!--用户编辑弹窗-->
     <el-dialog :title="userEdit.id?$t('userEdit.userEdit'):$t('userEdit.addUser')" :visible.sync="dialogFormVisible" v-if='dialogFormVisible'
-               width="650px" :before-close="dialogClose">
+               width="650px" :before-close="dialogClose" :close-on-click-modal="false">
 
       <el-form ref="dataForm" :model="userEdit" :rules="userEditRules" label-position="left" label-width="110px" style="width: 400px; margin-left:40px;"  class="demo-ruleForm">
         <el-form-item :label="$t('table.name')" prop="name" :rules="[ { required: true, message: $t('empty')}]">
@@ -113,8 +113,8 @@
         </el-form-item>
         <el-form-item :label="$t('login.password')">
           <el-form-item style="display: flex;justify-content: space-between;width:410px;" prop="password">
-            <el-input v-model="userEdit.password" v-if="userEdit.id" placeholder="******" style="width:410px;margin-right: 10px;" class="filter-item"/>
-            <el-input v-model="userEdit.password" v-else :placeholder="$t('login.password')" style="width:222px;margin-right: 10px;" class="filter-item"/>
+            <el-input v-model="userEdit.password" type="password" maxlength="15" v-if="userEdit.id" placeholder="******" style="width:410px;margin-right: 10px;" class="filter-item"/>
+            <el-input v-model="userEdit.password" type="password" maxlength="15" v-else :placeholder="$t('login.password')" style="width:222px;margin-right: 10px;" class="filter-item"/>
             <el-tag style="height: 36px;line-height: 36px;" v-if="!userEdit.id" type="primary">{{ $t('userEdit.DefaultPassword') }}： nd6808</el-tag>
           </el-form-item>
         </el-form-item>
@@ -141,7 +141,7 @@
       Pagination
     },
     data() {
-      let passwordReg = new RegExp("^[a-zA-Z0-9]{6,15}$");
+      let passwordReg = new RegExp("^([a-zA-Z0-9]+|[~!@#$%^&*()_+\-=]+){6,15}$");
       let validatePassword = (rule, value, callback) => {
         if (value === '') {
           callback();
@@ -166,7 +166,7 @@
           access_level: '',
           role: 1,
           status: '1',
-          remarks: '1',
+          remarks: '',
         },
 
         listQuery: {
@@ -203,10 +203,10 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             that.userEdit.access_level=that.userEdit.role;
-            if(!that.userEdit.password){
-              delete that.userEdit.password;
-            }
             if(id){ //修改
+              if(!that.userEdit.password){
+                delete that.userEdit.password;
+              }
               editAccount (that.userEdit).then(response => {
                 console.log('editAccount',response);
                 that.dialogFormVisible=false;
@@ -251,7 +251,16 @@
       },
       // 新增用户打开弹窗
       handleCreate() {
-        this.userEdit.password= 'nd6808';
+        this.userEdit= {
+        email: '',
+          name: '',
+          phone: '',
+          password: 'nd6808',
+          access_level: '',
+          role: 1,
+          status: '1',
+          remarks: '',
+      };
         this.dialogFormVisible=true;
 
       },

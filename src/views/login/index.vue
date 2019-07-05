@@ -39,6 +39,7 @@
             :placeholder="$t('login.password')"
             name="password"
             tabindex="2"
+            maxlength="15"
             auto-complete="on"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
@@ -70,9 +71,10 @@
     name: 'Login',
     components: {LangSelect},
     data() {
+      let passwordReg = new RegExp("^([a-zA-Z0-9]+|[~!@#$%^&*()_+\-=]+){6,15}$");
       const validatePassword = (rule, value, callback) => {
-        if (value.length < 6) {
-          callback(new Error(this.$t('login.pwdError')))
+        if(!passwordReg.test(value)){
+          callback(new Error(this.$t('login.pwdError')));
         } else {
           callback()
         }

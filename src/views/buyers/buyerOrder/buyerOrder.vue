@@ -147,7 +147,7 @@
     </div>
 
     <!--订单编辑弹窗-->
-    <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"  width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center>
+    <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"  width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
       <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="120px" label-lineHight="20px"  v-loading="assignedLoading">
         <div>
           <!--请选择买家想要购买的企业信息-->
@@ -194,7 +194,7 @@
 
     </el-dialog>
     <!--查看订单弹窗-->
-    <el-dialog :title="$t('order.viewOrder')" :visible.sync="dialogviewOrder" width="1000px" style="padding-bottom: 50px" center>
+    <el-dialog :title="$t('order.viewOrder')" :visible.sync="dialogviewOrder" width="1000px" style="padding-bottom: 50px" center :close-on-click-modal="false">
       <div style="padding-bottom: 100px" v-loading="viewOrderLoading">
         <el-form label-position="left" inline  class="demo-table-expand">
           <el-form-item :label="$t('buyers.Name')+'：'">

@@ -56,12 +56,11 @@
 
 
     <!--用户信息编辑弹窗-->
-    <el-dialog :title="$t('userEdit.userEdit')" :visible.sync="dialogFormVisible1" width="650px" center>
+    <el-dialog :title="$t('userEdit.userEdit')" :visible.sync="dialogFormVisible1" width="650px" center :close-on-click-modal="false">
 
       <el-form ref="dataForm" :model="userEdit" label-position="left" label-width="110px" style="width: 550px; margin-left:50px;"  class="demo-ruleForm">
         <el-form-item :label="$t('table.name')" prop="name" :rules="[ { required: true, message: $t('empty')}]">
-          <el-input v-model="userEdit.name" :placeholder="$t('table.name')" style="width:365px;"
-                    class="filter-item"/>
+          <el-input v-model="userEdit.name" :placeholder="$t('table.name')" style="width:365px;" class="filter-item"/>
         </el-form-item>
         <el-form-item :label="$t('table.email')" prop="email" :rules="[{ required: true, message: $t('empty')},{ type: 'email', message: $t('userEdit.inputEmail')}]">
           <el-input v-model="userEdit.email" :placeholder="$t('table.email')" style="width:365px;"
@@ -72,7 +71,7 @@
         </el-form-item>
         <el-form-item :label="$t('userEdit.password')" prop="password">
           <el-input disabled :placeholder="$t('table.phone')" style="width:200px;" class="filter-item" value="******"/>
-          <el-button style="" size="medium" type="primary" @click="passwordBox = true">{{$t('changePassword')}}</el-button>
+          <el-button style="" size="medium" type="primary" @click="passwordBox = true;passwordEdit={old_password: '',new_password: '', repeat_password:'', }">{{$t('changePassword')}}</el-button>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -84,17 +83,17 @@
 
     </el-dialog>
     <!--修改用户密码弹窗-->
-    <el-dialog :title="$t('changePassword')" :visible.sync="passwordBox" width="550px" center>
+    <el-dialog :title="$t('changePassword')" :visible.sync="passwordBox" width="550px" center :close-on-click-modal="false">
 
       <el-form ref="passwordForm" :model="passwordEdit" :rules="passwordRules" label-position="left" label-width="150px" style="width: 550px; margin-left:50px;"  class="demo-ruleForm">
         <el-form-item :label="$t('old_password')" prop="old_password">
-          <el-input v-model="passwordEdit.old_password" :placeholder="$t('old_password')" style="width:250px;" class="filter-item"/>
+          <el-input type="password" maxlength="15" v-model="passwordEdit.old_password" :placeholder="$t('old_password')" style="width:250px;" class="filter-item"/>
         </el-form-item>
         <el-form-item :label="$t('new_password')" prop="new_password">
-          <el-input v-model="passwordEdit.new_password" :placeholder="$t('new_password')" style="width:250px;" class="filter-item"/>
+          <el-input type="password" maxlength="15" v-model="passwordEdit.new_password" :placeholder="$t('new_password')" style="width:250px;" class="filter-item"/>
         </el-form-item>
         <el-form-item :label="$t('repeat_password')" prop="repeat_password" >
-          <el-input v-model.number="passwordEdit.repeat_password" :placeholder="$t('repeat_password')" style="width:250px;" class="filter-item"/>
+          <el-input type="password" maxlength="15" v-model.number="passwordEdit.repeat_password" :placeholder="$t('repeat_password')" style="width:250px;" class="filter-item"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -126,11 +125,11 @@
       LangSelect
     },
     data(){
-      let passwordReg = new RegExp("^[a-zA-Z0-9]{6,15}$");
-      var validateOld_password = (rule, value, callback) => {
+      let passwordReg = new RegExp("^([a-zA-Z0-9]+|[~!@#$%^&*()_+\-=]+){6,15}$");
+      let validateOld_password = (rule, value, callback) => {
         if (value === '') {
           callback(new Error(this.$t('empty')));
-        } else if(!passwordReg.test(value)){
+        }else if(!passwordReg.test(value)){
           callback(new Error(this.$t('passwordRule')));
         }
         callback();
