@@ -80,7 +80,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="250">
+          min-width="260">
           <template slot-scope="scope">
             <el-button
               size="mini"
