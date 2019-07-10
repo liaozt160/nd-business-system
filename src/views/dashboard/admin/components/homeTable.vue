@@ -8,7 +8,7 @@
       style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
+          <el-form label-position="left" inline class="demo-table-expand" label-width="200px">
             <el-form-item :label="$t('employeeEdit.companyName')">
               <!--企业名称-->
               <span>{{ props.row.company }}</span>
@@ -19,7 +19,7 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Price')">
               <!--标价-->
-              <span>{{ props.row.price }}</span>
+              <span>$ {{ toThousands(props.row.price) }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Location')">
               <!--地理位置-->
@@ -47,7 +47,10 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.GrossIncome')">
               <!--毛利润-->
-              <span>{{ props.row.gross_income }}</span>
+              <span>
+                $ {{ toThousands(props.row.gross_income) }}
+                / {{props.row.gross_income_unit==1?$t('week'):props.row.gross_income_unit==2?$t('Month'):props.row.gross_income_unit==3?$t('Quarter'):props.row.gross_income_unit==4?$t('Year'):''}}
+              </span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.EBITDA')">
               <!--税息折扣及摊销前利润-->
@@ -63,11 +66,17 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.NetIncome')">
               <!--净利润-->
-              <span>{{ props.row.net_income }}</span>
+              <span>
+                $ {{ toThousands(props.row.net_income) }}
+                / {{props.row.net_income_unit==1?$t('week'):props.row.net_income_unit==2?$t('Month'):props.row.net_income_unit==3?$t('Quarter'):props.row.net_income_unit==4?$t('Year'):''}}
+              </span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.Lease')">
               <!--租金-->
-              <span>{{ props.row.lease }}</span>
+              <span>
+                $ {{ toThousands(props.row.lease) }}
+                / {{props.row.lease_unit==1?$t('week'):props.row.lease_unit==2?$t('Month'):props.row.lease_unit==3?$t('Quarter'):props.row.lease_unit==4?$t('Year'):''}}
+              </span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.LeaseTerm')">
               <!--租约有效期-->
@@ -77,9 +86,9 @@
               <!--房地产估价-->
               <span>{{ props.row.value_of_real_estate }}</span>
             </el-form-item>
-            <el-form-item :label="$t('employeeEdit.Commission')">
-              <!--佣金-->
-              <span>{{ props.row.commission }} %</span>
+            <el-form-item :label="$t('employeeEdit.ServiceFee')">
+              <!--服务费-->
+              <span>{{ props.row.commission }} </span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.BuyerFinancing')">
               <!--卖家融资-->
@@ -109,6 +118,16 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="account.name"
+        align="center"
+        :label="$t('broker')"
+        min-width="200">
+        <template slot-scope="{row}">
+          <span v-if="row.account">{{row.account.name}}</span>
+          <span v-else>{{$t('Unknown')}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="company"
         align="center"
         :label="$t('employeeEdit.companyName')"
@@ -120,7 +139,7 @@
         :label="$t('table.price')+'($)'"
         min-width="150">
         <template slot-scope="{row}">
-          <span>{{row.price}}</span>
+          <span>{{toThousands(row.price)}}</span>
         </template>
       </el-table-column>
 
@@ -146,35 +165,35 @@
         :label="$t('table.entryTime')"
         min-width="160">
       </el-table-column>
-      <el-table-column
-        prop="address"
-        align="center"
-        :label="$t('table.operate')"
-        fixed="right"
-        min-width="300">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}
-          </el-button>
-          <el-button
-            size="mini"
-            type="info"
-            @click="handleChangeStatus(scope)" v-if="scope.row.status==1">{{$t('table.soldOut')}}
-          </el-button>
-          <el-button
-            size="mini"
-            type="primary"
-            @click="handleChangeStatus(scope)" v-else>{{$t('table.forSale')}}
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}
-          </el-button>
-        </template>
-      </el-table-column>
+      <!--<el-table-column-->
+        <!--prop="address"-->
+        <!--align="center"-->
+        <!--:label="$t('table.operate')"-->
+        <!--fixed="right"-->
+        <!--min-width="300">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-button-->
+            <!--size="mini"-->
+            <!--type="primary"-->
+            <!--@click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}-->
+          <!--</el-button>-->
+          <!--<el-button-->
+            <!--size="mini"-->
+            <!--type="info"-->
+            <!--@click="handleChangeStatus(scope)" v-if="scope.row.status==1">{{$t('table.soldOut')}}-->
+          <!--</el-button>-->
+          <!--<el-button-->
+            <!--size="mini"-->
+            <!--type="primary"-->
+            <!--@click="handleChangeStatus(scope)" v-else>{{$t('table.forSale')}}-->
+          <!--</el-button>-->
+          <!--<el-button-->
+            <!--size="mini"-->
+            <!--type="danger"-->
+            <!--@click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}-->
+          <!--</el-button>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
     </el-table>
   </div>
 </template>

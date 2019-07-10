@@ -27,7 +27,7 @@
           {{ $t('table.search') }}
         </el-button>
       </div>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit"
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
                  @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>
@@ -116,7 +116,7 @@
     <el-dialog :title="userEdit.id?$t('buyers.buyersEdit'):$t('buyers.addBuyers')" :visible.sync="dialogFormVisible" v-if='dialogFormVisible'
                width="920px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
 
-      <el-form ref="dataForm" :model="userEdit" :rules="rules" label-position="right" label-width="120px" label-lineHight="30px">
+      <el-form ref="dataForm" :model="userEdit" :rules="rules" label-position="right" label-width="130px" label-lineHight="30px" v-loading="userEditLoading">
         <div class="formRow">
           <!--买家姓名-->
           <el-form-item :label="$t('buyers.Name')" prop="buyer">
@@ -224,6 +224,7 @@
         dialogFormVisible: false,
         AssignVisible: false,
         // dialogView: false,
+        userEditLoading:false,
         userEdit: {
           id: '',
           buyer: '',
@@ -262,7 +263,7 @@
       }
     },
     mounted(){
-      this.role = store.getters && store.getters.role
+      this.role = store.getters && store.getters.role;
       this.getList();
     },
     methods: {
@@ -373,11 +374,14 @@
         let that=this;
         console.log(index, row);
         this.dialogFormVisible=true;
+        this.userEditLoading=true;
         showBuyer (row.row.id).then(response => {
+          that.userEditLoading=false;
           console.log('showBuyer',response);
           that.userEdit=response.data;
           that.userEdit.phone=parseInt(this.userEdit.phone);
         }).catch(err => {
+          that.userEditLoading=false;
           console.log(err);
         })
       },

@@ -17,6 +17,14 @@ export function getBusinessbrokersList (data) {
     data
   })
 }
+// 获取筛选指定经纪人列表
+export function changeBusinessbrokerSave (data) {
+  return request({
+    url: '/api/account/business/owner',
+    method: 'post',
+    data
+  })
+}
 // 买家中介获取待售企业列表-level one
 export function buyerGetBusinessOneList (data) {
   return request({

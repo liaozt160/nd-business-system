@@ -48,6 +48,15 @@ export default {
   passwordRepeat:'The password entered twice is different',//两次密码输入不一致
   changeSuccess:'Successful modification!',//修改成功！
 
+  pleaseSaveBefore:'Please save before you operate!',//请先保存后再操作！
+  pleaseImproveBusiness:'Please improve business information first!',//请先完善企业信息！
+  select:'Select',//请选择
+  unit:'Unit',//单位
+  week:'Week',//周
+  Month:'Month',//月
+  Quarter:'Quarter',//季度
+  Year:'Year',//年
+
 
   selectBuyerBroker:'Please select the business broker to add to the net',//请选择要添加到该网络的卖家经纪人
   all_Business_brokers:'All business Brokers',//所有卖家经纪人
@@ -76,6 +85,7 @@ export default {
     businessForSales: 'Business For Sales',//待售企业
     userManagement: 'User Management',//用户管理
     employerEdit: 'Business Edit',//企业编辑
+    AddBusiness: 'Add Business',//添加企业
     buyers: 'Buyers',//买家
     buyersManagement: 'Buyers Management',//买家管理
     attentionBusiness: 'Recommended Business',//推荐企业
@@ -134,6 +144,8 @@ export default {
     forSale: 'For Sale',//待售
     soldOut: 'Sold Out',//已售
     title: 'Title',
+    changeBroker: 'Change Broker',//更改经纪人
+    changeBrokerText: 'Choose to change the broker',//选择更改经纪人
 
     index: 'Index',//序号
     account: 'Account',//账号
@@ -243,14 +255,14 @@ export default {
     Lease:'Lease',//租金
     LeaseTerm:'Lease Term',//租约有效期
     Est:'Est. Value of Real Estate',//房地产估价
-    Commission:'Commission',//佣金
+    ServiceFee:'Service Fee',//服务费
     BuyerFinancing:'Buyer Financing',//卖家融资
     BusinessDescription:'Business Description',//生意介绍信息
     USBroker:'US Broker',//美国经纪人
     USBrokerContactInfo:'US Broker Contact Info',//美国经纪人联系方式
     ListingDate:'Listing Date',//待售开始日期
     ReasonForSelling:'Reason for Selling',//出售原因
-    business_description:'BUSINESS DESCRIPTIO',//商业描述
+    business_description:'BUSINESS DESCRIPTION',//商业描述
     financial_performance:'FINANCIAL PERFORMANCE',//财务绩效
     business_assets:'BUSINESS ASSETS',//商业资产
 

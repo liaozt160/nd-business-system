@@ -56,7 +56,7 @@
           :label="$t('order.orderAmount')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{row.pay_amount}}</span>
+            <span>{{toThousands(row.pay_amount)}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -230,7 +230,7 @@
           style="width: 100%">
           <el-table-column type="expand">
             <template slot-scope="props">
-              <el-form label-position="left" inline class="demo-table-expand">
+              <el-form label-position="left" inline class="demo-table-expand" label-width="200px">
                 <el-form-item :label="$t('employeeEdit.companyName')">
                   <!--企业名称-->
                   <span>{{ props.row.company }}</span>
@@ -245,7 +245,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.Price')">
                   <!--标价-->
-                  <span>{{props.row.price }}</span>
+                  <span>$ $ {{ toThousands(props.row.price) }}</span>
                 </el-form-item>
                 <!--<el-form-item :label="$t('employeeEdit.Location')">-->
                 <!--&lt;!&ndash;地理位置&ndash;&gt;-->
@@ -273,7 +273,10 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.GrossIncome')">
                   <!--毛利润-->
-                  <span>{{ props.row.gross_income }}</span>
+                  <span>
+                    $ {{ toThousands(props.row.gross_income) }}
+                    / {{props.row.gross_income_unit==1?$t('week'):props.row.gross_income_unit==2?$t('Month'):props.row.gross_income_unit==3?$t('Quarter'):props.row.gross_income_unit==4?$t('Year'):''}}
+                  </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.EBITDA')">
                   <!--税息折扣及摊销前利润-->
@@ -289,11 +292,17 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.NetIncome')">
                   <!--净利润-->
-                  <span>{{ props.row.net_income }}</span>
+                  <span>
+                    $ {{ toThousands(props.row.net_income) }}
+                    / {{props.row.net_income_unit==1?$t('week'):props.row.net_income_unit==2?$t('Month'):props.row.net_income_unit==3?$t('Quarter'):props.row.net_income_unit==4?$t('Year'):''}}
+                  </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.Lease')">
                   <!--租金-->
-                  <span>{{ props.row.lease }}</span>
+                  <span>
+                    $ {{ toThousands(props.row.lease) }}
+                    / {{props.row.lease_unit==1?$t('week'):props.row.lease_unit==2?$t('Month'):props.row.lease_unit==3?$t('Quarter'):props.row.lease_unit==4?$t('Year'):''}}
+                  </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.LeaseTerm')">
                   <!--租约有效期-->
@@ -303,9 +312,9 @@
                   <!--房地产估价-->
                   <span>{{ props.row.value_of_real_estate }}</span>
                 </el-form-item>
-                <el-form-item :label="$t('employeeEdit.Commission')">
-                  <!--佣金-->
-                  <span>{{ props.row.commission }} %</span>
+                <el-form-item :label="$t('employeeEdit. ServiceFee')">
+                  <!--服务费-->
+                  <span>{{ props.row.commission }}</span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.BuyerFinancing')">
                   <!--卖家融资-->
@@ -315,22 +324,22 @@
                 <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
                 <!--<span>{{ props.row.business_description }}</span>-->
                 <!--</el-form-item>-->
-                <el-form-item :label="$t('employeeEdit.USBroker')">
-                  <!--美国中介-->
-                  <span>{{ props.row.us_broker }}</span>
-                </el-form-item>
-                <el-form-item :label="$t('employeeEdit.USBrokerContactInfo')">
-                  <!--美国中介联系方式-->
-                  <span>{{ props.row.us_broker_contact_info }}</span>
-                </el-form-item>
-                <el-form-item :label="$t('employeeEdit.ListingDate')">
-                  <!--待售开始日期-->
-                  <span>{{ props.row.listing_date }}</span>
-                </el-form-item>
-                <el-form-item :label="$t('employeeEdit.ReasonForSelling')">
-                  <!--出售原因-->
-                  <span>{{ props.row.reason_for_selling }}</span>
-                </el-form-item>
+                <!--<el-form-item :label="$t('employeeEdit.USBroker')">-->
+                  <!--&lt;!&ndash;美国中介&ndash;&gt;-->
+                  <!--<span>{{ props.row.us_broker }}</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item :label="$t('employeeEdit.USBrokerContactInfo')">-->
+                  <!--&lt;!&ndash;美国中介联系方式&ndash;&gt;-->
+                  <!--<span>{{ props.row.us_broker_contact_info }}</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item :label="$t('employeeEdit.ListingDate')">-->
+                  <!--&lt;!&ndash;待售开始日期&ndash;&gt;-->
+                  <!--<span>{{ props.row.listing_date }}</span>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item :label="$t('employeeEdit.ReasonForSelling')">-->
+                  <!--&lt;!&ndash;出售原因&ndash;&gt;-->
+                  <!--<span>{{ props.row.reason_for_selling }}</span>-->
+                <!--</el-form-item>-->
               </el-form>
             </template>
           </el-table-column>
@@ -362,7 +371,7 @@
             :label="$t('table.price')+'($)'"
             min-width="150">
             <template slot-scope="{row}">
-              <span>{{row.price}}</span>
+              <span>{{toThousands(row.price)}}</span>
             </template>
           </el-table-column>
           <el-table-column

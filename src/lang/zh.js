@@ -50,6 +50,15 @@ export default {
   passwordRepeat:'两次密码输入不一致',//两次密码输入不一致
   changeSuccess:'修改成功！',//修改成功！
 
+  pleaseSaveBefore:'请先保存后再操作！',//请先保存后再操作！
+  pleaseImproveBusiness:'请先完善企业信息！',//请先完善企业信息！
+  select:'请选择',//请选择
+  unit:'单位',//单位
+  week:'周',//周
+  Month:'月',//月
+  Quarter:'季度',//季度
+  Year:'年',//年
+
   selectBuyerBroker:'请选择要添加到该网络的卖家经纪人',//请选择要添加到该网络的卖家经纪人
   all_Business_brokers:'所有卖家经纪人',//所有卖家经纪人
   selected_Business_brokers:'已选择的卖家经纪人',//已选择的卖家经纪人
@@ -76,6 +85,7 @@ export default {
     businessForSales: '待售企业',//待售企业
     userManagement: '用户管理',//用户管理
     employerEdit: '企业编辑',//企业编辑
+    AddBusiness: '添加企业',//添加企业
     buyers: '买家',//买家
     buyersManagement: '买家管理',//买家管理
     attentionBusiness: '推荐企业',//推荐企业
@@ -132,6 +142,8 @@ export default {
     type: '类型',
     search: '搜索',
     add: '添加',
+    changeBroker: '更改经纪人',//更改经纪人
+    changeBrokerText: '选择更改经纪人',//选择更改经纪人
 
     index: '序号',//序号
     account: '账号',//账号
@@ -243,7 +255,7 @@ export default {
     Lease:'租金',//租金
     LeaseTerm:'租约有效期',//租约有效期
     Est:'房地产估价',//房地产估价
-    Commission:'佣金',//佣金
+    ServiceFee:'服务费',//服务费
     BuyerFinancing:'卖家融资',//卖家融资
     BusinessDescription:'生意介绍信息',//生意介绍信息
     USBroker:'美国经纪人',//美国经纪人

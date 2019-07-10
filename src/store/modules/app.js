@@ -32,6 +32,7 @@ const mutations = {
   SET_LANGUAGE: (state, language) => {
     state.language = language
     Cookies.set('language', language)
+    localStorage.lang = language
   },
   SET_SIZE: (state, size) => {
     state.size = size

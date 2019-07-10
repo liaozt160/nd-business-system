@@ -33,7 +33,7 @@
           :label="$t('table.price')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{row.price}}</span>
+            <span>{{toThousands(row.price)}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -69,7 +69,7 @@
     </div>
     <!--// 打开企业详情弹窗-->
     <el-dialog :title="$t('detail')" :visible.sync="dialogView" width="800px" center :close-on-click-modal="false">
-      <el-form label-position="left" inline  class="demo-table-expand"  v-loading="ViewLoading">
+      <el-form label-position="left" inline  class="demo-table-expand" label-width="200px" v-loading="ViewLoading">
         <el-form-item :label="$t('employeeEdit.title')+'：'">
           <!--标题-->
           <span>{{ attentionData.title }}</span>

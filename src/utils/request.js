@@ -3,13 +3,12 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import qs from 'qs'
+import Cookies from 'js-cookie'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // create an axios instance
 let serverUrl = '';
-if (window.location.origin.indexOf('192.168.9.26:8090') != -1) {
-  serverUrl = 'https://dev.newdreamservices.com';
-} else if (window.location.origin.indexOf('dev.newdreamservices.com') != -1) {
+ if (window.location.origin.indexOf('dev.newdreamservices.com') != -1) {
   serverUrl = 'https://dev.newdreamservices.com';
 } else if (window.location.origin.indexOf('business.newdreamservices.com') != -1) {
   serverUrl = 'https://business.newdreamservices.com';
@@ -24,6 +23,7 @@ service.interceptors.request.use(
   config => {
     config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
     config.data = qs.stringify(config.data);
+    config.headers['Language'] = localStorage.lang;
     if (store.getters.token) {
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }

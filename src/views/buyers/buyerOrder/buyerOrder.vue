@@ -12,7 +12,7 @@
           {{ $t('table.search') }}
         </el-button>
       </div>
-      <el-button v-if="$route.query.role==role" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('order.addOrder') }}</el-button>
+      <el-button v-if="$route.query.role==role" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">{{ $t('order.addOrder') }}</el-button>
     </div>
 
     <!--列表-->
@@ -33,13 +33,13 @@
           prop="order_no"
           align="center"
           :label="$t('order.orderNumber')"
-          min-width="180">
+          min-width="170">
         </el-table-column>
         <el-table-column
           prop="created_at"
           align="center"
           :label="$t('order.creationTime')"
-          min-width="180">
+          min-width="160">
         </el-table-column>
         <el-table-column
           prop="paid"
@@ -58,7 +58,7 @@
           :label="$t('order.orderAmount')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
-            <span>{{row.pay_amount}}</span>
+            <span>{{toThousands(row.pay_amount)}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -148,7 +148,7 @@
 
     <!--订单编辑弹窗-->
     <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"  width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
-      <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="120px" label-lineHight="20px"  v-loading="assignedLoading">
+      <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="130px" label-lineHight="20px"  v-loading="assignedLoading">
         <div>
           <!--请选择买家想要购买的企业信息-->
           <p style="text-align: center;">{{$t('order.selectBusinessList')}}</p>
@@ -167,8 +167,10 @@
         <div class="formRow">
           <!--订单金额-->
           <el-form-item :label="$t('order.orderAmount')" prop="pay_amount">
-            <el-input v-model="orderEdit.pay_amount" :placeholder="$t('order.orderAmount')" style="width:210px;"
-                      class="filter-item"/>
+            <el-input  v-enter-number  maxLength="8" v-model="orderEdit.pay_amount" :placeholder="$t('order.orderAmount')" style="width:210px;"
+                      class="filter-item">
+            <template slot="prepend"> $ </template>
+            </el-input>
           </el-form-item>
           <!--是否已支付-->
           <el-form-item :label="$t('table.PaymentStatus')" prop="paid">
@@ -234,7 +236,7 @@
           style="width: 100%">
           <el-table-column type="expand">
             <template slot-scope="props">
-              <el-form label-position="left" inline class="demo-table-expand">
+              <el-form label-position="left" inline class="demo-table-expand" label-width="200px">
                 <el-form-item :label="$t('employeeEdit.companyName')">
                   <!--企业名称-->
                   <span>{{ props.row.company }}</span>
@@ -249,7 +251,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.Price')">
                   <!--标价-->
-                  <span>{{ props.row.price }}</span>
+                  <span>$ {{ toThousands(props.row.price) }}</span>
                 </el-form-item>
                 <!--<el-form-item :label="$t('employeeEdit.Location')">-->
                 <!--&lt;!&ndash;地理位置&ndash;&gt;-->
@@ -277,7 +279,10 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.GrossIncome')">
                   <!--毛利润-->
-                  <span>{{ props.row.gross_income }}</span>
+                  <span>
+                    $ {{ toThousands(props.row.gross_income) }}
+                    / {{props.row.gross_income_unit==1?$t('week'):props.row.gross_income_unit==2?$t('Month'):props.row.gross_income_unit==3?$t('Quarter'):props.row.gross_income_unit==4?$t('Year'):''}}
+                  </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.EBITDA')">
                   <!--税息折扣及摊销前利润-->
@@ -293,11 +298,17 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.NetIncome')">
                   <!--净利润-->
-                  <span>{{ props.row.net_income }}</span>
+                  <span>
+                    $ {{ toThousands(props.row.net_income) }}
+                    / {{props.row.net_income_unit==1?$t('week'):props.row.net_income_unit==2?$t('Month'):props.row.net_income_unit==3?$t('Quarter'):props.row.net_income_unit==4?$t('Year'):''}}
+                  </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.Lease')">
                   <!--租金-->
-                  <span>{{ props.row.lease}}</span>
+                  <span>
+                    $ {{ toThousands(props.row.lease)}}
+                    / {{props.row.lease_unit==1?$t('week'):props.row.lease_unit==2?$t('Month'):props.row.lease_unit==3?$t('Quarter'):props.row.lease_unit==4?$t('Year'):''}}
+                  </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.LeaseTerm')">
                   <!--租约有效期-->
@@ -307,9 +318,9 @@
                   <!--房地产估价-->
                   <span>{{ props.row.value_of_real_estate }}</span>
                 </el-form-item>
-                <el-form-item :label="$t('employeeEdit.Commission')">
-                  <!--佣金-->
-                  <span>{{ props.row.commission }} %</span>
+                <el-form-item :label="$t('employeeEdit.ServiceFee')">
+                  <!--服务费-->
+                  <span>{{ props.row.commission }} </span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.BuyerFinancing')">
                   <!--卖家融资-->
@@ -366,7 +377,7 @@
             :label="$t('table.price')+'($)'"
             min-width="150">
             <template slot-scope="{row}">
-              <span>{{row.price}}</span>
+              <span>{{toThousands(row.price)}}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -460,11 +471,13 @@
         let canlength=10-this.orderEdit.business_ids.length;
         if(e.length>canlength){
           if(e.length>=1){
-            this.$notify({
-              showClose: true,
-              message: this.$t('onlyChoose10'),
-              type: 'warning'
-            });
+            if(e.length<=11){
+              this.$notify({
+                showClose: true,
+                message: this.$t('onlyChoose10'),
+                type: 'warning'
+              });
+            }
             e.pop();
           }
           return false;
