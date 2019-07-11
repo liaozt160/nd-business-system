@@ -25,6 +25,7 @@ export default {
   view:'查看',//查看
   detail:'详情',//详情
   Successful:'成功！',//成功！
+  SwitchLanguageSuccess:'切换语言成功！',//切换语言成功！
   AddAttention:'添加到推荐企业',//添加到推荐企业
 
 

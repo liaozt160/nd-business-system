@@ -21,14 +21,21 @@ export default {
       return this.$store.getters.language
     }
   },
+  inject:['reload'],
   methods: {
     handleSetLanguage(lang) {
       this.$i18n.locale = lang;
       this.$store.dispatch('app/setLanguage', lang);
-      this.$message({
-        message: 'Switch Language Success',
+      // this.$message({
+      //   message: this.$t('SwitchLanguageSuccess'),
+      //   type: 'success'
+      // });
+      this.$notify({
+        showClose: true,
+        message: this.$t('SwitchLanguageSuccess'),
         type: 'success'
-      })
+      });
+      this.reload();
     }
   }
 }

@@ -50,11 +50,11 @@ export function getBrokerList(data) {
   })
 }
 // 获取经纪人网络成员列表
-export function getBrokerMembersList(net_id) {
+export function getBrokerMembersList(data) {
   return request({
     url: '/api/account/business/net/members',
     method: 'post',
-    params: { net_id }
+    data
   })
 }
 // 获取经纪人网络成员列表

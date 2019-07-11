@@ -134,7 +134,7 @@
 
 <script>
   import Pagination from '@/components/Pagination'
-  import { getAccountsList,addAccount,editAccount,delAccount,statusAccount,getAssignList,setAssignList } from '@/api/account'
+  import { getAccountsList,addAccount,editAccount,delAccount,statusAccount,setAssignList } from '@/api/account'
   export default {
     name: "index",
     components: {
@@ -314,7 +314,7 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          delAccount (row.row.id).then(response => {
+          delAccount ({id:row.row.id}).then(response => {
             console.log('delAccount',response);
             that.listQuery.page=1;
             that.getList();

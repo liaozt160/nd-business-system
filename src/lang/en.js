@@ -25,6 +25,7 @@ export default {
   view:'View',//查看
   detail:'Detail',//详情
   Successful:'Successful!',//成功！
+  SwitchLanguageSuccess:'Switch Language Success!',//切换语言成功！
 
   AddAttention:'Add Recommendation',//添加到推荐企业
   recommender:'Recommender',//推荐人

@@ -375,7 +375,7 @@
         console.log(index, row);
         this.dialogFormVisible=true;
         this.userEditLoading=true;
-        showBuyer (row.row.id).then(response => {
+        showBuyer ({id:row.row.id}).then(response => {
           that.userEditLoading=false;
           console.log('showBuyer',response);
           that.userEdit=response.data;
@@ -395,7 +395,7 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          delBuyer (row.row.id).then(response => {
+          delBuyer ({id:row.row.id}).then(response => {
             console.log('delBuyer',response);
             that.listQuery.page=1;
             that.getList();

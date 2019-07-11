@@ -12,7 +12,7 @@
           {{ $t('table.search') }}
         </el-button>
       </div>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit"
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
                  @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>
@@ -283,7 +283,7 @@
       getBrokerMembersList(id){
         let that=this;
         this.memberListLoading=true;
-        getBrokerMembersList(id).then(response => {
+        getBrokerMembersList({net_id:id}).then(response => {
           that.memberListLoading=false;
           console.log('getBrokerMembersList',response);
           that.memberList=response.data;

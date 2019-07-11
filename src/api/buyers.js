@@ -26,19 +26,19 @@ export function editBuyer (data) {
   })
 }
 // 查看买家信息
-export function showBuyer (id) {
+export function showBuyer (data) {
   return request({
     url: '/api/buyer/show',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 删除买家
-export function delBuyer (id) {
+export function delBuyer (data) {
   return request({
     url: '/api/buyer/del',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 买家中介获取买家意向企业列表
@@ -50,11 +50,11 @@ export function buyerAttentionList (data) {
   })
 }
 // 删除买家意向企业
-export function delBuyerAttention (id) {
+export function delBuyerAttention (data) {
   return request({
     url: '/api/buyer/attention/del',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 修改是否支付服务费

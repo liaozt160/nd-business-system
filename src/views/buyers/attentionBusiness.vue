@@ -154,7 +154,7 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          delBuyerAttention (row.row.id).then(response => {
+          delBuyerAttention ({id:row.row.id}).then(response => {
             console.log('delBuyerAttention',response);
             that.listQuery.page=1;
             that.getList();

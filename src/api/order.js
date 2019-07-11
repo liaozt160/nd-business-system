@@ -24,19 +24,19 @@ export function updateOrderApi(data) {
   })
 }
 // 删除
-export function deleteOrderApi(id) {
+export function deleteOrderApi(data) {
   return request({
     url: '/api/order/del',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 获取订单信息做修改
-export function showOrderApi(id) {
+export function showOrderApi(data) {
   return request({
     url: '/api/order/show',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 生成订单时获取所有可选企业列表
@@ -64,11 +64,11 @@ export function changeAuditApi(data) {
   })
 }
 // 查看审核通过订单详情
-export function viewAuditOrderApi(id) {
+export function viewAuditOrderApi(data) {
   return request({
     url: '/api/order/view',
     method: 'post',
-    params: { id }
+    data
   })
 }
 

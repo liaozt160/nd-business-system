@@ -565,7 +565,7 @@
         this.dialogFormVisible=true;
         this.orderId=scope.row.id;
         that.assignedLoading = true;
-        showOrderApi (scope.row.id).then(response => {
+        showOrderApi ({id:scope.row.id}).then(response => {
           console.log('showOrderApi',response);
           that.assignedLoading = false;
           that.orderEdit.id=response.data.id;
@@ -583,7 +583,7 @@
         let that=this;
         this.dialogviewOrder=true;
         that.viewOrderLoading = true;
-        viewAuditOrderApi (scope.row.id).then(response => {
+        viewAuditOrderApi ({id:scope.row.id}).then(response => {
           console.log('viewAuditOrderApi',response);
           that.viewOrderData=response.data;
           that.viewOrderLoading = false;
@@ -667,7 +667,7 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          deleteOrderApi (row.row.id).then(response => {
+          deleteOrderApi ({id:row.row.id}).then(response => {
             console.log('delBuyer',response);
             that.listQuery.page=1;
             that.getList({buyer_id:that.$route.query.id,});

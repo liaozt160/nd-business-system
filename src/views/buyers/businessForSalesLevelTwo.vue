@@ -259,7 +259,7 @@
         let that=this;
         this.dialogView=true;
         this.ViewLoading = true;
-        showLevelTwo (row.row.id).then(response => {
+        showLevelTwo ({business_id:row.row.id}).then(response => {
           that.ViewLoading = false;
           console.log('showLevelTwo',response);
           that.attentionData=response.data;

@@ -271,7 +271,7 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          delBusiness (row.row.id).then(response => {
+          delBusiness ({id:row.row.id}).then(response => {
             console.log('delBuyer',response);
             that.listQuery.page=1;
             that.getList();

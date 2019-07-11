@@ -50,19 +50,19 @@ export function buyerGetattentionBusinessList (data) {
   })
 }
 // 买家中介查看待售企业-level one
-export function showLevelOne (business_id) {
+export function showLevelOne (data) {
   return request({
     url: '/api/business/buyer/show/level/one',
     method: 'post',
-    params: { business_id }
+    data
   })
 }
 // 买家中介查看待售企业-level two
-export function showLevelTwo (business_id) {
+export function showLevelTwo (data) {
   return request({
     url: '/api/business/buyer/show/level/two',
     method: 'post',
-    params: { business_id }
+    data
   })
 }
 // 添加待售企业
@@ -90,19 +90,19 @@ export function editBusinessZh (data) {
   })
 }
 // 查看待售企业信息-英文
-export function showBusinessEn (id) {
+export function showBusinessEn (data) {
   return request({
     url: '/api/business/show',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 查看待售企业信息-中文
-export function showBusinessZh (id) {
+export function showBusinessZh (data) {
   return request({
     url: '/api/business/zh/show',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 修改待售企业状态
@@ -114,11 +114,11 @@ export function changeStatus (data) {
   })
 }
 // 删除待售企业
-export function delBusiness (id) {
+export function delBusiness (data) {
   return request({
     url: '/api/business/del',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 买家中介设置意向企业时，加载买家列表

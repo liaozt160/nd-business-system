@@ -34,19 +34,19 @@ export function statusAccount (data) {
   })
 }
 // 删除用户
-export function delAccount (id) {
+export function delAccount (data) {
   return request({
     url: '/api/account/del',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 获取当前用户信息
-export function getAccount (id) {
+export function getAccount (data) {
   return request({
     url: '/api/profile',
     method: 'post',
-    params: { id }
+    data
   })
 }
 // 修改当前用户信息
@@ -63,14 +63,6 @@ export function changeAccountPassword(data) {
     url: '/api/profile/password',
     method: 'post',
     data
-  })
-}
-// 管理员获取分配买家可查看企业列表
-export function getAssignList (id) {
-  return request({
-    url: '/api/account/assign/list',
-    method: 'post',
-    params: { id }
   })
 }
 // 管理员保存分配买家可查看企业列表

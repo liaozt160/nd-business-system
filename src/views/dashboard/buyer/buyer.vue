@@ -164,7 +164,7 @@
         let that=this;
         this.dialogView=true;
         this.ViewLoading = true;
-        showLevelOne (row.row.id).then(response => {
+        showLevelOne ({business_id:row.row.id}).then(response => {
           that.ViewLoading = false;
           console.log('showLevelOne',response);
           that.attentionData=response.data;

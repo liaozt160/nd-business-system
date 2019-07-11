@@ -230,7 +230,7 @@ export const buyerRoutes = [
         path: 'index',
         component: () => import('@/views/buyers/attentionBusiness'),
         name: 'attentionBusiness',
-        meta: { title: 'attentionBusiness', icon: 'daishou', noCache: true }
+        meta: { title: 'attentionBusiness', icon: 'recommend', noCache: true }
       }
     ]
   },

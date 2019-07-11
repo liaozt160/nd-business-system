@@ -877,7 +877,7 @@
           that.listLoading = false;
           return
         }
-        showBusinessEn(this.$route.query.id).then(response => {
+        showBusinessEn({id:this.$route.query.id}).then(response => {
           that.listLoading = false;
           console.log('getBusinessEn', response);
           let data = Object.assign({}, response.data);
@@ -902,7 +902,7 @@
           that.listLoading = false;
           return
         }
-        showBusinessZh(this.$route.query.id).then(response => {
+        showBusinessZh({id:this.$route.query.id}).then(response => {
           that.listLoading = false;
           console.log('getBusinessZh', response);
           let data = Object.assign({}, response.data);
