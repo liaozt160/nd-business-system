@@ -127,6 +127,16 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="account.name"
+          align="center"
+          :label="$t('broker')"
+          min-width="200">
+          <template slot-scope="{row}">
+            <span v-if="row.account">{{row.account.name}}</span>
+            <span v-else>{{$t('Unknown')}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="company"
           align="center"
           :label="$t('employeeEdit.companyName')"
@@ -163,35 +173,6 @@
           align="center"
           :label="$t('table.entryTime')"
           min-width="160">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          align="center"
-          :label="$t('table.operate')"
-          fixed="right"
-          min-width="300">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}
-            </el-button>
-            <el-button
-              size="mini"
-              type="info"
-              @click="handleChangeStatus(scope)" v-if="scope.row.status==1">{{$t('table.soldOut')}}
-            </el-button>
-            <el-button
-              size="mini"
-              type="primary"
-              @click="handleChangeStatus(scope)" v-else>{{$t('table.forSale')}}
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}
-            </el-button>
-          </template>
         </el-table-column>
       </el-table>
     </div>

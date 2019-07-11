@@ -133,12 +133,16 @@
         <el-table-column
           prop="address"
           align="center"
-          :label="$t('table.operate')"
-          fixed="right"
+          :label="$t('manager')"
           min-width="120">
           <template slot-scope="{row}">
-              <el-button v-if="row.manager==0" size="mini" type="primary" @click="setAsManager(row)">{{$t('setAsManager')}}</el-button>
-              <el-button v-if="row.manager==1" size="mini" type="warning" @click="setAsMember(row)">{{$t('setAsMember')}}</el-button>
+            <el-switch
+              @change="setAsManager(row)"
+              v-model="row.manager"
+              active-color="#13ce66">
+            </el-switch>
+              <!--<el-button v-if="row.manager==0" size="mini" type="primary" @click="setAsManager(row)">{{$t('setAsManager')}}</el-button>-->
+              <!--<el-button v-if="row.manager==1" size="mini" type="warning" @click="setAsMember(row)">{{$t('setAsMember')}}</el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -295,14 +299,14 @@
       // 设置负责人
       setAsManager(row){
         let that = this;
-        that.$confirm(that.$t('setAsManagerMsg'), that.$t('Confirmation'), {
-          distinguishCancelAndClose: true,
-          confirmButtonText: that.$t('confirm'),
-          cancelButtonText: that.$t('cancel')
-        }).then(() => {
-          setMembersRole ({id:row.id,manager:1}).then(response => {
+        // that.$confirm(that.$t('setAsManagerMsg'), that.$t('Confirmation'), {
+        //   distinguishCancelAndClose: true,
+        //   confirmButtonText: that.$t('confirm'),
+        //   cancelButtonText: that.$t('cancel')
+        // }).then(() => {
+          setMembersRole ({id:row.id,manager:row.manager}).then(response => {
             console.log('setMembersRole',response);
-            that.getBrokerMembersList(that.BrokerNetId);
+            // that.getBrokerMembersList(that.BrokerNetId);
             that.listQuery.page=1;
             that.$notify({
               showClose: true,
@@ -312,7 +316,7 @@
           }).catch(err => {
             console.log(err);
           })
-        }).catch(action => {});
+        // }).catch(action => {});
       },
       // 设置普通成员
       setAsMember(row){
