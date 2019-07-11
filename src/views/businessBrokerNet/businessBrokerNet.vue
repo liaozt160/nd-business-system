@@ -136,13 +136,11 @@
           :label="$t('manager')"
           min-width="120">
           <template slot-scope="{row}">
-            <el-switch
+            <el-switch :disabled="disSwitch"
               @change="setAsManager(row)"
               v-model="row.manager"
               active-color="#13ce66">
             </el-switch>
-              <!--<el-button v-if="row.manager==0" size="mini" type="primary" @click="setAsManager(row)">{{$t('setAsManager')}}</el-button>-->
-              <!--<el-button v-if="row.manager==1" size="mini" type="warning" @click="setAsMember(row)">{{$t('setAsMember')}}</el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -162,6 +160,8 @@
     },
     data() {
       return {
+        disSwitch:false,
+
         role: '',
         BrokerNetId: '',
 
@@ -216,7 +216,6 @@
                 console.log('editBusinessBrokerNet', response);
                 that.netVisible = false;
                 that.getList();
-                that.netData = {};
                 that.$notify({
                   showClose: true,
                   message: that.$t('Successful'),
@@ -230,7 +229,6 @@
                 console.log('addBusinessBrokerNet', response);
                 that.netVisible = false;
                 that.getList();
-                that.netData = {};
                 that.$notify({
                   showClose: true,
                   message: that.$t('Successful'),
@@ -304,41 +302,22 @@
         //   confirmButtonText: that.$t('confirm'),
         //   cancelButtonText: that.$t('cancel')
         // }).then(() => {
+        that.disSwitch=true;
           setMembersRole ({id:row.id,manager:row.manager}).then(response => {
             console.log('setMembersRole',response);
+            that.disSwitch=false;
             // that.getBrokerMembersList(that.BrokerNetId);
             that.listQuery.page=1;
             that.$notify({
-              showClose: true,
+              showClose: false,
               message: that.$t('Successful'),
               type: 'success'
             });
           }).catch(err => {
+            that.disSwitch=true;
             console.log(err);
           })
         // }).catch(action => {});
-      },
-      // 设置普通成员
-      setAsMember(row){
-        let that = this;
-        that.$confirm(that.$t('setAsMemberMsg'), that.$t('Confirmation'), {
-          distinguishCancelAndClose: true,
-          confirmButtonText: that.$t('confirm'),
-          cancelButtonText: that.$t('cancel')
-        }).then(() => {
-          setMembersRole ({id:row.id,manager:0}).then(response => {
-            console.log('setMembersRole',response);
-            that.getBrokerMembersList(that.BrokerNetId);
-            that.listQuery.page=1;
-            that.$notify({
-              showClose: true,
-              message: that.$t('Successful'),
-              type: 'success'
-            });
-          }).catch(err => {
-            console.log(err);
-          })
-        }).catch(action => {});
       },
       // 获取卖家经纪人网络列表
       getList(data) {
