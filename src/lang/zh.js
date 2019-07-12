@@ -10,8 +10,10 @@ export default {
   cancel:'取消',//取消
   deleted:'已删除！',//已删除！
   delMsg:'该操作不可恢复，确定要删除吗？',//该操作不可恢复，确定要删除吗？
+  enableMsg:'确定要启用该用户吗？',//确定要启用该用户吗？
+  disabledMsg:'确定要禁用该用户吗？',//确定要禁用该用户吗？
   changeMsg:'确定要修改当前状态吗？',//确定要修改当前状态吗？
-  cancelOrderMsg:'确定要取消该订单吗？',//确定要取消该订单吗？
+  cancelOrderMsg:'确定要取消提交该订单吗？',//确定要取消该订单吗？
   submitOrderMsg:'确定要提交该订单吗？',//确定要提交该订单吗？
   auditedOrderMsg:'审核通过前，请确定该订单是否已支付？',//审核通过前，请确定该订单是否已支付？
   rejectOrderMsg:'确定要拒绝该订单吗？',//确定要拒绝该订单吗？
@@ -118,6 +120,7 @@ export default {
     title: '系统登录',
     logIn: '登录',
     username: '账号',
+    account: '账号',
     password: '密码',
     // any: '随便填',
     // thirdparty: '第三方登录',

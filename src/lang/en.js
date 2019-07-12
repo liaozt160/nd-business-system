@@ -10,8 +10,10 @@ export default {
   cancel:'Cancel',//取消
   deleted:'Deleted!',//已删除！
   delMsg:'This operation is not recoverable. Are you sure you want to delete it?',//该操作不可恢复，确定要删除吗？
+  enableMsg:'Are you sure you want to enable this user account?',//确定要启用该用户吗？
+  disabledMsg:'Are you sure you want to disable this user account?',//确定要禁用该用户吗？
   changeMsg:'Are you sure you want to modify the current status?',//确定要修改当前状态吗？
-  cancelOrderMsg:'Are you sure you want to cancel the order?',//确定要取消该订单吗？
+  cancelOrderMsg:'Are you sure you want to cancel the submission of this order?',//确定要取消提交该订单吗？
   submitOrderMsg:'Are you sure you want to submit the order?',//确定要提交该订单吗？
   auditedOrderMsg:'Before approval, please confirm whether the order has been paid?',//审核通过前，请确定该订单是否已支付？
   rejectOrderMsg:'Are you sure you want to reject the order?',//确定要拒绝该订单吗？
@@ -115,9 +117,10 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'Login Form',
+    title: 'Login',
     logIn: 'Login',
     username: 'Username',
+    account: 'Account',
     password: 'Password',
     any: 'any',
     thirdparty: 'Or connect with',

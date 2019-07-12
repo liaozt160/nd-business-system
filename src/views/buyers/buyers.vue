@@ -114,44 +114,44 @@
 
     <!--买家编辑弹窗-->
     <el-dialog :title="userEdit.id?$t('buyers.buyersEdit'):$t('buyers.addBuyers')" :visible.sync="dialogFormVisible" v-if='dialogFormVisible'
-               width="920px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
+               width="750px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
 
-      <el-form ref="dataForm" :model="userEdit" :rules="rules" label-position="right" label-width="130px" label-lineHight="30px" v-loading="userEditLoading">
+      <el-form ref="dataForm" :model="userEdit" :rules="rules" label-position="right" label-width="100px" label-lineHight="30px" v-loading="userEditLoading">
         <div class="formRow">
           <!--买家姓名-->
           <el-form-item :label="$t('buyers.Name')" prop="buyer">
-            <el-input v-model="userEdit.buyer" :placeholder="$t('buyers.Name')" style="width:300px;"
+            <el-input v-model="userEdit.buyer" :placeholder="$t('buyers.Name')" style="width:200px;"
                       class="filter-item"/>
           </el-form-item>
           <!--邮箱-->
           <el-form-item :label="$t('buyers.email')" prop="email" >
-            <el-input v-model="userEdit.email" :placeholder="$t('buyers.email')" style="width:300px;"
+            <el-input v-model="userEdit.email" :placeholder="$t('buyers.email')" style="width:200px;"
                       class="filter-item"/>
           </el-form-item>
         </div>
         <div class="formRow">
           <!--手机-->
           <el-form-item :label="$t('buyers.phone')" prop="phone">
-            <el-input v-model.number="userEdit.phone" :placeholder="$t('buyers.phone')" style="width:300px;"
+            <el-input v-model.number="userEdit.phone" :placeholder="$t('buyers.phone')" style="width:200px;"
                       class="filter-item"/>
           </el-form-item>
           <!--可用资金-->
           <el-form-item :label="$t('buyers.fundsAvailable')" prop="funds_available">
-            <el-input v-model="userEdit.funds_available" :placeholder="$t('buyers.fundsAvailable')" style="width:300px;" class="filter-item"></el-input>
+            <el-input v-model="userEdit.funds_available" :placeholder="$t('buyers.fundsAvailable')" style="width:200px;" class="filter-item"></el-input>
           </el-form-item>
         </div>
         <div class="formRow">
           <!--期望的交易金额-->
           <el-form-item :label="$t('buyers.DesiredTransactionAmount')" prop="desired_transaction_amount">
-            <el-input v-model="userEdit.desired_transaction_amount" :placeholder="$t('buyers.DesiredTransactionAmount')" style="width:300px;" class="filter-item"></el-input>
+            <el-input v-model="userEdit.desired_transaction_amount" :placeholder="$t('buyers.DesiredTransactionAmount')" style="width:200px;" class="filter-item"></el-input>
           </el-form-item>
           <!--资金验证-->
           <div class="formItem filter-item el-select--medium">
             <!--资金验证-->
             <span class="formItemSpan">{{$t('buyers.FundsVerified')}}</span>
-            <div style="width: 80%;margin-bottom: 20px;">
-              <el-radio size="small" v-model="userEdit.funds_verified" :label="1" border>{{$t('yes')}}</el-radio>
-              <el-radio size="small" v-model="userEdit.funds_verified" :label="2" border>{{$t('no')}}</el-radio>
+            <div style="width:200px;margin-bottom: 20px;">
+              <el-radio style="display: inline-block;margin:10px 0;margin-right: 30px" size="small" v-model="userEdit.funds_verified" :label="1" >{{$t('yes')}}</el-radio>
+              <el-radio style="display: inline-block;margin:10px 0;" size="small" v-model="userEdit.funds_verified" :label="2" >{{$t('no')}}</el-radio>
             </div>
           </div>
         </div>

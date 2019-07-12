@@ -5,11 +5,12 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu" style="display: flex;">
-      <template v-if="device!=='mobile'">
+      <!--<template v-if="device!=='mobile'"> 手机端隐藏-->
+      <template>
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <screenfull v-if="device!=='mobile'" id="screenfull" class="right-menu-item hover-effect" />
 
         <!--<el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">-->
         <!--<size-select id="size-select" class="right-menu-item hover-effect" />-->

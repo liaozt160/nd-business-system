@@ -295,17 +295,23 @@
           status:status,
           id:row.row.id
         }
-        statusAccount (data).then(response => {
-          console.log('statusAccount',response);
-          that.$notify({
-            showClose: true,
-            message: status==1?that.$t('table.isEnable'):that.$t('table.isDisabled'),
-            type: 'success'
-          });
-          that.getList();
-        }).catch(err => {
-          console.log(err);
-        })
+        that.$confirm( status==1?that.$t('enableMsg'):that.$t('disabledMsg'), that.$t('Confirmation'), {
+          distinguishCancelAndClose: true,
+          confirmButtonText: that.$t('confirm'),
+          cancelButtonText: that.$t('cancel')
+        }).then(() => {
+          statusAccount (data).then(response => {
+            console.log('statusAccount',response);
+            that.$notify({
+              showClose: true,
+              message: status==1?that.$t('table.isEnable'):that.$t('table.isDisabled'),
+              type: 'success'
+            });
+            that.getList();
+          }).catch(err => {
+            console.log(err);
+          })
+        }).catch(action => {});
       },
       handleDelete(index, row) {
         let that = this;

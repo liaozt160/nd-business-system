@@ -87,30 +87,39 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          :min-width="role==1&&$route.query.role==1?500:380">
+          :min-width="role==1&&$route.query.role==1?270:240">
           <template slot-scope="scope">
             <!--管理员-->
             <div v-if="role==1">
               <!--待提交-->
               <div v-if="scope.row.status==0">
-                <el-button size="mini" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
+                <!--查看订单按钮-->
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
               </div>
               <!--审核中-->
               <div v-if="scope.row.status==1">
-                <el-button size="mini" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
-                <el-button size="mini" type="primary" plain v-if="$route.query.role==role" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
-                <el-button size="mini" type="primary" @click="audited(scope,2)">{{$t('order.Audit')}}</el-button>
-                <el-button size="mini" type="danger"  @click="audited(scope,3)">{{$t('order.reject')}}</el-button>
-                <el-button size="mini" type="danger" plain  @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+                <!--查看订单按钮-->
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
+                <!--编辑订单按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" @click="modifyOrder(scope)"></el-button>
+                <!--通过审核按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.Audit')" icon="el-icon-s-claim" circle @click="audited(scope,2)"></el-button>
+                <!--拒绝审核按钮-->
+                <el-button size="medium" type="danger" :title="$t('order.reject')" icon="el-icon-s-release" circle @click="audited(scope,3)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain @click="handleDelete(scope)"></el-button>
               </div>
               <!--已审核状态-->
               <div v-if="scope.row.status==2">
-                <el-button size="mini" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
+                <!--查看订单按钮-->
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
               </div>
               <!--拒绝状态-->
               <div v-if="scope.row.status==3">
-                <el-button size="mini" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
-                <el-button size="mini" type="danger" plain  @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+                <!--查看订单按钮-->
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain @click="handleDelete(scope)"></el-button>
               </div>
             </div>
 
@@ -118,23 +127,31 @@
             <div v-if="role!=1">
               <!--待提交-->
               <div v-if="scope.row.status==0">
-                <el-button size="mini" type="success" @click="changeStatus(scope,1)">{{$t('order.submitOrder')}}</el-button>
-                <el-button size="mini" type="primary" :disabled="scope.row.status!=0" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
-                <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+                <!--提交订单按钮-->
+                <el-button size="medium" type="success" :title="$t('order.submitOrder')" icon="el-icon-check" circle plain @click="changeStatus(scope,1)"></el-button>
+                <!--编辑订单按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain :disabled="scope.row.status!=0" @click="modifyOrder(scope)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
               </div>
               <!--审核中-->
               <div v-if="scope.row.status==1">
-                <el-button size="mini" type="warning" @click="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</el-button>
-                <el-button size="mini" type="primary" :disabled="scope.row.status!=0" @click="modifyOrder(scope)">{{$t('order.modifyOrder')}}</el-button>
-                <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+                <!--取消提交订单按钮-->
+                <el-button size="medium" type="warning" :title="$t('order.cancelOrder')" icon="el-icon-close" circle plain @click="changeStatus(scope,0)"></el-button>
+                <!--编辑订单按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain :disabled="scope.row.status!=0" @click="modifyOrder(scope)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
               </div>
               <!--已审核状态-->
               <div v-if="scope.row.status==2">
-                <el-button size="mini" v-if="$route.query.role==role" @click="viewOrder(scope)">{{$t('order.viewOrder')}}</el-button>
+                <!--查看订单按钮-->
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain v-if="$route.query.role==role" @click="viewOrder(scope)"></el-button>
               </div>
               <!--拒绝状态-->
               <div v-if="scope.row.status==3">
-                <el-button size="mini" type="danger" plain v-if="$route.query.role==role" @click="handleDelete(scope)">{{$t('table.delete')}}</el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
               </div>
             </div>
           </template>

@@ -17,7 +17,7 @@
         <el-input
           ref="email"
           v-model="loginForm.email"
-          :placeholder="$t('login.username')"
+          :placeholder="$t('login.account')"
           name="email"
           type="text"
           tabindex="1"

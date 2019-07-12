@@ -26,7 +26,7 @@ const mutations = {
     state.email = email
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = 'https://www.ylbservices.com/wap/static/favicon.png'
+    // state.avatar = 'https://www.ylbservices.com/wap/static/favicon.png'
   },
   SET_ROLE: (state, role) => {
     state.role = role
@@ -72,7 +72,7 @@ const actions = {
         commit('SET_ROLES', roles);
         commit('SET_EMAIL', email);
         commit('SET_NAME', name);
-        commit('SET_AVATAR', 'https://www.ylbservices.com/wap/static/favicon.png');
+        // commit('SET_AVATAR', 'https://www.ylbservices.com/wap/static/favicon.png');
         // commit('SET_INTRODUCTION', introduction)
         resolve(data)
       }).catch(error => {

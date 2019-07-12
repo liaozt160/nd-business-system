@@ -1,7 +1,8 @@
 module.exports = {
-  title: 'New Dream System',
+  title: '',
 
   /**
+   * //New Dream System
    * @type {boolean} true | false
    * @description Whether show the settings right-panel
    */

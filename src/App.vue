@@ -40,6 +40,6 @@ export default {
     margin: 8px 0!important;
   }
   .transfer .el-transfer-panel,.netTransfer .el-transfer-panel{
-    width: 277px;
+    width: 250px;
   }
 </style>

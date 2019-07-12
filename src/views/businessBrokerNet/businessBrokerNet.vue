@@ -49,7 +49,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="180">
+          min-width="250">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope)">{{$t('table.edit')}}</el-button>
             <el-button size="mini" type="primary" @click="handleManager(scope)">{{$t('member')}}</el-button>
@@ -61,7 +61,7 @@
     </div>
 
     <!--添加网络弹窗-->
-    <el-dialog :title="netData.id?$t('editNet'):$t('addNet')" :visible.sync="netVisible"  width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
+    <el-dialog :title="netData.id?$t('editNet'):$t('addNet')" :visible.sync="netVisible"  width="650px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
       <el-form ref="dataForm" :model="netData" :rules="rules" label-position="right" label-width="120px" label-lineHight="20px"  v-loading="netLoading">
         <div>
           <!--请选择要添加到该网络的卖家经纪人-->
@@ -99,7 +99,7 @@
 
     </el-dialog>
     <!--成员弹窗-->
-    <el-dialog :title="$t('member')" :visible.sync="memberVisible"  width="800px" style="padding-bottom: 50px" center :close-on-click-modal="false">
+    <el-dialog :title="$t('member')" :visible.sync="memberVisible"  width="650px" style="padding-bottom: 50px" center :close-on-click-modal="false">
       <div style="font-size: 16px;margin-bottom: 20px">{{$t('netMembersList')}}</div>
       <el-table
         v-loading="memberListLoading"
@@ -309,7 +309,7 @@
             // that.getBrokerMembersList(that.BrokerNetId);
             that.listQuery.page=1;
             that.$notify({
-              showClose: false,
+              showClose: true,
               message: that.$t('Successful'),
               type: 'success'
             });
