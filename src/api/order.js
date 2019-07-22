@@ -71,4 +71,54 @@ export function viewAuditOrderApi(data) {
     data
   })
 }
+// 查看订单支付信息
+export function viewPaymentInformationApi(data) {
+  return request({
+    url: '/api/order/payment/show',
+    method: 'post',
+    data
+  })
+}
+// 添加订单支付记录
+export function addPayRecordApi(data) {
+  return request({
+    url: '/api/order/payment/pay',
+    method: 'post',
+    data
+  })
+}
+// 删除订单支付记录
+export function delPayRecordApi(data) {
+  return request({
+    url: '/api/order/payment/del',
+    method: 'post',
+    data
+  })
+}
+//上传文件记录
+export function orderUploadFileApi(data) {
+  return request({
+    url: '/api/order/payment/file/upload',
+    method: 'post',
+    data
+  })
+}
+//查看文件记录
+export function viewFileApi(params) {
+  return request({
+    url: '/api/order/payment/file/view',
+    method: 'post',
+    responseType: 'blob',
+    data: params,
+
+  })
+}
+//删除文件记录
+export function delOrderFileApi(data) {
+  return request({
+    url: '/api/order/payment/file/del',
+    method: 'post',
+    data
+  })
+}
 

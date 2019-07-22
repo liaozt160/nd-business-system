@@ -25,6 +25,7 @@ export default {
   yes:'是',//是
   no:'没有',//没有
   view:'查看',//查看
+  buyerView:'买家查看',//买家查看
   detail:'详情',//详情
   Successful:'成功！',//成功！
   SwitchLanguageSuccess:'切换语言成功！',//切换语言成功！
@@ -163,6 +164,7 @@ export default {
     date: '时间',
     actions: '操作',
     publish: '发布',
+    download: '下载',//下载
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定',
@@ -195,6 +197,25 @@ export default {
   },
 
   order:{
+    payInformation: '付款信息',//付款信息
+    payRecord: '支付记录',//支付记录
+    addPayRecord: '添加支付记录',//添加支付记录
+    payContent: '支付内容',//支付内容
+    informationFee: '信息费',//信息费
+    informationFeeText: '信息费（约1000美元）获得的比较基础的商业信息',//付信息费（约1000美元）获得的比较基础的商业信息
+    investigationFee: '考察费',//考察费
+    investigationFeeText: '考察费（约3000美元）并且签署保密协议后获得详细的财务及税务信息',//付考察费（约3000美元）并且签署保密协议后获得详细的财务及税务信息
+    payAmount: '支付金额',//支付金额
+    File: '附件',//附件
+    addFile: '添加附件',//添加附件
+    FileRecords: '附件记录',//附件记录
+    addFileRecords: '添加附件记录',//添加附件记录
+    selectFile: '点击选择附件文件',//点击选择附件文件
+    pleaseSelectFile: '请选择附件文件',//请选择附件文件
+    ExcessiveFileSize: '文件过大',//文件过大
+    time: '时间',//时间
+    Print: '打印',//打印
+
     order: '订单',//订单
     orderManagement: '订单管理',//订单管理
     addOrder: '添加订单',//添加订单
@@ -204,6 +225,7 @@ export default {
     orderAmount:'订单金额',//订单金额
     auditStatus:'审核状态',//审核状态
     audited:'已审核',//已审核
+    notAudited:'未审核',//未审核
     Audit:'审核',//审核
     AuditInProgress:'审核中',//审核中
     reject:'拒绝',//拒绝

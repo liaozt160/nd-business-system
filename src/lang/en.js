@@ -25,6 +25,7 @@ export default {
   yes:'Yes',//是
   no:'No',//没有
   view:'View',//查看
+  buyerView:'Buyer View',//买家查看
   detail:'Detail',//详情
   Successful:'Successful!',//成功！
   SwitchLanguageSuccess:'Switch Language Success!',//切换语言成功！
@@ -166,6 +167,7 @@ export default {
     search: 'Search',
     add: 'Add',
     publish: 'Publish',//发布
+    download: 'Download',//下载
     delete: 'Delete',
     cancel: 'Cancel',
     confirm: 'Confirm',
@@ -196,6 +198,25 @@ export default {
     business: 'business',//企业
   },
   order:{
+    payInformation: 'Pay information',//付款信息
+    payRecord: 'Pay Record',//支付记录
+    addPayRecord: 'Add Pay Record',//添加支付记录
+    payContent: 'Pay Content',//支付内容
+    informationFee: 'Information Fee',//信息费
+    informationFeeText: 'Pay information fees ($1,000) for more basic business information',//付信息费（约1000美元）获得的比较基础的商业信息
+    investigationFee: 'Investigation Fee',//考察费
+    investigationFeeText: 'Pay inspection fees ($3,000) and sign confidentiality agreements to obtain detailed financial and tax information',//付考察费（约3000美元）并且签署保密协议后获得详细的财务及税务信息
+    payAmount: 'Pay Amount',//支付金额
+    File: 'File',//附件
+    addFile: 'Add File',//添加附件
+    FileRecords: 'File Records',//附件记录
+    addFileRecords: 'Add File Records',//添加附件记录
+    selectFile: 'Click to select the attachment file',//点击选择附件文件
+    pleaseSelectFile: 'Please select the attached file.',//请选择附件文件
+    ExcessiveFileSize: 'Excessive file size',//文件过大
+    time: 'Time',//时间
+    Print: 'Print',//打印
+
     order: 'Order',//订单
     orderManagement: 'Order Management',//订单管理
     addOrder: 'Add Order',//添加订单
@@ -205,6 +226,7 @@ export default {
     orderAmount:'Order Amount',//订单金额
     auditStatus:'Audit Status',//审核状态
     audited:'Audited',//已审核
+    notAudited:'Not Audited',//未审核
     Audit:'Audit',//审核
     AuditInProgress:'Pending',//审核中
     reject:'Reject',//拒绝

@@ -80,12 +80,18 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="260">
+          min-width="400">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleView(scope)">{{$t('view')}}
+              plain
+              @click="handleView(scope,1)">{{$t('buyerView')}}
+            </el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              @click="handleView(scope,0)">{{$t('view')}}
             </el-button>
             <el-button
               size="mini"
@@ -169,7 +175,7 @@
           <!--房地产估价-->
           <span>{{ attentionData.value_of_real_estate }}</span>
         </el-form-item>
-        <el-form-item :label="$t('employeeEdit.ServiceFee')+'：'">
+        <el-form-item :label="$t('employeeEdit.ServiceFee')+'：'" v-if="!isBuyer">
           <!--服务费-->
           <span>{{ attentionData.commission }}</span>
         </el-form-item>
@@ -216,6 +222,8 @@
     },
     data(){
       return{
+        isBuyer:false,
+
         dialogView:false,
         ViewLoading:false,
 
@@ -257,8 +265,9 @@
         this.getList(this.listQuery);
       },
       // 打开企业详情
-      handleView(row) {
+      handleView(row,isbuyer) {
         let that=this;
+        this.isBuyer=isbuyer==1?true:false;
         this.dialogView=true;
         this.ViewLoading = true;
         showLevelOne ({business_id:row.row.id}).then(response => {

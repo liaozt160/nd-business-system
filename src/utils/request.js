@@ -1,28 +1,33 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import {MessageBox, Message} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 import qs from 'qs'
 import Cookies from 'js-cookie'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // create an axios instance
 let serverUrl = '';
- if (window.location.origin.indexOf('dev.newdreamservices.com') != -1) {
+if (window.location.origin.indexOf('dev.newdreamservices.com') != -1) {
   serverUrl = 'https://dev.newdreamservices.com';
 } else if (window.location.origin.indexOf('business.newdreamservices.com') != -1) {
   serverUrl = 'https://business.newdreamservices.com';
 }
+
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.newdreamservices.com', // url = base url + request url
-  baseURL: process.env.NODE_ENV === 'development'?'api/':serverUrl, // url = base url + request url
+  baseURL: process.env.NODE_ENV === 'development' ? 'api/' : serverUrl, // url = base url + request url
   timeout: 30000 // request timeout
 })
 // request interceptor
 service.interceptors.request.use(
   config => {
-    config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    config.data = qs.stringify(config.data);
+    if (config.url.indexOf('/upload') !== -1) {
+      config.headers = {'Content-Type': 'multipart/form-data'};
+    } else {
+      config.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+      config.data = qs.stringify(config.data);
+    }
     config.headers['Language'] = localStorage.lang;
     if (store.getters.token) {
       config.headers['Authorization'] = 'Bearer ' + getToken()
@@ -35,16 +40,19 @@ service.interceptors.request.use(
   }
 )
 
+
 // response interceptor
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    if (res.code !== 1001) {
-      Message({
-        message: res.msg || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+    if(!res.code){//下载文件
+      return res
+    }else if (res.code !== 1001) {
+        Message({
+          message: res.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        });
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
@@ -60,14 +68,14 @@ service.interceptors.response.use(
         })
       }
       return Promise.reject(new Error(res.message || 'Error'))
-    } else if(res.code === 2100){
+    } else if (res.code === 2100) {
       console.log('token已过期')
-    } else {
+    }else {
       return res
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('err' + error); // for debug
     Message({
       message: error.message,
       type: 'error',

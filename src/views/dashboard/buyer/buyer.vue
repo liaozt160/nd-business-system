@@ -47,23 +47,10 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="updated_at"
           align="center"
-          :label="$t('table.operate')"
-          fixed="right"
-          min-width="260">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="handleView(scope)">{{$t('view')}}
-            </el-button>
-            <el-button
-              size="mini"
-              type="success"
-              @click="openSelectBuyer(scope)">{{$t('AddAttention')}}
-            </el-button>
-          </template>
+          :label="$t('table.entryTime')"
+          min-width="160">
         </el-table-column>
       </el-table>
     </div>

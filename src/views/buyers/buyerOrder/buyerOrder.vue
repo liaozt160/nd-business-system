@@ -1,4 +1,3 @@
-
 <template>
   <div class="app-container">
     <aside>
@@ -6,13 +5,17 @@
     </aside>
     <div class="filter-container">
       <div class="filter-item el-select--medium">
-        <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item"
+        <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;"
+                  class="filter-item"
                   @keyup.enter.native="handleFilter" clearable/>
-        <el-button class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search"
+                   @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
       </div>
-      <el-button v-if="$route.query.role==role" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">{{ $t('order.addOrder') }}</el-button>
+      <el-button v-if="$route.query.role==role" class="filter-item" style="margin-left: 10px;" type="primary"
+                 icon="el-icon-plus" @click="handleCreate">{{ $t('order.addOrder') }}
+      </el-button>
     </div>
 
     <!--列表-->
@@ -49,7 +52,7 @@
           <!--支付状态-->
           <template slot-scope="scope">
             <el-tag type="success" style="width: 60px" v-if="scope.row.paid==1">{{ $t('table.Paymented') }}</el-tag>
-            <el-tag type="info"    style="width: 60px" v-if="scope.row.paid==0">{{ $t('table.Unpaid') }}</el-tag>
+            <el-tag type="info" style="width: 60px" v-if="scope.row.paid==0">{{ $t('table.Unpaid') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -67,10 +70,11 @@
           :label="$t('order.auditStatus')"
           min-width="130">
           <template slot-scope="scope">
-            <el-tag type="danger"  style="width: 100px" v-if="scope.row.status==3">{{ $t('order.reject') }}</el-tag>
+            <el-tag type="danger" style="width: 100px" v-if="scope.row.status==3">{{ $t('order.reject') }}</el-tag>
             <el-tag type="success" style="width: 100px" v-if="scope.row.status==2">{{ $t('order.audited') }}</el-tag>
-            <el-tag type="primary" style="width: 100px" v-if="scope.row.status==1">{{ $t('order.AuditInProgress') }}</el-tag>
-            <el-tag type="info"    style="width: 100px" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
+            <el-tag type="primary" style="width: 100px" v-if="scope.row.status==1">{{ $t('order.AuditInProgress') }}
+            </el-tag>
+            <el-tag type="info" style="width: 100px" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -80,7 +84,8 @@
           min-width="200">
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" :content="scope.row.remark" placement="top">
-              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 120px;">{{scope.row.remark}}</span>
+              <span
+                style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 120px;">{{scope.row.remark}}</span>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -89,83 +94,135 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          :min-width="role==1&&$route.query.role==1?270:160">
+          :min-width="role==1&&$route.query.role==1?320:270">
           <template slot-scope="scope">
             <!--管理员-->
             <div v-if="role==1">
               <!--待提交-->
               <div v-if="scope.row.status==0">
                 <!--查看订单按钮-->
-                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain
+                           @click="viewOrder(scope)"></el-button>
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
               </div>
               <!--审核中-->
               <div v-if="scope.row.status==1">
                 <!--查看订单按钮-->
-                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain
+                           @click="viewOrder(scope)"></el-button>
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
                 <!--编辑订单按钮-->
-                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" @click="modifyOrder(scope)"></el-button>
+                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline"
+                           circle plain v-if="$route.query.role==role" @click="modifyOrder(scope)"></el-button>
                 <!--通过审核按钮-->
-                <el-button size="medium" type="primary" :title="$t('order.Audit')" icon="el-icon-s-claim" circle @click="audited(scope,2)"></el-button>
+                <el-button size="medium" type="primary" :title="$t('order.Audit')" icon="el-icon-s-claim" circle
+                           @click="audited(scope,2)"></el-button>
                 <!--拒绝审核按钮-->
-                <el-button size="medium" type="danger" :title="$t('order.reject')" icon="el-icon-s-release" circle @click="audited(scope,3)"></el-button>
+                <el-button size="medium" type="danger" :title="$t('order.reject')" icon="el-icon-s-release" circle
+                           @click="audited(scope,3)"></el-button>
                 <!--删除按钮-->
-                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain @click="handleDelete(scope)"></el-button>
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                           @click="handleDelete(scope)"></el-button>
               </div>
               <!--已审核状态-->
               <div v-if="scope.row.status==2">
                 <!--查看订单按钮-->
-                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain
+                           @click="viewOrder(scope)"></el-button>
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
+                <!--导出pdf按钮-->
+                <el-button size="medium" :title="$t('order.Print')" icon="el-icon-printer" circle plain
+                           @click="ExportPDF(scope)"></el-button>
                 <!--删除按钮-->
-                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain @click="handleDelete(scope)"></el-button>
+                <!--<el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain @click="handleDelete(scope)"></el-button>-->
               </div>
               <!--拒绝状态-->
               <div v-if="scope.row.status==3">
                 <!--查看订单按钮-->
-                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain @click="viewOrder(scope)"></el-button>
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain
+                           @click="viewOrder(scope)"></el-button>
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
                 <!--删除按钮-->
-                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain @click="handleDelete(scope)"></el-button>
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                           @click="handleDelete(scope)"></el-button>
               </div>
             </div>
             <!--买家中介-->
             <div v-if="role!=1">
-            <!--待提交-->
-            <div v-if="scope.row.status==0">
-              <!--提交订单按钮-->
-              <el-button size="medium" type="success" :title="$t('order.submitOrder')" icon="el-icon-check" circle plain @click="changeStatus(scope,1)"></el-button>
-              <!--编辑订单按钮-->
-              <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" @click="modifyOrder(scope)"></el-button>
-              <!--删除按钮-->
-              <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
-            </div>
-            <!--审核中-->
-            <div v-if="scope.row.status==1">
-              <!--取消提交订单按钮-->
-              <el-button size="medium" type="warning" :title="$t('order.cancelOrder')" icon="el-icon-close" circle plain @click="changeStatus(scope,0)"></el-button>
-              <!--编辑订单按钮-->
-              <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" :disabled="scope.row.status!=0" @click="modifyOrder(scope)"></el-button>
-              <!--删除按钮-->
-              <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
-            </div>
+              <!--待提交-->
+              <div v-if="scope.row.status==0">
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
+                <!--提交订单按钮-->
+                <el-button size="medium" type="success" :title="$t('order.submitOrder')" icon="el-icon-s-promotion"
+                           circle plain @click="changeStatus(scope,1)"></el-button>
+                <!--编辑订单按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline"
+                           circle plain v-if="$route.query.role==role" @click="modifyOrder(scope)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                           v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
+              </div>
+              <!--审核中-->
+              <div v-if="scope.row.status==1">
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
+                <!--取消提交订单按钮-->
+                <el-button size="medium" type="warning" :title="$t('order.cancelOrder')" icon="el-icon-close" circle
+                           plain @click="changeStatus(scope,0)"></el-button>
+                <!--编辑订单按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline"
+                           circle plain v-if="$route.query.role==role" :disabled="scope.row.status!=0"
+                           @click="modifyOrder(scope)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                           v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
+              </div>
               <!--已审核状态-->
               <div v-if="scope.row.status==2">
                 <!--查看订单按钮-->
-                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain v-if="$route.query.role==role" @click="viewOrder(scope)"></el-button>
+                <el-button size="medium" :title="$t('order.viewOrder')" icon="el-icon-view" circle plain
+                           v-if="$route.query.role==role" @click="viewOrder(scope)"></el-button>
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
+                <!--导出pdf按钮-->
+                <el-button size="medium" :title="$t('order.Print')" icon="el-icon-printer" circle plain
+                           v-if="$route.query.role==role" @click="ExportPDF(scope)"></el-button>
               </div>
-            <!--拒绝状态-->
-            <div v-if="scope.row.status==3">
-              <!--删除按钮-->
-              <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
-            </div>
+              <!--拒绝状态-->
+              <div v-if="scope.row.status==3">
+                <!--付款信息按钮-->
+                <el-button size="medium" type="primary" :title="$t('order.payInformation')" icon="el-icon-s-operation"
+                           circle plain @click="payInformationOpen(scope)"></el-button>
+                <!--删除按钮-->
+                <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                           v-if="$route.query.role==role" @click="handleDelete(scope)"></el-button>
+              </div>
             </div>
           </template>
         </el-table-column>
       </el-table>
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page"  :pageSize.sync="pageSize" @pagination="getList(listQuery)" />
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :pageSize.sync="pageSize"
+                  @pagination="getList(listQuery)"/>
     </div>
 
     <!--订单编辑弹窗-->
-    <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"  width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center :close-on-click-modal="false">
-      <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="130px" label-lineHight="20px"  v-loading="assignedLoading">
+    <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"
+               width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center
+               :close-on-click-modal="false">
+      <el-form ref="dataForm" :model="orderEdit" :rules="rules" label-position="right" label-width="130px"
+               label-lineHight="20px" v-loading="assignedLoading">
         <div>
           <!--请选择买家想要购买的企业信息-->
           <p style="text-align: center;">{{$t('order.selectBusinessList')}}</p>
@@ -184,23 +241,25 @@
         <div class="formRow">
           <!--订单金额-->
           <el-form-item :label="$t('order.orderAmount')" prop="pay_amount">
-            <el-input  v-enter-number  maxLength="8" v-model="orderEdit.pay_amount" :placeholder="$t('order.orderAmount')" style="width:210px;"
+            <el-input v-enter-number maxLength="8" v-model="orderEdit.pay_amount" :placeholder="$t('order.orderAmount')"
+                      style="width:210px;"
                       class="filter-item">
-            <template slot="prepend"> $ </template>
+              <template slot="prepend"> $</template>
             </el-input>
           </el-form-item>
           <!--是否已支付-->
-          <el-form-item :label="$t('table.PaymentStatus')" prop="paid">
-            <el-select v-model="orderEdit.paid" style="width:210px;" class="filter-item">
-              <el-option :label="$t('table.Paymented')" :value="1"/>
-              <el-option :label="$t('table.Unpaid')" :value="0"/>
-            </el-select>
-          </el-form-item>
+          <!--<el-form-item :label="$t('table.PaymentStatus')" prop="paid">-->
+          <!--<el-select v-model="orderEdit.paid" style="width:210px;" class="filter-item">-->
+          <!--<el-option :label="$t('table.Paymented')" :value="1"/>-->
+          <!--<el-option :label="$t('table.Unpaid')" :value="0"/>-->
+          <!--</el-select>-->
+          <!--</el-form-item>-->
         </div>
         <div class="formRow">
-          <!--订单金额-->
+          <!--备注-->
           <el-form-item :label="$t('order.remarks')" style="width: 100%;">
-            <el-input type="textarea" :autosize="{ minRows: 4}" :placeholder="$t('order.remarks')" v-model="orderEdit.remark"></el-input>
+            <el-input type="textarea" :autosize="{ minRows: 4}" :placeholder="$t('order.remarks')"
+                      v-model="orderEdit.remark"></el-input>
           </el-form-item>
         </div>
 
@@ -213,9 +272,10 @@
 
     </el-dialog>
     <!--查看订单弹窗-->
-    <el-dialog :title="$t('order.viewOrder')" :visible.sync="dialogviewOrder" width="1000px" style="padding-bottom: 50px" center :close-on-click-modal="false">
+    <el-dialog :title="$t('order.viewOrder')" :visible.sync="dialogviewOrder" width="900px" style="padding-bottom: 50px"
+               center :close-on-click-modal="false">
       <div style="padding-bottom: 100px" v-loading="viewOrderLoading">
-        <el-form label-position="left" inline  class="demo-table-expand">
+        <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item :label="$t('buyers.Name')+'：'">
             <!--买家名称-->
             <span v-if="viewOrderData.buyer">{{ viewOrderData.buyer.buyer }}</span>
@@ -335,7 +395,7 @@
                   <!--房地产估价-->
                   <span>{{ props.row.value_of_real_estate }}</span>
                 </el-form-item>
-                <el-form-item :label="$t('employeeEdit.ServiceFee')">
+                <el-form-item :label="$t('employeeEdit.ServiceFee')" v-if="role==1">
                   <!--服务费-->
                   <span>{{ props.row.commission }} </span>
                 </el-form-item>
@@ -373,7 +433,8 @@
             min-width="200">
             <template slot-scope="scope">
               <el-tooltip class="item" effect="dark" :content="scope.row.company" placement="top-start">
-                <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;">{{scope.row.company}}</span>
+                <span
+                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;">{{scope.row.company}}</span>
               </el-tooltip>
             </template>
           </el-table-column>
@@ -384,7 +445,8 @@
             min-width="200">
             <template slot-scope="scope">
               <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
-                <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;">{{scope.row.title}}</span>
+                <span
+                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;">{{scope.row.title}}</span>
               </el-tooltip>
             </template>
           </el-table-column>
@@ -420,6 +482,163 @@
       </div>
     </el-dialog>
 
+    <!--支付信息弹窗-->
+    <el-dialog :title="$t('order.payInformation')" :visible.sync="dialogViewPayInformation" width="800px"
+               style="padding-bottom: 50px" center :close-on-click-modal="false">
+      <div style="padding-bottom: 50px" v-loading="payInformationLoading">
+        <!--添加支付记录-->
+        <div style="font-weight: bold;margin: 20px 0;">
+          {{$t('order.payRecord')}}
+          <el-button v-if="payRecordData.length<2" class="filter-item" style="margin-left: 10px;" type="primary"
+                     size="mini" icon="el-icon-plus" @click="addPayRecord">{{ $t('order.addPayRecord') }}
+          </el-button>
+        </div>
+        <el-table
+          :data="payRecordData"
+          border
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="company"
+            align="center"
+            :label="$t('order.payContent')"
+            min-width="200">
+            <template slot-scope="scope">
+              <span v-if="scope.row.payment==1" style="color: #409eff">{{$t('order.informationFee')}}</span>
+              <span v-if="scope.row.payment==2" style="color: #67c23a">{{$t('order.investigationFee')}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="price"
+            align="center"
+            :label="$t('order.payAmount')+'($)'"
+            min-width="150">
+            <template slot-scope="{row}">
+              <span v-if="row.payment==1" style="color: #409eff">{{toThousands(1000)}}</span>
+              <span v-if="row.payment==2" style="color: #67c23a">{{toThousands(3000)}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="listing"
+            align="center"
+            :label="$t('order.time')"
+            min-width="150">
+            <template slot-scope="{row}">
+              <span>{{row.updated_at}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="status"
+            align="center"
+            :label="$t('table.operate')"
+            fixed="right">
+            <template slot-scope="scope">
+              <!--删除按钮-->
+              <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                         @click="payRecordDel(scope)"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!--添加附件记录-->
+        <div style="font-weight: bold;margin: 20px 0;">
+          {{$t('order.FileRecords')}}
+          <el-button class="filter-item" style="margin-left: 10px;" type="primary" size="mini" icon="el-icon-plus"
+                     @click="addFileRecords">{{ $t('order.addFile') }}
+          </el-button>
+        </div>
+        <el-table
+          :data="FileRecordsData"
+          border
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="company"
+            align="center"
+            :label="$t('order.File')"
+            min-width="200">
+            <template slot-scope="scope">
+              <span style="color: #409eff;">{{scope.row.name}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="remark"
+            align="center"
+            :label="$t('order.remarks')"
+            min-width="150">
+            <template slot-scope="{row}">
+              <!--备注-->
+              <span>{{ row.remark }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="listing"
+            align="center"
+            :label="$t('order.time')"
+            min-width="150">
+            <template slot-scope="{row}">
+              <span>{{row.created_at}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="status"
+            align="center"
+            :label="$t('table.operate')"
+            min-width="100"
+            fixed="right">
+            <template slot-scope="scope">
+              <!--下载按钮-->
+              <el-button size="medium" type="primary" :title="$t('table.download')" icon="el-icon-download" circle plain
+                         @click="viewFile(scope)"></el-button>
+              <!--删除按钮-->
+              <el-button size="medium" type="danger" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+                         @click="FileRecordsDel(scope)"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-dialog>
+    <!--添加支付记录弹窗-->
+    <el-dialog :title="$t('order.addPayRecord')" :visible.sync="dialogAddPayRecord" width="600px" center
+               :close-on-click-modal="false">
+      <div>
+        <p>1.{{$t('order.informationFeeText')}}</p>
+        <p>2.{{$t('order.investigationFeeText')}}</p>
+      </div>
+      <div style="padding-bottom: 10px">
+        <el-select v-model="selectPayContent" clearable style="width: 100%" class="filter-item">
+          <el-option :label="$t('order.informationFee')" :value="1"/>
+          <el-option :label="$t('order.investigationFee')" :value="2"/>
+        </el-select>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="dialogAddPayRecord = false">{{ $t('table.cancel') }}</el-button>
+        <el-button size="small" type="primary" @click="addPayRecordSave()">{{ $t('order.addPayRecord') }}</el-button>
+      </div>
+    </el-dialog>
+    <!--添加附件弹窗-->
+    <el-dialog :title="$t('order.addFile')" :visible.sync="dialogAddFileRecords" width="600px"
+               style="padding-bottom: 50px" center :close-on-click-modal="false">
+      <div style="padding-bottom: 30px">
+        <div class="updateFile">
+          <input class="fileUp" type="file" @change="update" accept=".doc,.txt,.pdf,image/*"/>
+          <!--支持jpg/png/gif格式-->
+          <input class="fileUpinput" readonly="readonly" type="text" v-model="fileName"
+                 :placeholder="$t('order.selectFile')"/>
+        </div>
+
+        <div class="remarksBox">
+          <!--备注-->
+          <span style="line-height: 40px;">{{$t('order.remarks')}}</span>
+          <el-input type="textarea" :autosize="{ minRows: 4}" :placeholder="$t('order.remarks')"
+                    v-model="FileRecordsRemark"></el-input>
+        </div>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="dialogAddFileRecords = false">{{ $t('table.cancel') }}</el-button>
+        <el-button size="small" type="primary" @click="addFileRecordsSave()">{{ $t('order.addFile') }}</el-button>
+      </div>
+    </el-dialog>
+
 
   </div>
 </template>
@@ -427,7 +646,24 @@
 <script>
   import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { getOrderList,addOrderApi,updateOrderApi,deleteOrderApi,showOrderApi,getAllBusinessApi,changeStatusApi,changeAuditApi,viewAuditOrderApi } from '@/api/order'
+  import {
+    getOrderList,
+    addOrderApi,
+    updateOrderApi,
+    deleteOrderApi,
+    showOrderApi,
+    getAllBusinessApi,
+    changeStatusApi,
+    changeAuditApi,
+    viewAuditOrderApi,
+    viewPaymentInformationApi,
+    addPayRecordApi,
+    delPayRecordApi,
+    orderUploadFileApi,
+    viewFileApi,
+    delOrderFileApi
+  } from '@/api/order'
+
   export default {
     name: "buyerOrder",
     components: {
@@ -435,29 +671,43 @@
     },
     data() {
       return {
+        params: '',
+
+        isBuyer: false,
+
         role: '',
         business: [],
         assignedLoading: false,
 
+        payInformationLoading: false,
+        dialogViewPayInformation: false,
+        dialogAddPayRecord: false,
+        dialogAddFileRecords: false,
+        payRecordData: [],//支付记录数据
+        selectPayContent: 1,//支付记录内容
+        FileRecordsData: [],//附件记录数据
+        fileName: '',
+        FileRecordsRemark: '',
+
         dialogviewOrder: false,
         viewOrderLoading: false,
-        viewOrderData:'',
+        viewOrderData: '',
 
         dialogFormVisible: false,
         AssignVisible: false,
         orderId: '',
         orderEdit: {
-          buyer_id:'',
-          paid:1,
-          pay_amount:'',
-          status:1,
-          remark:'',
-          business_ids:[],
+          buyer_id: '',
+          paid: 0,
+          pay_amount: '',
+          status: 1,
+          remark: '',
+          business_ids: [],
         },
 
         listQuery: {
           page: 1,
-          buyer_id:'',
+          buyer_id: '',
           funds_available_from: '',
           funds_available_to: '',
           funds_verified: '0',
@@ -469,26 +719,197 @@
         tableData: [],
 
         rules: {
-          pay_amount: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
-          paid: [{ required: true, message: this.$t('empty'), trigger: 'change'}],
+          pay_amount: [{required: true, message: this.$t('empty'), trigger: 'blur'}],
+          paid: [{required: true, message: this.$t('empty'), trigger: 'change'}],
         }
       }
     },
-    mounted(){
-      this.orderEdit.buyer_id=this.$route.query.id;
-      this.listQuery.buyer_id=this.$route.query.id;
-      this.getList({buyer_id:this.$route.query.id,});
-      this.getAllBusiness();
+    mounted() {
+      this.params = new FormData(); // 创建form对象
+      this.orderEdit.buyer_id = this.$route.query.id;
+      this.listQuery.buyer_id = this.$route.query.id;
+      this.getList({buyer_id: this.$route.query.id,});
 
       this.role = store.getters && store.getters.role
     },
     methods: {
+      /// 导出pdf
+      ExportPDF(scope) {
+        viewFileApi({file_id:scope.row.file_id}).then(response => {
+          console.log('viewFileApi', response);
+          const contents = response;
+          const blob = new Blob([contents]);
+          let pdfUrl = URL.createObjectURL(blob);
+          window.open('/web/viewer.html?file=' + encodeURIComponent(pdfUrl));
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+      // 打开支付信息弹窗
+      payInformationOpen(scope) {
+        this.order_id = scope.row.id;
+        this.dialogViewPayInformation = true;
+        this.getPayInformation(scope.row.id);
+      },
+      // 获取支付信息Data
+      getPayInformation(id) {
+        let that = this;
+        this.payInformationLoading = true;
+        viewPaymentInformationApi({id: id}).then(response => {
+          that.payInformationLoading = false;
+          console.log('viewPaymentInformationApi', response);
+          that.payRecordData = response.data.payment;
+          that.FileRecordsData = response.data.files;
+        }).catch(err => {
+          that.payInformationLoading = false;
+          console.log(err);
+        })
+      },
+      // 打开添加支付记录弹窗
+      addPayRecord() {
+        this.dialogAddPayRecord = true;
+      },
+      // 添加支付记录保存
+      addPayRecordSave() {
+        let that = this;
+        addPayRecordApi({order_id: this.order_id, payment: this.selectPayContent}).then(response => {
+          that.dialogAddPayRecord = false;
+          that.getPayInformation(that.order_id);
+          console.log('addPayRecordApi', response);
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+        }).catch(err => {
+          that.dialogAddPayRecord = false;
+          console.log(err);
+        })
+      },
+      // 删除支付记录
+      payRecordDel(scope) {
+        let that = this;
+        that.$confirm(that.$t('delMsg'), that.$t('Confirmation'), {
+          distinguishCancelAndClose: true,
+          confirmButtonText: that.$t('confirm'),
+          cancelButtonText: that.$t('cancel')
+        }).then(() => {
+          delPayRecordApi({id: scope.row.id}).then(response => {
+            console.log('delPayRecordApi', response);
+            that.getPayInformation(that.order_id);
+            that.$notify({
+              showClose: true,
+              message: that.$t('deleted'),
+              type: 'success'
+            });
+          }).catch(err => {
+            console.log(err);
+          })
+        }).catch(action => {
+        });
+
+      },
+
+      // 打开添加附件弹窗
+      addFileRecords() {
+        this.dialogAddFileRecords = true;
+        this.fileName = '';
+        this.FileRecordsRemark = '';
+        this.params = new FormData(); // 创建form对象
+      },
+      // 上传附件按钮
+      update(e) {
+        let that = this;
+        let file = e.target.files[0];
+        that.params.append('file', file, file.name); // 通过append向form对象添加数据
+        that.fileName = file.name;
+        e.target.value='';//防止两次提交同一个文件时不生效
+      },
+      // 添加附件保存
+      addFileRecordsSave() {
+        let that = this;
+        if (!that.fileName) {
+          that.$notify({
+            showClose: true,
+            message: that.$t('order.pleaseSelectFile'),
+            type: 'warning'
+          });
+          return false;
+        }
+        that.params.append('order_id', that.order_id);
+        that.params.append('remark', that.FileRecordsRemark);
+        orderUploadFileApi(that.params).then(response => {
+          that.dialogAddFileRecords = false;
+          that.getPayInformation(that.order_id);
+          console.log('orderUploadFileApi', response);
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+          that.params ='';
+        }).catch(err => {
+          that.dialogAddFileRecords = false;
+          that.params ='';
+          console.log(err);
+        })
+      },
+      // 查看附件
+      viewFile(scope){
+        viewFileApi({file_id:scope.row.file_id}).then(response => {
+          console.log('viewFileApi', response);
+          const contents = response;
+          const blob = new Blob([contents]);
+          const fileName = scope.row.name;
+          if ('download' in document.createElement('a')) { // 非IE下载
+            if(scope.row.name.indexOf('.pdf')!==-1){ //如果是pdf文件，先预览
+              window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+            }else{ //不是pdf文件，直接下载
+              const elink = document.createElement('a');
+              elink.download = fileName;
+              elink.style.display = 'none';
+              elink.href = URL.createObjectURL(blob);
+              document.body.appendChild(elink);
+              elink.click();
+              URL.revokeObjectURL(elink.href); // 释放URL 对象
+              document.body.removeChild(elink)
+            }
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, fileName)
+          }
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+      //附件记录删除
+      FileRecordsDel(scope) {
+        let that = this;
+        that.$confirm(that.$t('delMsg'), that.$t('Confirmation'), {
+          distinguishCancelAndClose: true,
+          confirmButtonText: that.$t('confirm'),
+          cancelButtonText: that.$t('cancel')
+        }).then(() => {
+          delOrderFileApi({id: scope.row.id}).then(response => {
+            console.log('delOrderFileApi', response);
+            that.getPayInformation(that.order_id);
+            that.$notify({
+              showClose: true,
+              message: that.$t('deleted'),
+              type: 'success'
+            });
+          }).catch(err => {
+            console.log(err);
+          })
+        }).catch(action => {
+        });
+      },
+
       // 穿梭框
       leftChoose(e) {
-        let canlength=10-this.orderEdit.business_ids.length;
-        if(e.length>canlength){
-          if(e.length>=1){
-            if(e.length<=11){
+        let canlength = 10 - this.orderEdit.business_ids.length;
+        if (e.length > canlength) {
+          if (e.length >= 1) {
+            if (e.length <= 11) {
               this.$notify({
                 showClose: true,
                 message: this.$t('onlyChoose10'),
@@ -501,41 +922,44 @@
         }
       },
       // 穿梭框获取所有企业列表
-      getAllBusiness(){
-        let that=this;
-        getAllBusinessApi ().then(response => {
-          console.log('getAllBusinessApi',response);
-          that.business=response.data;
+      getAllBusiness() {
+        let that = this;
+        that.assignedLoading = true;
+        getAllBusinessApi().then(response => {
+          that.assignedLoading = false;
+          console.log('getAllBusinessApi', response);
+          that.business = response.data;
         }).catch(err => {
+          that.assignedLoading = false;
           console.log(err);
         })
       },
 
       // 弹出框关闭前
       dialogClose(done) {
-        this.orderEdit =  {
-          buyer_id:this.$route.query.id,
-          paid:1,
-          pay_amount:'',
-          status:1,
-          remark:'',
-          business_ids:[],
+        this.orderEdit = {
+          buyer_id: this.$route.query.id,
+          paid: 0,
+          pay_amount: '',
+          status: 1,
+          remark: '',
+          business_ids: [],
         };
         done();
       },
       // 弹出框保存
-      orderEditSave(){
-        let that=this;
+      orderEditSave() {
+        let that = this;
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             let data = Object.assign({}, that.orderEdit);
-            data.business_ids=JSON.stringify( data.business_ids);
+            data.business_ids = JSON.stringify(data.business_ids);
             if (that.orderId) {
-              data.order_id=that.orderId;
+              data.order_id = that.orderId;
               updateOrderApi(data).then(response => {
                 console.log('updateOrderApi', response);
                 that.dialogFormVisible = false;
-                that.getList({buyer_id:that.$route.query.id,});
+                that.getList({buyer_id: that.$route.query.id,});
                 that.$notify({
                   showClose: true,
                   message: that.$t('Successful'),
@@ -546,12 +970,12 @@
               })
             } else {
               let data2 = Object.assign({}, that.orderEdit);
-              data2.business_ids=JSON.stringify( data2.business_ids);
+              data2.business_ids = JSON.stringify(data2.business_ids);
               delete data2.order_id;
               addOrderApi(data2).then(response => {
                 console.log('addOrderApi', response);
                 that.dialogFormVisible = false;
-                that.getList({buyer_id:that.$route.query.id,});
+                that.getList({buyer_id: that.$route.query.id,});
                 that.$notify({
                   showClose: true,
                   message: that.$t('Successful'),
@@ -566,37 +990,39 @@
       },
 
       handleFilter() {
-        this.listQuery.page=1;
+        this.listQuery.page = 1;
         this.getList(this.listQuery);
       },
       // 添加订单
       handleCreate() {
-        this.dialogFormVisible=true;
-        this.orderId='';
-        this.orderEdit =  {
-          buyer_id:this.$route.query.id,
-          paid:1,
-          pay_amount:'',
-          status:1,
-          remark:'',
-          business_ids:[],
+        this.dialogFormVisible = true;
+        this.getAllBusiness();
+        this.orderId = '';
+        this.orderEdit = {
+          buyer_id: this.$route.query.id,
+          paid: 0,
+          pay_amount: '',
+          status: 1,
+          remark: '',
+          business_ids: [],
         };
 
       },
       // 修改订单
       modifyOrder(scope) {
-        let that=this;
-        this.dialogFormVisible=true;
-        this.orderId=scope.row.id;
+        let that = this;
+        this.getAllBusiness();
+        this.dialogFormVisible = true;
+        this.orderId = scope.row.id;
         that.assignedLoading = true;
-        showOrderApi ({id:scope.row.id}).then(response => {
-          console.log('showOrderApi',response);
+        showOrderApi({id: scope.row.id}).then(response => {
+          console.log('showOrderApi', response);
           that.assignedLoading = false;
-          that.orderEdit.id=response.data.id;
-          that.orderEdit.paid=response.data.paid;
-          that.orderEdit.pay_amount=response.data.pay_amount;
-          that.orderEdit.remark=response.data.remark;
-          that.orderEdit.business_ids=response.data.order_detail;
+          that.orderEdit.id = response.data.id;
+          that.orderEdit.paid = response.data.paid;
+          that.orderEdit.pay_amount = response.data.pay_amount;
+          that.orderEdit.remark = response.data.remark;
+          that.orderEdit.business_ids = response.data.order_detail;
         }).catch(err => {
           console.log(err);
           that.assignedLoading = false;
@@ -604,12 +1030,12 @@
       },
       // 审核通过后查看订单
       viewOrder(scope) {
-        let that=this;
-        this.dialogviewOrder=true;
+        let that = this;
+        this.dialogviewOrder = true;
         that.viewOrderLoading = true;
-        viewAuditOrderApi ({id:scope.row.id}).then(response => {
-          console.log('viewAuditOrderApi',response);
-          that.viewOrderData=response.data;
+        viewAuditOrderApi({id: scope.row.id}).then(response => {
+          console.log('viewAuditOrderApi', response);
+          that.viewOrderData = response.data;
           that.viewOrderLoading = false;
         }).catch(err => {
           that.viewOrderLoading = false;
@@ -618,19 +1044,19 @@
       },
 
       // 审核通过
-      audited(row,status){
+      audited(row, status) {
         let that = this;
-        let data={id:row.row.id,status:status};
-        that.$confirm(status==2?that.$t('auditedOrderMsg'):status==3?that.$t('rejectOrderMsg'):'', that.$t('Confirmation'), {
+        let data = {id: row.row.id, status: status};
+        that.$confirm(status == 2 ? that.$t('auditedOrderMsg') : status == 3 ? that.$t('rejectOrderMsg') : '', that.$t('Confirmation'), {
           distinguishCancelAndClose: true,
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
           that.listLoading = true;
-          changeAuditApi (data).then(response => {
-            console.log('changeAuditApi',response);
+          changeAuditApi(data).then(response => {
+            console.log('changeAuditApi', response);
             that.listLoading = false;
-            that.getList({buyer_id:that.$route.query.id,});
+            that.getList({buyer_id: that.$route.query.id,});
             that.$notify({
               showClose: true,
               message: that.$t('Successful'),
@@ -640,18 +1066,19 @@
             that.listLoading = false;
             console.log(err);
           })
-        }).catch(action => {});
+        }).catch(action => {
+        });
       },
 
       // 获取买家列表
       getList(data) {
-        let that=this;
+        let that = this;
         this.listLoading = true;
-        getOrderList (data).then(response => {
-          console.log('getOrderList',response);
+        getOrderList(data).then(response => {
+          console.log('getOrderList', response);
           that.listLoading = false;
-          that.total=response.data.total;
-          that.tableData=response.data.data;
+          that.total = response.data.total;
+          that.tableData = response.data.data;
         }).catch(err => {
           console.log(err);
           that.listLoading = false
@@ -659,19 +1086,19 @@
       },
 
       //修改订单状态
-      changeStatus(row,status){
+      changeStatus(row, status) {
         let that = this;
-        let data={id:row.row.id,status:status};
-        that.$confirm(status==1?that.$t('submitOrderMsg'):status==0?that.$t('cancelOrderMsg'):'', that.$t('Confirmation'), {
+        let data = {id: row.row.id, status: status};
+        that.$confirm(status == 1 ? that.$t('submitOrderMsg') : status == 0 ? that.$t('cancelOrderMsg') : '', that.$t('Confirmation'), {
           distinguishCancelAndClose: true,
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
           that.listLoading = true;
-          changeStatusApi (data).then(response => {
-            console.log('changeStatus',response);
+          changeStatusApi(data).then(response => {
+            console.log('changeStatus', response);
             that.listLoading = false;
-            that.getList({buyer_id:that.$route.query.id,});
+            that.getList({buyer_id: that.$route.query.id,});
             that.$notify({
               showClose: true,
               message: that.$t('Successful'),
@@ -681,7 +1108,8 @@
             that.listLoading = false;
             console.log(err);
           })
-        }).catch(action => {});
+        }).catch(action => {
+        });
       },
 
       handleDelete(row) {
@@ -691,10 +1119,10 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          deleteOrderApi ({id:row.row.id}).then(response => {
-            console.log('delBuyer',response);
-            that.listQuery.page=1;
-            that.getList({buyer_id:that.$route.query.id,});
+          deleteOrderApi({id: row.row.id}).then(response => {
+            console.log('delBuyer', response);
+            that.listQuery.page = 1;
+            that.getList({buyer_id: that.$route.query.id,});
             that.$notify({
               showClose: true,
               message: that.$t('deleted'),
@@ -703,13 +1131,43 @@
           }).catch(err => {
             console.log(err);
           })
-        }).catch(action => {});
+        }).catch(action => {
+        });
       },
     }
   }
 </script>
 
 <style scoped>
+  .updateFile {
+    width: 100%;
+    position: relative;
+    display: flex;
+  }
+
+  .fileUpinput {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid #dfdfdf;
+    padding-left: 20px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+
+  .fileUp {
+    position: absolute;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    opacity: 0;
+    z-index: 4;
+    cursor: pointer;
+  }
+
   .demo-table-expand {
     overflow: hidden;
   }
@@ -722,20 +1180,33 @@
     float: left;
   }
 
-  .formRow{
-    display: flex;justify-content: space-between;margin-right: 50px;
-  }
-  .formItem{
-    width: 49%;display: flex;justify-content: space-between;
-  }
-  .formItemSpan{
-    font-size: 14px;width: 140px;display: inline-block;text-align: right; margin: 10px 0;padding-right: 15px;font-weight: bold;
+  .formRow {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
   }
 
-  .itemBox{
+  .formItem {
+    width: 49%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .formItemSpan {
+    font-size: 14px;
+    width: 140px;
+    display: inline-block;
+    text-align: right;
+    margin: 10px 0;
+    padding-right: 15px;
+    font-weight: bold;
+  }
+
+  .itemBox {
     margin-top: 30px;
   }
-  .formTitle{
+
+  .formTitle {
     line-height: 50px;
     border: 1px solid #DCDFE6;
     border-bottom: transparent;

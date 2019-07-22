@@ -12,9 +12,9 @@
 
         <screenfull v-if="device!=='mobile'" id="screenfull" class="right-menu-item hover-effect" />
 
-        <!--<el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">-->
-        <!--<size-select id="size-select" class="right-menu-item hover-effect" />-->
-        <!--</el-tooltip>-->
+        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
+        <size-select id="size-select" class="right-menu-item hover-effect" />
+        </el-tooltip>
 
         <lang-select class="right-menu-item hover-effect" />
         <el-tag style="margin-top: 11px;margin-right: 10px" type="primary">
