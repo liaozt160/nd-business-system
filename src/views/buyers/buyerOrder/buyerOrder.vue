@@ -863,7 +863,11 @@
           const fileName = scope.row.name;
           if ('download' in document.createElement('a')) { // 非IE下载
             if(scope.row.name.indexOf('.pdf')!==-1){ //如果是pdf文件，先预览
-              window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
+                window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              } else{
+                window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              }
             }else{ //不是pdf文件，直接下载
               const elink = document.createElement('a');
               elink.download = fileName;
