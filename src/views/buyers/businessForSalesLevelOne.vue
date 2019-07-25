@@ -96,6 +96,7 @@
             <el-button
               size="mini"
               type="success"
+              :disabled="scope.row.status!=1"
               @click="openSelectBuyer(scope)">{{$t('AddAttention')}}
             </el-button>
           </template>

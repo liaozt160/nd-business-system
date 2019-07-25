@@ -132,7 +132,7 @@
           :label="$t('broker')"
           min-width="200">
           <template slot-scope="{row}">
-            <span v-if="row.account">{{row.account.name}}</span>
+            <span v-if="row.account_name">{{row.account_name}}</span>
             <span v-else>{{$t('Unknown')}}</span>
           </template>
         </el-table-column>

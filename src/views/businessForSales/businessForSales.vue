@@ -155,11 +155,22 @@
           prop="account.name"
           align="center"
           :label="$t('broker')"
-          min-width="200">
+          min-width="150">
           <template slot-scope="{row}">
-            <span v-if="row.account">{{row.account.name}}</span>
+            <span v-if="row.account_name">{{row.account_name}}</span>
             <span v-else>{{$t('Unknown')}}</span>
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="title"
+          align="center"
+          :label="$t('employeeEdit.title')"
+          min-width="200">
+          <template slot-scope="scope">
+          <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
+            <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.title}}</span>
+          </el-tooltip>
+        </template>
         </el-table-column>
         <el-table-column
           prop="company"

@@ -200,6 +200,7 @@ export default {
   order:{
     payInformation: 'Pay information',//付款信息
     payRecord: 'Pay Record',//支付记录
+    Payment: 'Payment',//支付款项
     addPayRecord: 'Add Pay Record',//添加支付记录
     payContent: 'Pay Content',//支付内容
     informationFee: 'Information Fee',//信息费
@@ -227,8 +228,16 @@ export default {
     auditStatus:'Audit Status',//审核状态
     audited:'Audited',//已审核
     notAudited:'Not Audited',//未审核
-    Audit:'Audit',//审核
+    Audit:'Audit Approval',//审核通过
     AuditInProgress:'Pending',//审核中
+    PaidInformationFee:'Paid information fee',//已支付信息费
+    ExpensesPaid:'Expenses paid',//已支付考察费
+    PendingInformationFee:'Pending information fee',//待审核信息费
+    ReviewedInformationFee:'Reviewed information fee',//已审核信息费
+    InformationFeeReviewFailed:'Information fee review failed',//信息费审核不通过
+    PendingInspectionFee:'Pending inspection fee',//待审核考察费
+    AuditedInspectionFee:'Audited inspection fee',//已审核考察费
+    InspectionFeeReviewFailed:'Inspection fee review failed',//考察费审核不通过
     reject:'Reject',//拒绝
     notSubmitted:'Not Submitted',//未提交
     submitOrder:'Submit Order',//提交订单

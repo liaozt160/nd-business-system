@@ -5,6 +5,24 @@ import {getToken} from '@/utils/auth'
 import qs from 'qs'
 import Cookies from 'js-cookie'
 
+
+/***
+ * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
+ * │Esc│   │ F1│ F2│ F3│ F4│ │ F5│ F6│ F7│ F8│ │ F9│F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
+ * └───┘   └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┘  └┘    └┘    └┘
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐ ┌───┬───┬───┐ ┌───┬───┬───┬───┐
+ * │~ `│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤ ├───┼───┼───┤ ├───┼───┼───┼───┤
+ * │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│  |  │ │Del│End│PDn│ │ 7 │ 8 │ 9 │   │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤ └───┴───┴───┘ ├───┼───┼───┤ + │
+ * │ Caps │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│"  │ Enter  │               │ 4 │ 5 │ 6 │   │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────────┤     ┌───┐     ├───┼───┼───┼───┤
+ * │ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│  Shift   │     │ ↑ │     │ 1 │ 2 │ 3 │   │
+ * ├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
+ * │ Ctrl│    │Alt │         Space         │ Alt│    │    │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
+ * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
+ */
+
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // create an axios instance
 let serverUrl = '';
@@ -18,7 +36,7 @@ const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.newdreamservices.com', // url = base url + request url
   baseURL: process.env.NODE_ENV === 'development' ? 'api/' : serverUrl, // url = base url + request url
   timeout: 30000 // request timeout
-})
+});
 // request interceptor
 service.interceptors.request.use(
   config => {
@@ -46,6 +64,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data;
     if(!res.code){//下载文件
+      console.log('文件流===',res)
       return res
     }else if (res.code !== 1001) {
         Message({

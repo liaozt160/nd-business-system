@@ -121,4 +121,13 @@ export function delOrderFileApi(data) {
     data
   })
 }
+//查看下载订单企业信息pdf文件
+export function showDetailPdfApi(data) {
+  return request({
+    url: '/api/order/detail/pdf',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}
 

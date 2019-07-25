@@ -32,6 +32,10 @@ import * as filters from './filters' // global filters
 // if (process.env.NODE_ENV === 'production') {
 //   mockXHR()
 // }
+/***
+ * When I wrote this, only God and I understood what I was doing
+ * Now, God only knows
+ */
 Vue.directive('enterNumber', {
   inserted: function (el) {
     el.addEventListener("keypress",function(e){
