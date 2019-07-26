@@ -752,7 +752,7 @@
                style="padding-bottom: 50px" center :close-on-click-modal="false">
       <div style="padding-bottom: 30px">
         <div class="updateFile">
-          <input class="fileUp" type="file" @change="update" accept=".doc,.txt,.pdf,image/*"/>
+          <input class="fileUp" type="file" @change="update" accept=".xls,.doc,.ppt,.txt,.pdf,image/*"/>
           <!--支持jpg/png/gif格式-->
           <input class="fileUpinput" readonly="readonly" type="text" v-model="fileName"
                  :placeholder="$t('order.selectFile')"/>

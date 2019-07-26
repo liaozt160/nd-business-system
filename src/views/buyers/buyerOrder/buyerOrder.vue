@@ -767,7 +767,7 @@
                style="padding-bottom: 50px" center :close-on-click-modal="false">
       <div style="padding-bottom: 30px">
         <div class="updateFile">
-          <input class="fileUp" type="file" @change="update" accept=".doc,.txt,.pdf,image/*"/>
+          <input class="fileUp" type="file" @change="update" accept=".xls,.doc,.ppt,.txt,.pdf,image/*"/>
           <!--支持jpg/png/gif格式-->
           <input class="fileUpinput" readonly="readonly" type="text" v-model="fileName"
                  :placeholder="$t('order.selectFile')"/>
@@ -980,6 +980,14 @@
       update(e) {
         let that = this;
         let file = e.target.files[0];
+        if(file.size/1000/1000>1){//文件大于10M
+          that.$notify({
+            showClose: true,
+            message: that.$t('order.ExcessiveFileSize'),
+            type: 'warning'
+          });
+          return false;
+        }
         that.params.append('file', file, file.name); // 通过append向form对象添加数据
         that.fileName = file.name;
         e.target.value='';//防止两次提交同一个文件时不生效
