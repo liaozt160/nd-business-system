@@ -35,7 +35,7 @@ if (window.location.origin.indexOf('dev.newdreamservices.com') != -1) {
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'development'?'api/':'https://dev.newdreamservices.com', // url = base url + request url
   baseURL: process.env.NODE_ENV === 'development' ? 'api/' : serverUrl, // url = base url + request url
-  timeout: 30000 // request timeout
+  timeout: 300000 // request timeout
 });
 // request interceptor
 service.interceptors.request.use(
