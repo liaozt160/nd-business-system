@@ -44,11 +44,11 @@
           prop="paid"
           align="center"
           :label="$t('order.Payment')"
-          min-width="130">
+          min-width="150">
           <!--支付款项-->
           <template slot-scope="scope">
-            <el-tag type="success" style="width: 100px" v-if="scope.row.paid==2">{{$t('order.investigationFee')}}</el-tag>
-            <el-tag type="primary" style="width: 100px" v-if="scope.row.paid==1">{{$t('order.informationFee')}}</el-tag>
+            <el-tag type="success" style="width: 120px" v-if="scope.row.paid==2">{{$t('order.investigationFee')}}</el-tag>
+            <el-tag type="primary" style="width: 120px" v-if="scope.row.paid==1">{{$t('order.informationFee')}}</el-tag>
           </template>
         </el-table-column>
         <!--<el-table-column-->
@@ -419,8 +419,8 @@
           <el-form-item :label="$t('order.Payment')+'：'">
             <!--支付款项-->
             <template>
-              <el-tag type="success" style="text-align:center;width: 100px" v-if="viewOrderData.paid==2">{{$t('order.investigationFee')}}</el-tag>
-              <el-tag type="primary" style="text-align:center;width: 100px" v-if="viewOrderData.paid==1">{{$t('order.informationFee')}}</el-tag>
+              <el-tag type="success" style="text-align:center;width: 120px" v-if="viewOrderData.paid==2">{{$t('order.investigationFee')}}</el-tag>
+              <el-tag type="primary" style="text-align:center;width: 120px" v-if="viewOrderData.paid==1">{{$t('order.informationFee')}}</el-tag>
             </template>
           </el-form-item>
           <!--<el-form-item :label="$t('table.PaymentStatus')+'：'">-->
@@ -664,7 +664,7 @@
             fixed="right">
             <template slot-scope="scope">
               <!--删除按钮-->
-              <el-button size="medium" type="danger" :disabled="scope.row.verification==1" :title="$t('table.delete')" icon="el-icon-delete" circle plain
+              <el-button size="medium" type="danger" :disabled="scope.row.verification==1||scope.row.payment==1" :title="$t('table.delete')" icon="el-icon-delete" circle plain
                          @click="payRecordDel(scope)"></el-button>
             </template>
           </el-table-column>

@@ -56,15 +56,16 @@ service.interceptors.request.use(
     console.log(error); // for debug
     return Promise.reject(error)
   }
-)
+);
 
 
 // response interceptor
 service.interceptors.response.use(
   response => {
     const res = response.data;
+    // console.log('response===',response);
     if(!res.code){//下载文件
-      console.log('文件流===',res)
+      console.log('文件流===',res);
       return res
     }else if (res.code !== 1001) {
         Message({
@@ -72,7 +73,6 @@ service.interceptors.response.use(
           type: 'error',
           duration: 5 * 1000
         });
-
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
@@ -99,9 +99,9 @@ service.interceptors.response.use(
       message: error.message,
       type: 'error',
       duration: 5 * 1000
-    })
+    });
     return Promise.reject(error)
   }
-)
+);
 
 export default service
