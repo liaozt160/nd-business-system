@@ -767,7 +767,7 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="dialogAddFileRecords = false">{{ $t('table.cancel') }}</el-button>
-        <el-button size="small" type="primary" @click="addFileRecordsSave()">{{ $t('order.addFile') }}</el-button>
+        <el-button size="small" type="primary" :disabled="AddFileRecordsClick" @click="addFileRecordsSave()">{{ $t('order.addFile') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -835,6 +835,7 @@
         dialogViewPayInformation: false,
         dialogAddPayRecord: false,
         dialogAddFileRecords: false,
+        AddFileRecordsClick: false,
         payRecordData: [],//支付记录数据
         selectPayContent: 1,//支付记录内容
         FileRecordsData: [],//附件记录数据
@@ -992,8 +993,10 @@
         that.params.append('order_id', that.order_id);
         that.params.append('remark', that.FileRecordsRemark);
         that.params.append('file_name', that.fileName);
+        that.AddFileRecordsClick=true;
         orderUploadFileApi(that.params).then(response => {
           that.dialogAddFileRecords = false;
+          that.AddFileRecordsClick=false;
           that.getPayInformation(that.order_id);
           console.log('orderUploadFileApi', response);
           that.$notify({
@@ -1003,6 +1006,7 @@
           });
           that.params ='';
         }).catch(err => {
+          that.AddFileRecordsClick=false;
           that.dialogAddFileRecords = false;
           that.params ='';
           console.log(err);
@@ -1010,6 +1014,8 @@
       },
       // 查看附件
       viewFile(scope){
+        let that=this;
+        that.payInformationLoading=true;
         viewFileApi({file_id:scope.row.file_id}).then(response => {
           console.log('viewFileApi', response);
           const contents = response;
@@ -1035,7 +1041,9 @@
           } else { // IE10+下载
             navigator.msSaveBlob(blob, fileName)
           }
+          that.payInformationLoading=false;
         }).catch(err => {
+          that.payInformationLoading=false;
           console.log(err);
         })
       },
