@@ -980,7 +980,7 @@
       update(e) {
         let that = this;
         let file = e.target.files[0];
-        if(file.size/1000/1000>1){//文件大于10M
+        if(file.size/1000/1000>10){//文件大于10M
           that.$notify({
             showClose: true,
             message: that.$t('order.ExcessiveFileSize'),
