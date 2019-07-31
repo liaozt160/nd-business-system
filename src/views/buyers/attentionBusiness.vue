@@ -1,6 +1,6 @@
 
 <template>
-  <div class="app-container">
+  <div class="app-container" v-loading="pdfLoading">
     <aside>
       <h3 style="text-align: center;">{{$t('route.attentionBusiness')}}</h3>
     </aside>
@@ -14,17 +14,18 @@
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('myRecommendation')" value="1" />
       </el-select>
-
-      <!--<div class="filter-item el-select&#45;&#45;medium">-->
-        <!--<span style="color: #717171;font-size: 14px;">{{$t('table.price')}} ($)</span>-->
-        <!--<el-input v-model="listQuery.price_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>-->
-        <!--~-->
-        <!--<el-input v-model="listQuery.price_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>-->
-      <!--</div>-->
       <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
       <el-button  class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
+
+      <el-button :disabled="selectArray.length==0"  class="filter-item" type="primary" icon="el-icon-printer" @click="handlePrinter">
+        {{$t('order.Print')}}
+      </el-button>
+      <el-button :disabled="selectArray.length==0"  class="filter-item" type="danger" icon="el-icon-delete" @click="handleDelete(selectArrayDel)">
+        {{$t('table.delete')}}
+      </el-button>
+
     </div>
 
     <!--列表-->
@@ -34,7 +35,14 @@
         :data="tableData"
         border
         stripe
+        @selection-change="handleSelectionChange"
         style="width: 100%">
+        <el-table-column
+          type="selection"
+          align="center"
+          fixed="left"
+          width="50">
+        </el-table-column>
         <el-table-column
           prop="listing"
           align="center"
@@ -100,7 +108,7 @@
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}
+              @click="handleDelete(scope)">{{$t('table.delete')}}
             </el-button>
           </template>
         </el-table-column>
@@ -113,7 +121,7 @@
 <script>
   import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList } from '@/api/buyers'
+  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList,attentionPdf } from '@/api/buyers'
   export default {
     name: "attentionBusiness",
     components:{
@@ -121,7 +129,11 @@
     },
     data(){
       return{
+        pdfLoading: false,
+
         role: '',
+        selectArray:[],
+        selectArrayDel:[],
 
         listQuery: {
           page: 1,
@@ -142,22 +154,60 @@
       this.role = store.getters && store.getters.role
     },
     methods:{
+      // 选择事件
+      handleSelectionChange(selectData){
+        this.selectArray=[];
+        this.selectArrayDel=[];
+        for(let i=0,len=selectData.length;i<len;i++){
+          this.selectArray.push(selectData[i].business_id);
+          this.selectArrayDel.push(selectData[i].id)
+        }
+        console.log(selectData,this.selectArray,this.selectArrayDel)
+      },
+      // 打印
+      handlePrinter(){
+        let that = this;
+        this.pdfLoading=true;
+        attentionPdf({ids:JSON.stringify(this.selectArray)}).then(response => {
+          console.log('attentionPdf', response);
+          const contents = response;
+          const blob = new Blob([contents]);
+          if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
+            window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+          } else{
+            window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+          }
+          that.pdfLoading=false;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+      // 筛选
       handleFilter() {
         this.listQuery.page = 1;
         this.getList(this.listQuery);
       },
-
-      handleDelete(index, row) {
+      // 多选删除
+      handleDelete(row) {
         let that = this;
+        let id='';
+        if(Object.prototype.toString.call(row).indexOf('Array')!==-1){
+          id=JSON.stringify(row);
+          console.log('数组',row)
+        }else{
+          id='['+row.row.id+']';
+          console.log('非数组')
+        }
+
         that.$confirm(that.$t('delMsg'), that.$t('Confirmation'), {
           distinguishCancelAndClose: true,
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          delBuyerAttention ({id:row.row.id}).then(response => {
+          delBuyerAttention ({ids:id}).then(response => {
             console.log('delBuyerAttention',response);
             that.listQuery.page=1;
-            that.getList();
+            that.getList(that.listQuery);
             that.$notify({
               showClose: true,
               message: that.$t('deleted'),

@@ -24,6 +24,7 @@ export default {
   agent:'代理人',//代理人
   yes:'是',//是
   no:'没有',//没有
+  NA:'未知',//未知
   view:'查看',//查看
   buyerView:'买家查看',//买家查看
   detail:'详情',//详情
@@ -130,6 +131,7 @@ export default {
     pwdError: '密码不能少于6位数'//密码不能少于6位数
   },
   table: {
+    moreOperations: '更多操作',//更多操作
     all: '全部',
     business: '企业',//企业
     industry: '行业',//行业
@@ -224,6 +226,7 @@ export default {
     modifyOrder: '订单修改',//订单修改
     orderNumber:'订单号',//订单号
     orderAmount:'订单金额',//订单金额
+    orderType:'订单类型',//订单类型
     auditStatus:'审核状态',//审核状态
     audited:'已审核',//已审核
     notAudited:'未审核',//未审核
@@ -297,8 +300,8 @@ export default {
     USBrokerContactInfo:'美国经纪人联系方式',//美国经纪人联系方式
     ListingDate:'待售开始日期',//待售开始日期
     ReasonForSelling:'出售原因',//出售原因
-    business_description:'商业描述',//商业描述
-    financial_performance:'财务绩效',//财务绩效
+    business_description:'业务描述',//业务描述
+    financial_performance:'待售商业资产',//待售商业资产
     business_assets:'商业资产',//商业资产
 
 

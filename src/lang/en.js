@@ -24,6 +24,7 @@ export default {
   agent:'Agent',//代理人
   yes:'Yes',//是
   no:'No',//没有
+  NA:'NA',//未知
   view:'View',//查看
   buyerView:'Buyer View',//买家查看
   detail:'Detail',//详情
@@ -134,6 +135,7 @@ export default {
     github: 'Github Repository'
   },
   table: {
+    moreOperations: 'More Operations',//更多操作
     all: 'All',
     business: 'Business',//企业
     industry: 'Industry',//行业
@@ -225,6 +227,7 @@ export default {
     modifyOrder: 'Modify Order',//修改订单
     orderNumber:'Order Number',//订单号
     orderAmount:'Order Amount',//订单金额
+    orderType:'Order Type',//订单类型
     auditStatus:'Audit Status',//审核状态
     audited:'Audited',//已审核
     notAudited:'Not Audited',//未审核
@@ -297,8 +300,8 @@ export default {
     USBrokerContactInfo:'US Broker Contact Info',//美国经纪人联系方式
     ListingDate:'Listing Date',//待售开始日期
     ReasonForSelling:'Reason for Selling',//出售原因
-    business_description:'BUSINESS DESCRIPTION',//商业描述
-    financial_performance:'FINANCIAL PERFORMANCE',//财务绩效
+    business_description:'BUSINESS DESCRIPTION',//业务描述
+    financial_performance:'BUSINESS ASSET FOR SALE',//待售商业资产
     business_assets:'BUSINESS ASSETS',//商业资产
 
     emploteesEdit:'Emplotees Edit',//雇员编辑

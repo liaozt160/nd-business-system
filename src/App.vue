@@ -61,6 +61,10 @@ export default {
 }
 </script>
 <style>
+  .orderEditForm .el-form-item__label{
+    line-height: 40px!important;
+    margin: 8px 0;
+  }
   .demo-table-expand .el-form-item__label{
     line-height: 20px!important;
     margin: 8px 0;
@@ -74,5 +78,15 @@ export default {
   }
   .transfer .el-transfer-panel,.netTransfer .el-transfer-panel{
     width: 250px;
+  }
+
+  .menuItem{
+    padding: 0!important;
+    margin: 0!important;
+  }
+  .menuItem span{
+    display: inline-block;
+    width: 100%;
+    padding: 0 16px;
   }
 </style>

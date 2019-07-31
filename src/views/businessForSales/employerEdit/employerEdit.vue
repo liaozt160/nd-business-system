@@ -836,6 +836,7 @@
     mounted() {
       this.businessId=this.$route.query.id;
       this.getBusinessEn();
+      this.tablang='en';
     },
     methods: {
       // 获取地址三级联动数据
@@ -922,7 +923,7 @@
       },
       //切换中英tab
       changetab(e) {
-        this.tablang = e.index == 0 ? 'en' : 'zh';
+        // this.tablang = e.index == 0 ? 'en' : 'zh';
         this.provinces = [];
         this.cities = [];
         if (e.index == 0) {
@@ -937,7 +938,10 @@
           this.$alert( this.$t('pleaseSaveBefore'), this.$t('Confirmation'), {
             confirmButtonText: this.$t('confirm'),
           });
+          this.tablang =  'en';
           return false;
+        }else{
+          this.tablang = e.index == 0 ? 'en' : 'zh';
         }
       },
       // 弹出框
@@ -993,6 +997,7 @@
       formSave() {
         let that = this;
         let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
+        console.log(33333,this.tablang);
         if(!formData.company||!formData.title||!formData.listing||!formData.price){
           this.$alert( this.$t('pleaseImproveBusiness'), this.$t('Confirmation'), {
             confirmButtonText: this.$t('confirm'),

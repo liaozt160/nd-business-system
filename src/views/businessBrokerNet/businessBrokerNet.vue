@@ -37,10 +37,10 @@
           prop="remark"
           align="center"
           :label="$t('order.remarks')"
-          min-width="200">
+          min-width="300">
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" :content="scope.row.remark" placement="top">
-              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.remark}}</span>
+              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 300px;">{{scope.row.remark}}</span>
             </el-tooltip>
           </template>
         </el-table-column>

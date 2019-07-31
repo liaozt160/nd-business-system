@@ -157,7 +157,9 @@
           :label="$t('broker')"
           min-width="150">
           <template slot-scope="{row}">
-            <span v-if="row.account_name">{{row.account_name}}</span>
+            <el-tooltip v-if="row.account_name" class="item" effect="dark" :content="row.account_name" placement="top-start">
+              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{row.account_name}}</span>
+            </el-tooltip>
             <span v-else>{{$t('Unknown')}}</span>
           </template>
         </el-table-column>
@@ -168,7 +170,7 @@
           min-width="200">
           <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
-            <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.title}}</span>
+            <span style="display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:200px">{{scope.row.title}}</span>
           </el-tooltip>
         </template>
         </el-table-column>
@@ -199,7 +201,12 @@
           prop="address"
           align="center"
           :label="$t('table.location')"
-          min-width="200">
+          min-width="150">
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="scope.row.address" placement="top-start">
+              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{scope.row.address}}</span>
+            </el-tooltip>
+          </template>
         </el-table-column>
         <el-table-column
           prop="state"
@@ -216,52 +223,65 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="300">
+          min-width="180">
           <template slot-scope="scope">
-            <el-button
-              v-if="role==1"
-              size="medium"
-              type="primary"
-              :title="$t('table.changeBroker')"
-              icon="el-icon-user" circle
-              @click="changeBroker(scope)">
-            </el-button>
-            <el-button
-              v-if="role!=3"
-              size="medium"
-              type="success"
-              :title="$t('AddAttention')"
-              icon="el-icon-star-off" circle
-              @click="openSelectBuyer(scope)">
-            </el-button>
-            <el-button
-              size="medium"
-              type="primary"
-              :title="$t('table.edit')"
-              icon="el-icon-edit" circle
-              @click="handleEdit(scope.$index,scope)">
-            </el-button>
-            <el-button
-              size="medium"
-              type="info"
-              :title="$t('table.soldOut')"
-              icon="el-icon-s-release" circle
-              @click="handleChangeStatus(scope)" v-if="scope.row.status==1">
-            </el-button>
-            <el-button
-              size="medium"
-              type="primary"
-              :title="$t('table.forSale')"
-              icon="el-icon-s-claim" circle
-              @click="handleChangeStatus(scope)" v-else>
-            </el-button>
-            <el-button
-              size="medium"
-              type="danger"
-              :title="$t('table.delete')"
-              icon="el-icon-delete" circle
-              @click="handleDelete(scope.$index,scope)">
-            </el-button>
+            <el-dropdown trigger="click">
+              <el-button size="mini" type="primary" plain>
+                {{$t('table.moreOperations')}}<i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item class="menuItem" v-if="role==1" ><span @click.stop="changeBroker(scope)">{{$t('table.changeBroker')}}</span></el-dropdown-item>
+                <el-dropdown-item class="menuItem" v-if="role!=3"><span @click.stop="openSelectBuyer(scope)">{{$t('AddAttention')}}</span></el-dropdown-item>
+                <el-dropdown-item class="menuItem"><span @click.stop="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</span></el-dropdown-item>
+                <el-dropdown-item class="menuItem" v-if="scope.row.status==1"><span @click.stop="handleChangeStatus(scope)">{{$t('table.soldOut')}}</span></el-dropdown-item>
+                <el-dropdown-item class="menuItem" v-else><span @click.stop="handleChangeStatus(scope)">{{$t('table.forSale')}}</span></el-dropdown-item>
+                <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</span></el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <!--<el-button-->
+              <!--v-if="role==1"-->
+              <!--size="medium"-->
+              <!--type="primary"-->
+              <!--:title="$t('table.changeBroker')"-->
+              <!--icon="el-icon-user" circle-->
+              <!--@click="changeBroker(scope)">-->
+            <!--</el-button>-->
+            <!--<el-button-->
+              <!--v-if="role!=3"-->
+              <!--size="medium"-->
+              <!--type="success"-->
+              <!--:title="$t('AddAttention')"-->
+              <!--icon="el-icon-star-off" circle-->
+              <!--@click="openSelectBuyer(scope)">-->
+            <!--</el-button>-->
+            <!--<el-button-->
+              <!--size="medium"-->
+              <!--type="primary"-->
+              <!--:title="$t('table.edit')"-->
+              <!--icon="el-icon-edit" circle-->
+              <!--@click="handleEdit(scope.$index,scope)">-->
+            <!--</el-button>-->
+            <!--<el-button-->
+              <!--size="medium"-->
+              <!--type="info"-->
+              <!--:title="$t('table.soldOut')"-->
+              <!--icon="el-icon-s-release" circle-->
+              <!--@click="handleChangeStatus(scope)" v-if="scope.row.status==1">-->
+            <!--</el-button>-->
+            <!--<el-button-->
+              <!--size="medium"-->
+              <!--type="primary"-->
+              <!--:title="$t('table.forSale')"-->
+              <!--icon="el-icon-s-claim" circle-->
+              <!--@click="handleChangeStatus(scope)" v-else>-->
+            <!--</el-button>-->
+            <!--<el-button-->
+              <!--size="medium"-->
+              <!--type="danger"-->
+              <!--:title="$t('table.delete')"-->
+              <!--icon="el-icon-delete" circle-->
+              <!--@click="handleDelete(scope.$index,scope)">-->
+            <!--</el-button>-->
           </template>
         </el-table-column>
       </el-table>

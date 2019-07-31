@@ -41,14 +41,6 @@ export function buyerGetBusinessTwoList (data) {
     data
   })
 }
-// 买家中介获取感兴趣待售企业列表
-export function buyerGetattentionBusinessList (data) {
-  return request({
-    url: '/api/buyer/attention/list',
-    method: 'post',
-    data
-  })
-}
 // 买家中介查看待售企业-level one
 export function showLevelOne (data) {
   return request({

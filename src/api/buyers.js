@@ -73,3 +73,12 @@ export function adminGetBuyerAttentionList (data) {
     data
   })
 }
+// 根据所传business id，生成一级企业资料pdf文件
+export function attentionPdf (data) {
+  return request({
+    url: '/api/buyer/attention/pdf',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}
