@@ -890,6 +890,7 @@
                   type: 'success'
                 });
               }).catch(err => {
+                that.orderEditSaveClick = false;
                 console.log(err);
               })
             } else {
@@ -899,6 +900,7 @@
               addOrderApi(data2).then(response => {
                 console.log('addOrderApi', response);
                 that.dialogFormVisible = false;
+                that.orderEditSaveClick = false;
                 that.getList({buyer_id: that.$route.query.id,});
                 that.$notify({
                   showClose: true,
@@ -906,6 +908,7 @@
                   type: 'success'
                 });
               }).catch(err => {
+                that.orderEditSaveClick = false;
                 console.log(err);
               })
             }
