@@ -117,7 +117,7 @@
                     <!--查看订单按钮-->
                     <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
                     <!--取消提交订单按钮-->
-                    <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
+                    <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
                     <!--编辑订单按钮-->
                     <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                     <!--付款信息按钮-->
