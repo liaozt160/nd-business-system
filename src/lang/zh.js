@@ -16,7 +16,8 @@ export default {
   cancelOrderMsg:'确定要取消提交该订单吗？',//确定要取消该订单吗？
   submitOrderMsg:'确定要提交该订单吗？',//确定要提交该订单吗？
   auditedOrderMsg:'审核通过前，请确定该订单是否已支付？',//审核通过前，请确定该订单是否已支付？
-  rejectOrderMsg:'确定要拒绝该订单吗？',//确定要拒绝该订单吗？
+  rejectOrderMsg:'确定要拒绝该订单吗？请填写拒绝原因',//确定要拒绝该订单吗？请填写拒绝原因
+  reasonsForRefusal:'拒绝原因',//拒绝原因
   desiredTransactionAmount:'期望的交易金额',//期望的交易金额
   fundsAvailable:'可用资金',//可用资金
   fundsVerified:'资金核实',//资金核实
@@ -207,6 +208,7 @@ export default {
     informationFee: '信息费',//信息费
     informationFeeText: '信息费（约1000美元）获得的比较基础的商业信息',//付信息费（约1000美元）获得的比较基础的商业信息
     investigationFee: '考察费',//考察费
+    otherFees: '其他费用',//其他费用
     investigationFeeText: '考察费（约3000美元）并且签署保密协议后获得详细的财务及税务信息',//付考察费（约3000美元）并且签署保密协议后获得详细的财务及税务信息
     payAmount: '支付金额',//支付金额
     File: '附件',//附件
@@ -231,6 +233,7 @@ export default {
     audited:'已审核',//已审核
     notAudited:'未审核',//未审核
     Audit:'审核通过',//审核通过
+    auditFailed:'审核不通过',//审核不通过
     AuditInProgress:'审核中',//审核中
     PaidInformationFee:'已支付信息费',//已支付信息费
     ExpensesPaid:'已支付考察费',//已支付考察费

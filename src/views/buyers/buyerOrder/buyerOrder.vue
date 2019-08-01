@@ -46,7 +46,8 @@
           min-width="150">
           <!--订单类型-->
           <template slot-scope="scope">
-            <el-tag type="success" style="width: 120px" v-if="scope.row.paid==2">{{$t('order.investigationFee')}}</el-tag>
+            <el-tag type="primary" style="width: 120px" v-if="scope.row.paid==3">{{$t('order.otherFees')}}</el-tag>
+            <el-tag type="primary" style="width: 120px" v-if="scope.row.paid==2">{{$t('order.investigationFee')}}</el-tag>
             <el-tag type="primary" style="width: 120px" v-if="scope.row.paid==1">{{$t('order.informationFee')}}</el-tag>
           </template>
         </el-table-column>
@@ -63,17 +64,15 @@
           prop="status"
           align="center"
           :label="$t('order.auditStatus')"
-          min-width="210">
+          min-width="150">
           <template slot-scope="scope">
-            <el-tag type="danger" style="width: 180px" v-if="scope.row.status==7">{{$t('order.InspectionFeeReviewFailed')}}</el-tag>
-            <el-tag type="success" style="width: 180px" v-if="scope.row.status==6">{{$t('order.AuditedInspectionFee')}}</el-tag>
-            <el-tag type="success" style="width: 180px" v-if="scope.row.status==5">{{$t('order.PendingInspectionFee')}}</el-tag>
-            <el-tag type="info" style="width: 180px" v-if="scope.row.status==4">{{ $t('order.notSubmitted') }}</el-tag>
-
-            <el-tag type="danger" style="width: 180px" v-if="scope.row.status==3">{{$t('order.InformationFeeReviewFailed')}}</el-tag>
-            <el-tag type="primary" style="width: 180px" v-if="scope.row.status==2">{{$t('order.ReviewedInformationFee')}}</el-tag>
-            <el-tag type="primary" style="width: 180px" v-if="scope.row.status==1">{{$t('order.PendingInformationFee')}}</el-tag>
-            <el-tag type="info" style="width: 180px" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }}</el-tag>
+            <el-tooltip class="item" effect="dark" :content="scope.row.audit_reason" placement="top" v-if="scope.row.audit_reason">
+              <el-tag type="danger"  style="width: 120px" v-if="scope.row.status==3"> {{$t('order.auditFailed')}}</el-tag>
+            </el-tooltip>
+            <el-tag type="danger"  style="width: 120px" v-if="scope.row.status==3&&!scope.row.audit_reason"> {{$t('order.auditFailed')}}</el-tag>
+            <el-tag type="success" style="width: 120px" v-if="scope.row.status==2">{{$t('order.Audit')}}</el-tag>
+            <el-tag type="primary" style="width: 120px" v-if="scope.row.status==1">{{$t('order.AuditInProgress')}}</el-tag>
+            <el-tag type="info"    style="width: 120px" v-if="scope.row.status==0">{{ $t('order.notSubmitted') }} </el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -101,22 +100,35 @@
               </el-button>
               <!--管理员-->
               <el-dropdown-menu slot="dropdown" v-if="role==1">
-                <!--审核中//待审核信息费-->
+                <!--未提交-->
+                <div v-if="scope.row.status==0">
+                  <!--付款信息按钮-->
+                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
+                  <!--提交订单按钮-->
+                  <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,1)">{{$t('order.submitOrder')}}</span></el-dropdown-item>
+                  <!--编辑订单按钮-->
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
+                  <!--删除按钮-->
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
+                </div>
+                <!--审核中-->
                 <div v-if="scope.row.status==1">
                   <!--查看订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
+                  <!--取消提交订单按钮-->
+                  <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
+                  <!--编辑订单按钮-->
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--编辑订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
-                  <!--通过信息费审核按钮-->
+                  <!--通过审核按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="audited(scope,2)">{{$t('order.Audit')}}</span></el-dropdown-item>
                   <!--拒绝审核按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="audited(scope,3)">{{$t('order.reject')}}</span></el-dropdown-item>
                   <!--删除按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
-                <!--已审核状态//已审核信息费-->
+                <!--已审核状态-->
                 <div v-if="scope.row.status==2">
                   <!--查看订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
@@ -127,54 +139,12 @@
                   <!--删除按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
-                <!--拒绝状态//信息费审核不通过-->
+                <!--拒绝状态-->
                 <div v-if="scope.row.status==3">
                   <!--查看订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--删除按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
-                </div>
-
-                <!--审核中//待审核考察费-->
-                <div v-if="scope.row.status==5">
-                  <!--查看订单按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--编辑订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
-                  <!--考察费通过审核按钮-->
-                  <!--<el-button size="medium" type="primary" :title="$t('order.Audit')" icon="el-icon-s-claim" circle @click="audited(scope,6)"></el-button>-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="audited(scope,6)">{{$t('order.Audit')}}</span></el-dropdown-item>
-                  <!--考察费拒绝审核按钮-->
-                  <!--<el-button size="medium" type="danger" :title="$t('order.reject')" icon="el-icon-s-release" circle @click="audited(scope,7)"></el-button>-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="audited(scope,7)">{{$t('order.reject')}}</span></el-dropdown-item>
-                  <!--导出pdf按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
-                  <!--删除按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
-                </div>
-                <!--已审核状态//已审核考察费-->
-                <div v-if="scope.row.status==6">
-                  <!--查看订单按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--导出pdf按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
-                  <!--删除按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
-                </div>
-                <!--拒绝状态//考察费审核不通过-->
-                <div v-if="scope.row.status==7">
-                  <!--查看订单按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--导出pdf按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
                   <!--删除按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
@@ -182,30 +152,29 @@
 
               <!--买家中介-->
               <el-dropdown-menu slot="dropdown" v-if="role==2">
-                <!--待提交信息费-->
+                <!--待提交-->
                 <div v-if="scope.row.status==0">
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--提交信息费订单按钮-->
+                  <!--提交订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,1)">{{$t('order.submitOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                   <!--删除按钮-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
-                <!--审核中//待审核信息费-->
+                <!--审核中-->
                 <div v-if="scope.row.status==1">
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--取消提交信息费订单按钮-->
+                  <!--取消提交订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
-                  <!--<el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" :disabled="scope.row.status!=0" @click="modifyOrder(scope)"></el-button>-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                   <!--删除按钮-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
-                <!--已审核状态//已审核信息费-->
+                <!--已审核状态-->
                 <div v-if="scope.row.status==2">
                   <!--查看订单按钮-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
@@ -214,45 +183,12 @@
                   <!--导出pdf按钮-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
                 </div>
-                <!--拒绝状态//信息费审核不通过-->
+                <!--拒绝状态-->
                 <div v-if="scope.row.status==3">
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
                 </div>
 
-                <!--待提交考察费-->
-                <div v-if="scope.row.status==4">
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--提交考察费订单按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,5)">{{$t('order.submitOrder')}}</span></el-dropdown-item>
-                  <!--编辑订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
-                </div>
-                <!--审核中//待审核考察费-->
-                <div v-if="scope.row.status==5">
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--取消提交考察费订单按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,4)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
-                  <!--编辑订单按钮-->
-                  <!--<el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" :disabled="scope.row.status!=0" @click="modifyOrder(scope)"></el-button>-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
-                </div>
-                <!--已审核状态//已审核考察费-->
-                <div v-if="scope.row.status==6">
-                  <!--查看订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                  <!--导出pdf按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
-                </div>
-                <!--拒绝状态//考察费审核不通过-->
-                <div v-if="scope.row.status==7">
-                  <!--付款信息按钮-->
-                  <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
-                </div>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -297,6 +233,7 @@
           <el-select v-model="orderEdit.paid" style="width:210px;" class="filter-item">
           <el-option :label="$t('order.informationFee')" :value="1"/>
           <el-option :label="$t('order.investigationFee')" :value="2"/>
+          <el-option :label="$t('order.otherFees')" :value="3"/>
           </el-select>
           </el-form-item>
         </div>
@@ -312,7 +249,7 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click.native.prevent="orderEditSave()">{{ $t('table.confirm') }}</el-button>
+        <el-button :disabled="orderEditSaveClick" type="primary" @click.native.prevent="orderEditSave()">{{ $t('table.confirm') }}</el-button>
       </div>
 
     </el-dialog>
@@ -332,22 +269,16 @@
           <el-form-item :label="$t('order.auditStatus')+'：'">
             <!--订单状态-->
             <template>
-              <!--考察费-->
-              <el-tag type="danger"  style="text-align:center;width: 180px" v-if="viewOrderData.status==7">{{$t('order.InspectionFeeReviewFailed')}}</el-tag>
-              <el-tag type="success" style="text-align:center;width: 180px" v-if="viewOrderData.status==6">{{$t('order.AuditedInspectionFee')}}</el-tag>
-              <el-tag type="success" style="text-align:center;width: 180px" v-if="viewOrderData.status==5">{{$t('order.PendingInspectionFee')}}</el-tag>
-              <el-tag type="info"    style="text-align:center;width: 180px" v-if="viewOrderData.status==4">{{ $t('order.notSubmitted') }}</el-tag>
-
-              <!--信息费-->
-              <el-tag type="danger"  style="text-align:center;width: 180px" v-if="viewOrderData.status==3">{{$t('order.InformationFeeReviewFailed')}}</el-tag>
-              <el-tag type="primary" style="text-align:center;width: 180px" v-if="viewOrderData.status==2">{{$t('order.ReviewedInformationFee')}}</el-tag>
-              <el-tag type="primary" style="text-align:center;width: 180px" v-if="viewOrderData.status==1">{{$t('order.PendingInformationFee')}}</el-tag>
-              <el-tag type="info"    style="text-align:center;width: 180px" v-if="viewOrderData.status==0">{{ $t('order.notSubmitted') }}</el-tag>
+              <el-tag type="danger"  style="text-align:center;width: 180px" v-if="viewOrderData.status==3">{{$t('order.auditFailed')}}    </el-tag>
+              <el-tag type="success" style="text-align:center;width: 180px" v-if="viewOrderData.status==2">{{$t('order.Audit')}}          </el-tag>
+              <el-tag type="primary" style="text-align:center;width: 180px" v-if="viewOrderData.status==1">{{$t('order.AuditInProgress')}}</el-tag>
+              <el-tag type="info"    style="text-align:center;width: 180px" v-if="viewOrderData.status==0">{{ $t('order.notSubmitted') }} </el-tag>
             </template>
           </el-form-item>
           <el-form-item :label="$t('order.Payment')+'：'">
             <!--支付款项-->
             <template>
+              <el-tag type="success" style="text-align:center;width: 120px" v-if="viewOrderData.paid==3">{{$t('order.otherFees')}}</el-tag>
               <el-tag type="success" style="text-align:center;width: 120px" v-if="viewOrderData.paid==2">{{$t('order.investigationFee')}}</el-tag>
               <el-tag type="primary" style="text-align:center;width: 120px" v-if="viewOrderData.paid==1">{{$t('order.informationFee')}}</el-tag>
             </template>
@@ -678,6 +609,8 @@
     },
     data() {
       return {
+        orderEditSaveClick: false,
+
         pdfLoading: false,
 
         params: '',
@@ -939,6 +872,7 @@
       // 弹出框保存
       orderEditSave() {
         let that = this;
+        that.orderEditSaveClick=true;
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             let data = Object.assign({}, that.orderEdit);
@@ -948,6 +882,7 @@
               updateOrderApi(data).then(response => {
                 console.log('updateOrderApi', response);
                 that.dialogFormVisible = false;
+                that.orderEditSaveClick = false;
                 that.getList({buyer_id: that.$route.query.id,});
                 that.$notify({
                   showClose: true,
@@ -1032,31 +967,55 @@
         })
       },
 
-      // 审核通过
+      // 审核
       audited(row, status) {
         let that = this;
         let data = {id: row.row.id, status: status};
-        that.$confirm(status == 2||status == 6 ? that.$t('auditedOrderMsg') : status == 3||status == 7 ? that.$t('rejectOrderMsg') : '', that.$t('Confirmation'), {
-          distinguishCancelAndClose: true,
-          confirmButtonText: that.$t('confirm'),
-          cancelButtonText: that.$t('cancel')
-        }).then(() => {
-          that.listLoading = true;
-          changeAuditApi(data).then(response => {
-            console.log('changeAuditApi', response);
-            that.listLoading = false;
-            that.getList({buyer_id: that.$route.query.id,});
-            that.$notify({
-              showClose: true,
-              message: that.$t('Successful'),
-              type: 'success'
-            });
-          }).catch(err => {
-            that.listLoading = false;
-            console.log(err);
-          })
-        }).catch(action => {
-        });
+        if(status == 2){
+          that.$confirm( that.$t('auditedOrderMsg'), that.$t('Confirmation'), {
+            distinguishCancelAndClose: true,
+            confirmButtonText: that.$t('confirm'),
+            cancelButtonText: that.$t('cancel')
+          }).then(() => {
+            that.listLoading = true;
+            changeAuditApi(data).then(response => {
+              console.log('changeAuditApi', response);
+              that.listLoading = false;
+              that.getList({buyer_id: that.$route.query.id,});
+              that.$notify({
+                showClose: true,
+                message: that.$t('Successful'),
+                type: 'success'
+              });
+            }).catch(err => {
+              that.listLoading = false;
+              console.log(err);
+            })
+          }).catch(action => {
+          });
+        }else if(status == 3){
+          this.$prompt(that.$t('rejectOrderMsg'), that.$t('Confirmation'), {
+            distinguishCancelAndClose: true,
+            confirmButtonText: that.$t('confirm'),
+            cancelButtonText: that.$t('cancel'),
+          }).then(({ value }) => {
+            that.listLoading = true;
+            data.reason=value;
+            changeAuditApi(data).then(response => {
+              console.log('changeAuditApi', response);
+              that.listLoading = false;
+              that.getList({buyer_id: that.$route.query.id,});
+              that.$notify({
+                showClose: true,
+                message: that.$t('Successful'),
+                type: 'success'
+              });
+            }).catch(err => {
+              that.listLoading = false;
+              console.log(err);
+            })
+          }).catch(() => {});
+        }
       },
 
       // 获取订单列表

@@ -16,7 +16,8 @@ export default {
   cancelOrderMsg:'Are you sure you want to cancel the submission of this order?',//确定要取消提交该订单吗？
   submitOrderMsg:'Are you sure you want to submit the order?',//确定要提交该订单吗？
   auditedOrderMsg:'Before approval, please confirm whether the order has been paid?',//审核通过前，请确定该订单是否已支付？
-  rejectOrderMsg:'Are you sure you want to reject the order?',//确定要拒绝该订单吗？
+  rejectOrderMsg:'Are you sure you want to reject the order? Please fill in the reasons for rejection.',//确定要拒绝该订单吗？请填写拒绝原因
+  reasonsForRefusal:'Reasons for refusal',//拒绝原因
   desiredTransactionAmount:'Desired Transaction Amount',//期望的交易金额
   fundsAvailable:'Funds Available',//可用资金
   fundsVerified:'Funds Verified',//资金核实
@@ -208,6 +209,7 @@ export default {
     informationFee: 'Information Fee',//信息费
     informationFeeText: 'Pay information fees ($1,000) for more basic business information',//付信息费（约1000美元）获得的比较基础的商业信息
     investigationFee: 'Investigation Fee',//考察费
+    otherFees: 'Other Fees',//其他费用
     investigationFeeText: 'Pay inspection fees ($3,000) and sign confidentiality agreements to obtain detailed financial and tax information',//付考察费（约3000美元）并且签署保密协议后获得详细的财务及税务信息
     payAmount: 'Pay Amount',//支付金额
     File: 'File',//附件
@@ -232,6 +234,7 @@ export default {
     audited:'Audited',//已审核
     notAudited:'Not Audited',//未审核
     Audit:'Audit Approval',//审核通过
+    auditFailed:'Audit failed',//审核不通过
     AuditInProgress:'Pending',//审核中
     PaidInformationFee:'Paid information fee',//已支付信息费
     ExpensesPaid:'Expenses paid',//已支付考察费
