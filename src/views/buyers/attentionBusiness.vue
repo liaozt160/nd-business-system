@@ -14,6 +14,14 @@
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('myRecommendation')" value="1" />
       </el-select>
+
+      <div class="filter-item el-select--medium">
+        <el-select v-model="listQuery.buyers" :placeholder="$t('route.buyers')" style="width: 180px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
+          <el-option :label="$t('table.all')" value="0" />
+          <el-option v-for="item in buyerListData" :label="item.label" :value="item.key" />
+        </el-select>
+      </div>
+
       <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
       <el-button  class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
@@ -83,6 +91,7 @@
           prop="name"
           align="center"
           :label="$t('recommender')"
+          v-if="role==1"
           min-width="200">
         </el-table-column>
         <el-table-column
@@ -121,7 +130,8 @@
 <script>
   import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList,attentionPdf } from '@/api/buyers'
+  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList,attentionPdf,getBuyerList } from '@/api/buyers'
+  import { getBuyers } from '@/api/business'
   export default {
     name: "attentionBusiness",
     components:{
@@ -147,10 +157,13 @@
         total: 1,
         pageSize: 15,
         tableData: [],
+
+        buyerListData: [],
       }
     },
     mounted(){
       this.getList();
+      this.getBuyerListFun();
       this.role = store.getters && store.getters.role
     },
     methods:{
@@ -244,6 +257,17 @@
           })
         }
 
+      },
+
+      // 获取买家列表
+      getBuyerListFun() {
+        let that=this;
+        getBuyers ().then(response => {
+          console.log('getBuyers',response);
+          that.buyerListData=response.data;
+        }).catch(err => {
+          console.log(err);
+        })
       },
     }
   }

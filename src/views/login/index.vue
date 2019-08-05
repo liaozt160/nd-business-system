@@ -55,11 +55,11 @@
       </el-button>
     </el-form>
 
-    <div style="text-align: center;color: #fff;font-size: 14px" v-if="locationOrigin.indexOf('dev')!==-1||locationOrigin.indexOf('192.168.9.26:8090')!==-1">
-      <p>管理员账号：jason@ylbservices.com  密码：111111</p>
-      <p>买方中介账号：buyer@ylbservices.com  密码：111111</p>
-      <p>卖方中介账号：business@ylbservices.com  密码：111111</p>
-    </div>
+    <!--<div style="text-align: center;color: #fff;font-size: 14px" v-if="locationOrigin.indexOf('dev')!==-1||locationOrigin.indexOf('192.168.9.26:8090')!==-1">-->
+      <!--<p>管理员账号：jason@ylbservices.com  密码：111111</p>-->
+      <!--<p>买方中介账号：buyer@ylbservices.com  密码：111111</p>-->
+      <!--<p>卖方中介账号：business@ylbservices.com  密码：111111</p>-->
+    <!--</div>-->
 
   </div>
 </template>
@@ -78,7 +78,7 @@
         } else {
           callback()
         }
-      }
+      };
       return {
         locationOrigin:window.location.origin,
         loginForm: {

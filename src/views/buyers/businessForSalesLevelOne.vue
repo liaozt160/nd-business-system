@@ -189,7 +189,7 @@
           <span>{{ attentionData.address }}</span>
         </el-form-item>
           <!--业务描述-->
-        <b style="font-size: 14px;line-height: 45px;">{{$t('employeeEdit.business_description')+'：'}}</b>
+        <b style="font-size: 14px;line-height: 45px;display: block;">{{$t('employeeEdit.business_description')+'：'}}</b>
           <el-input
             class="texareaBox"
             style="display:block;width: 100%;"
@@ -199,7 +199,7 @@
             v-model="attentionData.business_assets">
           </el-input>
           <!--待售商业资产-->
-        <b style="font-size: 14px;line-height: 45px;">{{$t('employeeEdit.financial_performance')+'：'}}</b>
+        <b style="font-size: 14px;line-height: 45px;display: block;">{{$t('employeeEdit.financial_performance')+'：'}}</b>
           <el-input
             class="texareaBox"
             style="display:block;width: 100%;"

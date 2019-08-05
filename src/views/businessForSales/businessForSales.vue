@@ -5,7 +5,7 @@
     </aside>
     <div class="filter-container">
       <div class="filter-item el-select--medium">
-      <span style="color: #717171;font-size: 14px;">{{$t('table.status')}}</span>
+      <!--<span style="color: #717171;font-size: 14px;">{{$t('table.status')}}</span>-->
       <el-select v-model="listQuery.status" :placeholder="$t('table.status')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('table.forSale')" value="1" />
