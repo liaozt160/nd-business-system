@@ -8,7 +8,7 @@
       <div class="filter-item el-select--medium">
         <!--资金已核实-->
         <span style="color: #717171;font-size: 14px;margin-left: 10px;">{{$t('fundsVerified')}}</span>
-        <el-select v-model="listQuery.funds_verified" :placeholder="$t('fundsVerified')" @change="handleFilter" clearable style="width: 130px;margin-bottom: 0;" class="filter-item">
+        <el-select size="small" v-model="listQuery.funds_verified" :placeholder="$t('fundsVerified')" @change="handleFilter" clearable style="width: 130px;margin-bottom: 0;" class="filter-item">
           <el-option :label="$t('table.all')" value="0" />
           <el-option :label="$t('yes')" value="1" />
           <el-option :label="$t('no')" value="2" />
@@ -17,14 +17,14 @@
       <div class="filter-item el-select--medium">
         <!--可用资金-->
         <span style="color: #717171;font-size: 14px;margin-left: 10px;">{{$t('fundsAvailable')}} ($)</span>
-        <el-input v-model="listQuery.funds_available_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
+        <el-input size="small" v-model="listQuery.funds_available_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
         ~
-        <el-input v-model="listQuery.funds_available_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
+        <el-input size="small" v-model="listQuery.funds_available_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
       </div>
       <div class="filter-item el-select--medium">
-        <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item"
+        <el-input size="small" v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item"
                   @keyup.enter.native="handleFilter" clearable/>
-        <el-button class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search" @click="handleFilter">
+        <el-button size="small" class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
       </div>

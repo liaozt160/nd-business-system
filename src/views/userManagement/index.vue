@@ -4,18 +4,18 @@
       <h3 style="text-align: center;">{{$t('route.userManagement')}}</h3>
     </aside>
     <div class="filter-container">
-      <el-select v-model="listQuery.role" :placeholder="$t('role')" style="width: 160px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
+      <el-select size="small" v-model="listQuery.role" :placeholder="$t('role')" style="width: 160px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('userEdit.admin')" value="1" />
         <el-option :label="$t('userEdit.buyerBroker')" value="2" />
         <el-option :label="$t('userEdit.businessBroker')" value="3" />
       </el-select>
-      <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item"
+      <el-input size="small" v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;" class="filter-item"
                 @keyup.enter.native="handleFilter" clearable/>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button size="small" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
+      <el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
                  @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>
@@ -210,7 +210,7 @@
               editAccount (that.userEdit).then(response => {
                 console.log('editAccount',response);
                 that.dialogFormVisible=false;
-                that.getList();
+                that.getList(that.listQuery);
                 that.userEdit = {};
                 that.$notify({
                   showClose: true,
@@ -227,7 +227,7 @@
               addAccount (that.userEdit).then(response => {
                 console.log('addAccount',response);
                 that.dialogFormVisible=false;
-                that.getList();
+                that.getList(that.listQuery);
                 that.userEdit = {};
                 that.$notify({
                   showClose: true,
@@ -307,7 +307,7 @@
               message: status==1?that.$t('table.isEnable'):that.$t('table.isDisabled'),
               type: 'success'
             });
-            that.getList();
+            that.getList(that.listQuery);
           }).catch(err => {
             console.log(err);
           })
@@ -323,7 +323,7 @@
           delAccount ({id:row.row.id}).then(response => {
             console.log('delAccount',response);
             that.listQuery.page=1;
-            that.getList();
+            that.getList(that.listQuery);
             that.$notify({
               showClose: true,
               message: that.$t('deleted'),

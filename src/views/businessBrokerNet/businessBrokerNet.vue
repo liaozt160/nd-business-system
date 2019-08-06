@@ -6,13 +6,13 @@
     </aside>
     <div class="filter-container">
       <div class="filter-item el-select--medium">
-        <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item"
+        <el-input size="small" v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item"
                   @keyup.enter.native="handleFilter" clearable/>
-        <el-button class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search" @click="handleFilter">
+        <el-button size="small" class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
       </div>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
+      <el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
                  @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>

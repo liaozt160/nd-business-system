@@ -6,7 +6,7 @@
     <div class="filter-container">
       <div class="filter-item el-select--medium">
       <!--<span style="color: #717171;font-size: 14px;">{{$t('table.status')}}</span>-->
-      <el-select v-model="listQuery.status" :placeholder="$t('table.status')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
+      <el-select size="small" v-model="listQuery.status" :placeholder="$t('table.status')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('table.forSale')" value="1" />
         <el-option :label="$t('table.soldOut')" value="2" />
@@ -14,7 +14,7 @@
       </div>
       <div class="filter-item el-select--medium" v-if="businessBrokerList.length>1">
       <span style="color: #717171;font-size: 14px;">{{$t('broker')}}</span>
-      <el-select v-model="listQuery.broker_id" :placeholder="$t('broker')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
+      <el-select size="small" v-model="listQuery.broker_id" :placeholder="$t('broker')" style="width: 130px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
         <el-option :label="$t('table.all')" value="0" />
         <el-option v-for="item in businessBrokerList" :label="item.name" :value="item.account_id" />
       </el-select>
@@ -22,14 +22,14 @@
 
       <div class="filter-item el-select--medium">
         <span style="color: #717171;font-size: 14px;">{{$t('table.price')}} ($)</span>
-        <el-input v-model="listQuery.price_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
+        <el-input size="small" v-model="listQuery.price_from" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
         ~
-        <el-input v-model="listQuery.price_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
+        <el-input size="small" v-model="listQuery.price_to" :placeholder="$t('table.all')" style="width: 130px;margin-bottom: 0;margin-right: 15px;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
       </div>
       <div class="filter-item el-select--medium">
-      <el-input v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
-      <el-button  class="filter-item" style="margin-bottom: 0;" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button></div>
-      <el-button class="filter-item"  style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">{{ $t('table.add') }}</el-button></div>
+      <el-input size="small" v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable/>
+      <el-button  size="small" class="filter-item" style="margin-bottom: 0;" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button></div>
+      <el-button size="small" class="filter-item"  style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">{{ $t('table.add') }}</el-button></div>
 
     <!--列表-->
     <div class="companyTable">
