@@ -305,6 +305,9 @@ export default {
     ReasonForSelling:'Reason for Selling',//出售原因
     business_description:'BUSINESS DESCRIPTION',//业务描述
     financial_performance:'BUSINESS ASSET FOR SALE',//待售商业资产
+    financial_reports:'FINANCIAL REPORTS',//财务报表
+    tax_returns:'TAX RETURNS',//报税记录
+    employee_info:'EMPLOYEE INFO',//员工信息
     business_assets:'BUSINESS ASSETS',//商业资产
 
     emploteesEdit:'Emplotees Edit',//雇员编辑

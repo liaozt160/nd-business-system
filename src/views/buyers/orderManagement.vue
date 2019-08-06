@@ -160,9 +160,9 @@
                   <!--提交订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,1)">{{$t('order.submitOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" ><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                   <!--删除按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" ><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
                 <!--审核中-->
                 <div v-if="scope.row.status==1">
@@ -171,19 +171,16 @@
                   <!--取消提交订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
-                  <!--<el-button size="medium" type="primary" :title="$t('order.modifyOrder')" icon="el-icon-edit-outline" circle plain v-if="$route.query.role==role" :disabled="scope.row.status!=0" @click="modifyOrder(scope)"></el-button>-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
-                  <!--删除按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                 </div>
                 <!--已审核状态-->
                 <div v-if="scope.row.status==2">
                   <!--查看订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
                   <!--导出pdf按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem"><span @click.stop="ExportPDF(scope)">{{$t('order.Print')}}</span></el-dropdown-item>
                 </div>
                 <!--拒绝状态-->
                 <div v-if="scope.row.status==3">

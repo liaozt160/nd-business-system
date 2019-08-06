@@ -37,9 +37,9 @@
             <span class="formItemSpan">{{$t('employeeEdit.Profitability')}}</span>
             <el-select v-model="formDataEn.profitability" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
-              <el-option label="Yes" :value="1"/>
-              <el-option label="No" :value="2"/>
-              <el-option label="NA" :value="3"/>
+              <el-option :label="$t('yes')" :value="1"/>
+              <el-option :label="$t('no')" :value="2"/>
+              <el-option :label="$t('NA')" :value="3"/>
             </el-select>
           </div>
           <div class="formItem filter-item el-select--medium">
@@ -47,22 +47,22 @@
             <span class="formItemSpan">{{$t('employeeEdit.RealEstate')}}</span>
             <el-select v-model="formDataEn.real_estate" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
-              <el-option label="Yes" :value="1"/>
-              <el-option label="No" :value="2"/>
-              <el-option label="NA" :value="3"/>
+              <el-option :label="$t('yes')" :value="1"/>
+              <el-option :label="$t('no')" :value="2"/>
+              <el-option :label="$t('NA')" :value="3"/>
             </el-select>
           </div>
         </div>
         <div class="formRow">
-          <!--<div class="formItem filter-item el-select&#45;&#45;medium">-->
-          <!--&lt;!&ndash;是否连锁店&ndash;&gt;-->
-          <!--<span class="formItemSpan">Franchise</span>-->
-          <!--<el-select v-model="formDataEn.type" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;" class="filter-item">-->
-          <!--<el-option label="Yes" value="1" />-->
-          <!--<el-option label="No" value="2" />-->
-          <!--<el-option label="NA" value="3" />-->
-          <!--</el-select>-->
-          <!--</div>-->
+          <div class="formItem filter-item el-select--medium">
+          <!--是否连锁店-->
+          <span class="formItemSpan">{{$t('employeeEdit.Franchise')}}</span>
+          <el-select v-model="formDataEn.franchise" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+          <el-option :label="$t('yes')" :value="1" />
+          <el-option :label="$t('no')"  :value="2" />
+          <el-option :label="$t('NA')"  :value="3" />
+          </el-select>
+          </div>
           <div class="formItem filter-item el-select--medium">
             <!--营业面积-->
             <span class="formItemSpan">{{$t('employeeEdit.BuildingSF')}}</span>
@@ -231,6 +231,30 @@
               </el-input>
             </div>
           </div>
+          <!--Financial Reports 财务报表-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.financial_reports')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.financial_reports')"
+                v-model="formDataEn.financial_reports">
+              </el-input>
+            </div>
+          </div>
+          <!--Tax Returns 报税记录-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.tax_returns')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.tax_returns')"
+                v-model="formDataEn.tax_returns">
+              </el-input>
+            </div>
+          </div>
           <!--财务绩效-->
           <div class="itemBox">
             <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
@@ -264,6 +288,18 @@
                 :autosize="{ minRows: 4}"
                 :placeholder="$t('employeeEdit.business_assets')"
                 v-model="formDataEn.business_assets">
+              </el-input>
+            </div>
+          </div>
+          <!--Employee Info 员工信息-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.employee_info')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.employee_info')"
+                v-model="formDataEn.employee_info">
               </el-input>
             </div>
           </div>
@@ -371,9 +407,9 @@
             <span class="formItemSpan">{{$t('employeeEdit.Profitability')}}</span>
             <el-select v-model="formDataZh.profitability" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
-              <el-option label="是" :value="1"/>
-              <el-option label="否" :value="2"/>
-              <el-option label="未知" :value="3"/>
+              <el-option :label="$t('yes')" :value="1"/>
+              <el-option :label="$t('no')"  :value="2"/>
+              <el-option :label="$t('NA')" :value="3"/>
             </el-select>
           </div>
           <div class="formItem filter-item el-select--medium">
@@ -381,22 +417,22 @@
             <span class="formItemSpan">{{$t('employeeEdit.RealEstate')}}</span>
             <el-select v-model="formDataZh.real_estate" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
-              <el-option label="是" :value="1"/>
-              <el-option label="否" :value="2"/>
-              <el-option label="未知" :value="3"/>
+              <el-option :label="$t('yes')"  :value="1"/>
+              <el-option :label="$t('no')"   :value="2"/>
+              <el-option :label="$t('NA')"  :value="3"/>
             </el-select>
           </div>
         </div>
         <div class="formRow">
-          <!--<div class="formItem filter-item el-select&#45;&#45;medium">-->
-          <!--&lt;!&ndash;是否连锁店&ndash;&gt;-->
-          <!--<span class="formItemSpan">是否连锁店</span>-->
-          <!--<el-select v-model="formDataEn.type" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;" class="filter-item">-->
-          <!--<el-option label="是" value="1" />-->
-          <!--<el-option label="否" value="2" />-->
-          <!--<el-option label="未知" value="3" />-->
-          <!--</el-select>-->
-          <!--</div>-->
+          <div class="formItem filter-item el-select--medium">
+          <!--是否连锁店-->
+          <span class="formItemSpan">{{$t('employeeEdit.Franchise')}}</span>
+          <el-select v-model="formDataZh.franchise" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+          <el-option :label="$t('yes')"  :value="1" />
+          <el-option :label="$t('no')"   :value="2" />
+          <el-option :label="$t('NA')"   :value="3" />
+          </el-select>
+          </div>
           <div class="formItem filter-item el-select--medium">
             <!--营业面积-->
             <span class="formItemSpan">{{$t('employeeEdit.BuildingSF')}}</span>
@@ -567,6 +603,30 @@
               </el-input>
             </div>
           </div>
+          <!--Financial Reports 财务报表-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.financial_reports')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.financial_reports')"
+                v-model="formDataZh.financial_reports">
+              </el-input>
+            </div>
+          </div>
+          <!--Tax Returns 报税记录-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.tax_returns')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.tax_returns')"
+                v-model="formDataZh.tax_returns">
+              </el-input>
+            </div>
+          </div>
           <!--财务绩效-->
           <div class="itemBox">
             <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
@@ -600,6 +660,18 @@
                 :autosize="{ minRows: 4}"
                 :placeholder="$t('employeeEdit.business_assets')"
                 v-model="formDataZh.business_assets">
+              </el-input>
+            </div>
+          </div>
+          <!--Employee Info 员工信息-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.employee_info')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.employee_info')"
+                v-model="formDataZh.employee_info">
               </el-input>
             </div>
           </div>
@@ -744,6 +816,7 @@
           listing: '',
           industry: '',
           type: '',
+          franchise: '',
           price: '',
           employee_count: '1',
           country: '',//国家
@@ -773,6 +846,9 @@
           business_description: '',
           business_assets: '',
           financial_performance: '',
+          financial_reports: '',
+          tax_returns: '',
+          employee_info: '',
         },
         formDataZh: {
           lang:'zh',
@@ -781,6 +857,7 @@
           listing: '',
           industry: '',
           type: '',
+          franchise: '',
           price: '',
           employee_count: '1',
           country: '',//国家
@@ -810,6 +887,9 @@
           business_description: '',
           business_assets: '',
           financial_performance: '',
+          financial_reports: '',
+          tax_returns: '',
+          employee_info: '',
         },
         Employee: [
           {

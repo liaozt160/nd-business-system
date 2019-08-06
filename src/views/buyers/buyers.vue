@@ -156,6 +156,29 @@
           </div>
         </div>
 
+        <div class="formRow">
+          <!--买家地址-->
+          <el-form-item :label="$t('employeeEdit.Location')" prop="country">
+            <el-select v-model="userEdit.country" id="country"
+                       @change="getlocation('country',userEdit.country)"
+                       style="" class="filter-item">
+              <el-option :label="$t('China')" value="1000"/>
+              <el-option :label="$t('UnitedStates')" value="USA"/>
+            </el-select>
+            <el-select v-model="userEdit.states" style="width: 215px;margin: 0 5px;"
+                       :disabled="locationLoading"
+                       class="filter-item">
+              <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
+            </el-select>
+          </el-form-item>
+        </div>
+        <div class="formRow" style="margin-top: -10px">
+          <el-form-item >
+          <el-input v-model="userEdit.address" :placeholder="$t('address')" style="width: 424px;" class="filter-item"/>
+          </el-form-item>
+        </div>
+
+
 
       <!--买方的具体技能-->
       <div class="itemBox">
@@ -194,12 +217,10 @@
         </el-form-item>
       </div>
       </el-form>
-
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
         <el-button type="primary" @click="userEditSave(userEdit.id)">{{ $t('table.confirm') }}</el-button>
       </div>
-
     </el-dialog>
 
   </div>
@@ -209,6 +230,7 @@
   import store from '@/store'
   import Pagination from '@/components/Pagination'
   import { getBuyerList,addBuyer,editBuyer,delBuyer,showBuyer,changeServiceCharge } from '@/api/buyers'
+  import {getLocation} from '@/api/business'
   export default {
     name: "buyers",
     components: {
@@ -224,6 +246,11 @@
         AssignVisible: false,
         // dialogView: false,
         userEditLoading:false,
+
+        provinces: [],//省份
+        cities: [],//城市
+        locationLoading: false,
+
         userEdit: {
           id: '',
           buyer: '',
@@ -234,7 +261,11 @@
           funds_verified: '1',
           specific_skills_of_buyer: '',
           business_management_needs: '',
-          time_line_to_purchase: ''
+          time_line_to_purchase: '',
+
+          country: '',
+          states: '',
+          address: '',
         },
 
         listQuery: {
@@ -266,6 +297,34 @@
       this.getList();
     },
     methods: {
+      // 获取地址三级联动数据
+      getlocation(type, value) {
+        let that = this;
+        that.userEdit.states = '';
+        return new Promise(function (resolve, reject) {
+          if (type && value) {
+            let paramsData = {code: value, lang: that.$store.getters.language};
+            that.locationLoading = true;
+            that.provinces = [];
+            getLocation(paramsData).then(response => {
+              if (type == 'country') {
+                that.provinces = response.data;
+                // that.cities = [];
+                // that.userEdit.city = '';
+                resolve();
+              } else if (type == 'provinces') {
+                that.cities = response.data;
+                // that.userEdit.city = '';
+                // that.userEdit.states = value;
+                resolve();
+              }
+              that.locationLoading = false;
+            }).catch(err => {
+              console.log(err);
+            })
+          }
+        })
+      },
       // 弹出框关闭前
       dialogClose(done) {
         this.userEdit =  {};
@@ -325,7 +384,10 @@
           funds_verified: 2,
           specific_skills_of_buyer: '',
           business_management_needs: '',
-          time_line_to_purchase: ''
+          time_line_to_purchase: '',
+          country: '',
+          states: '',
+          address: '',
         };
       },
 

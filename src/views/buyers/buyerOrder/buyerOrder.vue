@@ -171,8 +171,6 @@
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
                   <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
-                  <!--删除按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
                 <!--已审核状态-->
                 <div v-if="scope.row.status==2">

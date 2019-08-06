@@ -223,6 +223,18 @@ export const buyerRoutes = [
     ]
   },
   {
+    path: '/orderManagement',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyers/orderManagement'),
+        name: 'orderManagement',
+        meta: { title: 'orderManagement', icon: 'order', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/attentionBusiness',
     component: Layout,
     children: [

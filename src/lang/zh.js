@@ -24,7 +24,7 @@ export default {
   TokenAssign:'令牌分配',//令牌分配
   agent:'代理人',//代理人
   yes:'是',//是
-  no:'没有',//没有
+  no:'否',//没有
   NA:'未知',//未知
   view:'查看',//查看
   buyerView:'买家查看',//买家查看
@@ -305,6 +305,9 @@ export default {
     ReasonForSelling:'出售原因',//出售原因
     business_description:'业务描述',//业务描述
     financial_performance:'待售商业资产',//待售商业资产
+    financial_reports:'财务报表',//财务报表
+    tax_returns:'报税记录',//报税记录
+    employee_info:'员工信息',//员工信息
     business_assets:'商业资产',//商业资产
 
 
