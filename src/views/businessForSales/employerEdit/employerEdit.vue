@@ -239,7 +239,7 @@
                 type="textarea"
                 :autosize="{ minRows: 4}"
                 :placeholder="$t('employeeEdit.financial_reports')"
-                v-model="formDataEn.financial_reports">
+                v-model="formDataEn.franchise_reports">
               </el-input>
             </div>
           </div>
@@ -611,7 +611,7 @@
                 type="textarea"
                 :autosize="{ minRows: 4}"
                 :placeholder="$t('employeeEdit.financial_reports')"
-                v-model="formDataZh.financial_reports">
+                v-model="formDataZh.franchise_reports">
               </el-input>
             </div>
           </div>
@@ -846,7 +846,7 @@
           business_description: '',
           business_assets: '',
           financial_performance: '',
-          financial_reports: '',
+          franchise_reports: '',
           tax_returns: '',
           employee_info: '',
         },
@@ -887,7 +887,7 @@
           business_description: '',
           business_assets: '',
           financial_performance: '',
-          financial_reports: '',
+          franchise_reports: '',
           tax_returns: '',
           employee_info: '',
         },
