@@ -106,7 +106,7 @@
 
           </div>
           <div class="formItem filter-item el-select--medium">
-            <!--毛利润-->
+            <!--营业额-->
             <span class="formItemSpan">{{$t('employeeEdit.GrossIncome')}}</span>
             <el-input v-enter-number :placeholder="$t('employeeEdit.GrossIncome')" maxLength="8" v-model="formDataEn.gross_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
@@ -417,6 +417,30 @@
         </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
+            <!--卖家融资-->
+            <span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>
+            <el-input :placeholder="$t('employeeEdit.BuyerFinancing')" v-model="formDataZh.buyer_financing"
+                      style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            </el-input>
+          </div>
+          <div class="formItem filter-item el-select--medium">
+            <!--企业状态-->
+            <span class="formItemSpan">{{$t('employeeEdit.EnterpriseState')}}</span>
+            <el-select v-model="formDataZh.status" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
+                       class="filter-item">
+              <el-option :label="$t('table.forSale')" :value="1"/>
+              <el-option :label="$t('table.soldOut')" :value="2"/>
+              <el-option :label="$t('employeeEdit.noVerified')" :value="3"/>
+            </el-select>
+          </div>
+          <!--<div class="formItem filter-item el-select&#45;&#45;medium">-->
+          <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
+          <!--<span class="formItemSpan">Business Description</span>-->
+          <!--<el-input v-model="formDataEn.business_description" placeholder="Business Description" style="width: 70%;margin-bottom: 20px;" class="filter-item"/>-->
+          <!--</div>-->
+        </div>
+        <div class="formRow">
+          <div class="formItem filter-item el-select--medium">
             <!--是否盈利-->
             <span class="formItemSpan">{{$t('employeeEdit.Profitability')}}</span>
             <el-select v-model="formDataZh.profitability" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
@@ -455,15 +479,19 @@
             </el-input>
           </div>
         </div>
+
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--员工人数-->
             <span class="formItemSpan">{{$t('employeeEdit.EmployeeCount')}}</span>
-            <el-input-number v-model="formDataZh.employee_count" :min="0"
-                             style="width: 70%;margin-bottom: 20px;"></el-input-number>
+            <div style="width: 70%;margin-bottom: 20px;position: relative;">
+              <el-input v-model="formDataZh.employee_count" class="filter-item" @focus="employee_countNA=true" @blur="employee_countBlur"></el-input>
+              <div v-show="employee_countNA" class="selectBox" @click="formDataZh.employee_count=$t('NA');employee_countNA=false">{{$t('NA')}}</div>
+            </div>
+
           </div>
           <div class="formItem filter-item el-select--medium">
-            <!--毛利润-->
+            <!--营业额-->
             <span class="formItemSpan">{{$t('employeeEdit.GrossIncome')}}</span>
             <el-input v-enter-number :placeholder="$t('employeeEdit.GrossIncome')" maxLength="8" v-model="formDataZh.gross_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
@@ -476,6 +504,7 @@
             </el-input>
           </div>
         </div>
+
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--税息折旧及摊销前利润-->
@@ -884,12 +913,12 @@
           real_estate: '',
           building_sf: '',
           gross_income: '',
-          gross_income_unit: '1',
+          gross_income_unit: '4',
           value_of_real_estate: '',
           net_income: '',
-          net_income_unit: '1',
+          net_income_unit: '4',
           lease: '',
-          lease_unit: '1',
+          lease_unit: '2',
           lease_term: '',
           ebitda: '',
           ff_e: '',
