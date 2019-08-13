@@ -288,7 +288,7 @@ export default {
     Franchise:'是否连锁店',//是否连锁店
     BuildingSF:'营业面积',//营业面积
     EmployeeCount:'员工人数',//员工人数
-    GrossIncome:'毛利润',//毛利润
+    GrossIncome:'营业额',//营业额
     EBITDA:'税息折扣及摊销前利润',//税息折扣及摊销前利润
     FFandE:'硬件资产价值',//硬件资产价值
     Inventory:'库存',//库存
@@ -318,6 +318,9 @@ export default {
     InitiationTime:'入职时间',//入职时间
     salary : '薪资(时薪)', //薪资(时薪)
     selectDate : '选择日期', //选择日期
+
+    EnterpriseState : '企业状态', //企业状态
+    noVerified : '未核实', //未核实
   },
 
 

@@ -33,6 +33,30 @@
         </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
+            <!--卖家融资-->
+            <span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>
+            <el-input :placeholder="$t('employeeEdit.BuyerFinancing')" v-model="formDataEn.buyer_financing"
+                      style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            </el-input>
+          </div>
+          <div class="formItem filter-item el-select--medium">
+            <!--企业状态-->
+            <span class="formItemSpan">{{$t('employeeEdit.EnterpriseState')}}</span>
+            <el-select v-model="formDataEn.status" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
+                       class="filter-item">
+              <el-option :label="$t('table.forSale')" :value="1"/>
+              <el-option :label="$t('table.soldOut')" :value="2"/>
+              <el-option :label="$t('employeeEdit.noVerified')" :value="3"/>
+            </el-select>
+          </div>
+          <!--<div class="formItem filter-item el-select&#45;&#45;medium">-->
+          <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
+          <!--<span class="formItemSpan">Business Description</span>-->
+          <!--<el-input v-model="formDataEn.business_description" placeholder="Business Description" style="width: 70%;margin-bottom: 20px;" class="filter-item"/>-->
+          <!--</div>-->
+        </div>
+        <div class="formRow">
+          <div class="formItem filter-item el-select--medium">
             <!--是否盈利-->
             <span class="formItemSpan">{{$t('employeeEdit.Profitability')}}</span>
             <el-select v-model="formDataEn.profitability" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
@@ -75,7 +99,11 @@
           <div class="formItem filter-item el-select--medium">
             <!--员工人数-->
             <span class="formItemSpan">{{$t('employeeEdit.EmployeeCount')}}</span>
-            <el-input-number v-model="formDataEn.employee_count" :min="0" :max="100000" :precision="0" :step="1" style="width: 70%;margin-bottom: 20px;"></el-input-number>
+            <div style="width: 70%;margin-bottom: 20px;position: relative;">
+              <el-input v-model="formDataEn.employee_count" class="filter-item" @focus="employee_countNA=true" @blur="employee_countBlur"></el-input>
+              <div v-show="employee_countNA" class="selectBox" @click="formDataEn.employee_count=$t('NA');employee_countNA=false">{{$t('NA')}}</div>
+            </div>
+
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--毛利润-->
@@ -156,20 +184,6 @@
             <span class="formItemSpan">{{$t('employeeEdit.ServiceFee')}}</span>
             <el-input :placeholder="$t('employeeEdit.ServiceFee')" v-model="formDataEn.commission" style="width: 70%;margin-bottom: 20px;" class="filter-item"></el-input>
           </div>
-        </div>
-        <div class="formRow">
-          <div class="formItem filter-item el-select--medium">
-            <!--卖家融资-->
-            <span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>
-            <el-input :placeholder="$t('employeeEdit.BuyerFinancing')" v-model="formDataEn.buyer_financing"
-                      style="width: 70%;margin-bottom: 20px;" class="filter-item">
-            </el-input>
-          </div>
-          <!--<div class="formItem filter-item el-select&#45;&#45;medium">-->
-          <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
-          <!--<span class="formItemSpan">Business Description</span>-->
-          <!--<el-input v-model="formDataEn.business_description" placeholder="Business Description" style="width: 70%;margin-bottom: 20px;" class="filter-item"/>-->
-          <!--</div>-->
         </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
@@ -776,7 +790,6 @@
       </div>
     </el-dialog>
 
-
   </div>
 </template>
 
@@ -796,6 +809,7 @@
     name: "employerEdit",
     data() {
       return {
+        employee_countNA: false,
         editStatus: false,
 
         dialogFormVisible: false,
@@ -815,6 +829,7 @@
           title: '',
           listing: '',
           industry: '',
+          status: '1',
           type: '',
           franchise: '',
           price: '',
@@ -827,12 +842,12 @@
           real_estate: '',
           building_sf: '',
           gross_income: '',
-          gross_income_unit: '1',
+          gross_income_unit: '4',
           value_of_real_estate: '',
           net_income: '',
-          net_income_unit: '1',
+          net_income_unit: '4',
           lease: '',
-          lease_unit: '1',
+          lease_unit: '2',
           lease_term: '',
           ebitda: '',
           ff_e: '',
@@ -856,6 +871,7 @@
           title: '',
           listing: '',
           industry: '',
+          status: '1',
           type: '',
           franchise: '',
           price: '',
@@ -919,6 +935,12 @@
       this.tablang='en';
     },
     methods: {
+      employee_countBlur(){
+        let that=this;
+        setTimeout(function() {
+          that.employee_countNA=false;
+        },200)
+      },
       // 获取地址三级联动数据
       getlocation(type, value) {
         let that = this;
@@ -1140,6 +1162,26 @@
 </script>
 
 <style scoped>
+  .selectBox{
+    list-style: none;
+    margin-top: 6px;
+    background-color: #fff;
+    color: #606266;
+    height: 34px;
+    line-height: 34px;
+    padding-left: 10px;
+    cursor: pointer;
+    border: solid 1px #dfe4ed;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    font-size: 14px;
+  }
+  .selectBox:hover{
+    background-color: #F5F7FA;
+  }
   .formRow {
     display: flex;
     justify-content: space-between;

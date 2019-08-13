@@ -288,7 +288,7 @@ export default {
     Franchise:'Franchise',//是否连锁店
     BuildingSF:'Building SF',//营业面积
     EmployeeCount:'Employee Count',//员工人数
-    GrossIncome:'Gross Income',//毛利润
+    GrossIncome:'Gross Revenue',//营业额
     EBITDA:'EBITDA(Earning Before Interest, Tax, Depreciation & Amortization)',//税息折扣及摊销前利润
     FFandE:'FF&E(Furniture, Fixture, & Equipment)',//硬件资产价值
     Inventory:'Inventory',//库存
@@ -317,6 +317,9 @@ export default {
     InitiationTime:'Initiation Time',//入职时间
     salary : 'Salary( per hour)', //薪资(时薪)
     selectDate : 'Select Date', //选择日期
+
+    EnterpriseState : 'Enterprise State', //企业状态
+    noVerified : 'no verified', //未核实
   },
 
 
