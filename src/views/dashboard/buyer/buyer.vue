@@ -43,7 +43,8 @@
           min-width="100">
           <template slot-scope="{row}">
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
-            <el-tag type="info" v-else>{{ $t('table.soldOut') }}</el-tag>
+            <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
+            <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -71,7 +72,7 @@
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.EmployeeCount')+'：'">
           <!--员工人数-->
-          <span>{{ attentionData.employee_count }}</span>
+          <span>{{ attentionData.employee_count==0?$t('NA'):attentionData.employee_count }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Profitability')+'：'">
           <!--是否盈利-->
@@ -87,7 +88,7 @@
         </el-form-item>
         <el-form-item :label="$t('table.status')+'：'">
           <!--状态-->
-          <span>{{ attentionData.status==1? $t('table.forSale'):$t('table.soldOut') }}</span>
+          <span>{{ attentionData.status==1?$t('table.forSale'):attentionData.status==2?$t('table.soldOut'):$t('employeeEdit.noVerified') }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Location')+'：'">
           <!--地理位置-->

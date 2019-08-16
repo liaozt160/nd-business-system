@@ -42,7 +42,7 @@ Vue.directive('enterNumber', {
       e = e || window.event;
       let charcode = typeof e.charCode === 'number' ? e.charCode : e.keyCode;
       let re = /\d/;
-      if(!re.test(String.fromCharCode(charcode)) && charcode > 9 && !e.ctrlKey){
+      if(!re.test(String.fromCharCode(charcode)||e=='NA'||e=='未知') && charcode > 9 && !e.ctrlKey){
         if(e.preventDefault){
           e.preventDefault();
         }else{

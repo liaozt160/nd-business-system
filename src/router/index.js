@@ -173,6 +173,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  // {
+  //   path: '/tipsAndRecommendations',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/tipsAndRecommendations/tipsAndRecommendations'),
+  //       name: 'tipsAndRecommendations',
+  //       meta: { title: 'tipsAndRecommendations', icon: 'tipsAndRecommendations', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/businessBrokerNet',
     component: Layout,
@@ -246,6 +258,18 @@ export const buyerRoutes = [
       }
     ]
   },
+  // {
+  //   path: '/tipsAndRecommendations',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/tipsAndRecommendations/tipsAndRecommendations'),
+  //       name: 'tipsAndRecommendations',
+  //       meta: { title: 'tipsAndRecommendations', icon: 'tipsAndRecommendations', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/businessForSalesLevelOne',
     component: Layout,

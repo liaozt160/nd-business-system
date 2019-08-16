@@ -9,6 +9,7 @@
         <el-option :label="$t('table.all')" value="0" />
         <el-option :label="$t('table.forSale')" value="1" />
         <el-option :label="$t('table.soldOut')" value="2" />
+        <el-option :label="$t('employeeEdit.noVerified')" value="3" />
       </el-select>
       <el-select size="small" v-if="role==1" v-model="listQuery.recommend_by_me" :placeholder="$t('recommender')" style="width: 130px;margin-right: 15px;" class="filter-item" @change="handleFilter" clearable>
         <el-option :label="$t('table.all')" value="0" />
@@ -84,7 +85,8 @@
           min-width="100">
           <template slot-scope="{row}">
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
-            <el-tag type="info" v-else>{{ $t('table.soldOut') }}</el-tag>
+            <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
+            <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column

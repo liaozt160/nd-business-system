@@ -43,7 +43,7 @@
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.EmployeeCount')">
               <!--员工人数-->
-              <span>{{ props.row.employee_count }}</span>
+              <span>{{ props.row.employee_count==0?$t('NA'):props.row.employee_count }}</span>
             </el-form-item>
             <el-form-item :label="$t('employeeEdit.GrossIncome')">
               <!--毛利润-->
@@ -156,7 +156,8 @@
         min-width="100">
         <template slot-scope="{row}">
           <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
-          <el-tag type="info" v-else>{{ $t('table.soldOut') }}</el-tag>
+          <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
+          <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column

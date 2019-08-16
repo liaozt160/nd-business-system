@@ -144,3 +144,39 @@ export function getLocation (data) {
     data
   })
 }
+// 根据所传business id，生成1级企业资料pdf文件
+export function businessGeneratePdfOne (data) {
+  return request({
+    url: '/api/account/business/pdf/1',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}
+// 根据所传business id，生成2级企业资料pdf文件
+export function businessGeneratePdfTwo (data) {
+  return request({
+    url: '/api/account/business/pdf/2',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}
+// 根据所传business id，生成3级企业资料pdf文件
+export function businessGeneratePdfThree (data) {
+  return request({
+    url: '/api/account/business/pdf/3',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}
+// 根据所传business id，生成不同等级企业资料pdf文件
+export function businessGeneratePdf (data) {
+  return request({
+    url: '/api/account/business/pdf/'+data.num,
+    method: 'post',
+    responseType: 'blob',
+    data:data.data
+  })
+}

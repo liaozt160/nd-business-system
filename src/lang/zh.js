@@ -102,6 +102,7 @@ export default {
     orderManagement: '订单管理',//订单管理
     myBusiness: '我的企业',//我的企业
     businessBrokerNet: '商业经纪人网络',//商业经纪人网络
+    tipsAndRecommendations: '提示推荐',//提示推荐
   },
   panelGroup:{
     Buyer:'买家',//买家
@@ -220,6 +221,10 @@ export default {
     ExcessiveFileSize: '文件过大',//文件过大
     time: '时间',//时间
     Print: '打印',//打印
+    PrintOne: '打印一级信息',//打印一级信息
+    PrintTwo: '打印二级信息',//打印二级信息
+    PrintThree: '打印三级信息',//打印三级信息
+    PrintFour: '打印四级信息',//打印四级信息
 
     order: '订单',//订单
     orderManagement: '订单管理',//订单管理

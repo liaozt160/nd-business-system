@@ -8,7 +8,7 @@
         <el-input size="small" v-model="listQuery.q" :placeholder="$t('table.search')" style="width: 200px;margin-bottom: 0;" class="filter-item" @keyup.enter.native="handleFilter" clearable></el-input>
         <el-button size="small" class="filter-item" type="primary" style="margin-bottom: 0;" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       </div>
-      <el-button size="small" v-if="$route.query.role==role" class="filter-item" style="margin-left: 10px;" type="primary"
+      <el-button size="small" v-if="$route.query.role==role||role==1" class="filter-item" style="margin-left: 10px;" type="primary"
                  icon="el-icon-plus" @click="handleCreate">{{ $t('order.addOrder') }}
       </el-button>
     </div>
@@ -107,18 +107,18 @@
                   <!--提交订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="changeStatus(scope,1)">{{$t('order.submitOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role||role==1"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                   <!--删除按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role||role==1"><span @click.stop="handleDelete(scope)">{{$t('table.delete')}}</span></el-dropdown-item>
                 </div>
                 <!--审核中-->
                 <div v-if="scope.row.status==1">
                   <!--查看订单按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="viewOrder(scope)">{{$t('order.viewOrder')}}</span></el-dropdown-item>
                   <!--取消提交订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role||role==1"><span @click.stop="changeStatus(scope,0)">{{$t('order.cancelOrder')}}</span></el-dropdown-item>
                   <!--编辑订单按钮-->
-                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
+                  <el-dropdown-item class="menuItem" v-if="$route.query.role==role||role==1" :disabled="scope.row.status!=0"><span @click.stop="modifyOrder(scope)">{{$t('order.modifyOrder')}}</span></el-dropdown-item>
                   <!--付款信息按钮-->
                   <el-dropdown-item class="menuItem"><span @click.stop="payInformationOpen(scope)">{{$t('order.payInformation')}}</span></el-dropdown-item>
                   <!--通过审核按钮-->
@@ -332,7 +332,7 @@
                 </el-form-item>
                 <!--<el-form-item :label="$t('employeeEdit.Franchise')">-->
                 <!--&lt;!&ndash;是否连锁店&ndash;&gt;-->
-                <!--<span>{{ props.row.real_estate==1?$t('yes'):$t('no') }}</span>-->
+                <!--<span>{{ props.row.real_estate==1?$t('yes'):props.row.real_estate==2?$t('no'):$t('NA') }}</span>-->
                 <!--</el-form-item>-->
                 <el-form-item :label="$t('employeeEdit.BuildingSF')">
                   <!--营业面积-->
@@ -340,7 +340,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.EmployeeCount')">
                   <!--员工人数-->
-                  <span>{{ props.row.employee_count }}</span>
+                  <span>{{ props.row.employee_count==0?$t('NA'):props.row.employee_count }}</span>
                 </el-form-item>
                 <el-form-item :label="$t('employeeEdit.GrossIncome')">
                   <!--毛利润-->
@@ -463,7 +463,8 @@
             min-width="100">
             <template slot-scope="{row}">
               <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
-              <el-tag type="info" v-else>{{ $t('table.soldOut') }}</el-tag>
+              <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
+              <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
             </template>
           </el-table-column>
         </el-table>

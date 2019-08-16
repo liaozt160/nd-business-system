@@ -100,7 +100,7 @@
             <!--员工人数-->
             <span class="formItemSpan">{{$t('employeeEdit.EmployeeCount')}}</span>
             <div style="width: 70%;margin-bottom: 20px;position: relative;">
-              <el-input v-model="formDataEn.employee_count" class="filter-item" @focus="employee_countNA=true" @blur="employee_countBlur"></el-input>
+              <el-input v-enter-number v-model="formDataEn.employee_count" class="filter-item" @focus="employee_countNA=true" @blur="employee_countBlur"></el-input>
               <div v-show="employee_countNA" class="selectBox" @click="formDataEn.employee_count=$t('NA');employee_countNA=false">{{$t('NA')}}</div>
             </div>
 
@@ -485,7 +485,7 @@
             <!--员工人数-->
             <span class="formItemSpan">{{$t('employeeEdit.EmployeeCount')}}</span>
             <div style="width: 70%;margin-bottom: 20px;position: relative;">
-              <el-input v-model="formDataZh.employee_count" class="filter-item" @focus="employee_countNA=true" @blur="employee_countBlur"></el-input>
+              <el-input v-enter-number v-model="formDataZh.employee_count" class="filter-item" @focus="employee_countNA=true" @blur="employee_countBlur"></el-input>
               <div v-show="employee_countNA" class="selectBox" @click="formDataZh.employee_count=$t('NA');employee_countNA=false">{{$t('NA')}}</div>
             </div>
 
@@ -858,7 +858,7 @@
           title: '',
           listing: '',
           industry: '',
-          status: 1,
+          // status: 1,
           type: '',
           franchise: '',
           price: '',
@@ -900,7 +900,7 @@
           title: '',
           listing: '',
           industry: '',
-          status: 1,
+          // status: 1,
           type: '',
           franchise: '',
           price: '',
@@ -1012,10 +1012,11 @@
         showBusinessEn({id:this.$route.query.id}).then(response => {
           that.listLoading = false;
           console.log('getBusinessEn', response);
-          let data = Object.assign({}, response.data);
           that.formDataEn =  response.data;
+          that.formDataEn.employee_count=response.data.employee_count==0?that.$t('NA'):response.data.employee_count;
           that.business_broker =  response.data.business_broker;
-            that.getlocation('country', data.country).then(_ => {
+          let data = Object.assign({}, response.data);
+          that.getlocation('country', data.country).then(_ => {
               that.formDataEn.country = data.country;
               that.getlocation('provinces', data.states).then(_ => {
                 that.formDataEn.city = data.city;
@@ -1037,9 +1038,10 @@
         showBusinessZh({id:this.$route.query.id}).then(response => {
           that.listLoading = false;
           console.log('getBusinessZh', response);
-          let data = Object.assign({}, response.data);
-          if(data.length!=0){
+          if(response.data.length!=0){
             that.formDataZh =  response.data;
+            that.formDataZh.employee_count=response.data.employee_count==0?that.$t('NA'):response.data.employee_count;
+            let data = Object.assign({}, response.data);
             that.getlocation('country', data.country).then(_ => {
               that.formDataZh.country = data.country;
               that.getlocation('provinces', data.states).then(_ => {
@@ -1054,7 +1056,7 @@
       },
       //切换中英tab
       changetab(e) {
-        // this.tablang = e.index == 0 ? 'en' : 'zh';
+        this.tablang = e.index == 0 ? 'en' : 'zh';
         this.provinces = [];
         this.cities = [];
         if (e.index == 0) {
@@ -1127,9 +1129,10 @@
       // 企业编辑保存
       formSave() {
         let that = this;
-        let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
-        console.log(33333,this.tablang);
-        if(!formData.company||!formData.title||!formData.listing||!formData.price){
+        // let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
+        let formData = Object.assign({}, this.tablang == 'en' ? this.formDataEn : this.formDataZh);
+        if(formData.employee_count=='NA'||formData.employee_count=='未知'){formData.employee_count=0;}
+        if(!formData.company||!formData.title||!formData.listing||!formData.price){//必填信息不能为空
           this.$alert( this.$t('pleaseImproveBusiness'), this.$t('Confirmation'), {
             confirmButtonText: this.$t('confirm'),
           });
@@ -1139,11 +1142,12 @@
           formData.id=this.businessId;
           formData.business_broker=this.business_broker;
           if(that.tablang == 'en'){
+            console.log(123,formData)
             editBusiness(formData).then(response => {
               console.log('editBusiness', response);
-              that.formDataEn = {};
-              that.formDataZh = {};
-              that.$router.push('/businessForSales/index');
+              // that.formDataEn = {};
+              // that.formDataZh = {};
+              // that.$router.push('/businessForSales/index');
               that.$notify({
                 showClose: true,
                 message: that.$t('Successful'),
@@ -1155,9 +1159,9 @@
           }else if(that.tablang == 'zh'){
             editBusinessZh(formData).then(response => {
               console.log('editBusinessZh', response);
-              that.formDataEn = {};
-              that.formDataZh = {};
-              that.$router.push('/businessForSales/index');
+              // that.formDataEn = {};
+              // that.formDataZh = {};
+              // that.$router.push('/businessForSales/index');
               that.$notify({
                 showClose: true,
                 message: that.$t('Successful'),
