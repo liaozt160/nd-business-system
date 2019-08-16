@@ -284,10 +284,10 @@
                 </el-dropdown-item>
                 <el-dropdown-item class="menuItem"><span @click.stop="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</span>
                 </el-dropdown-item>
-                <el-dropdown-item class="menuItem" v-if="scope.row.status==1"><span
-                  @click.stop="handleChangeStatus(scope)">{{$t('table.soldOut')}}</span></el-dropdown-item>
-                <el-dropdown-item class="menuItem" v-else><span @click.stop="handleChangeStatus(scope)">{{$t('table.forSale')}}</span>
-                </el-dropdown-item>
+                <!--<el-dropdown-item class="menuItem" v-if="scope.row.status==1"><span-->
+                  <!--@click.stop="handleChangeStatus(scope)">{{$t('table.soldOut')}}</span></el-dropdown-item>-->
+                <!--<el-dropdown-item class="menuItem" v-else><span @click.stop="handleChangeStatus(scope)">{{$t('table.forSale')}}</span>-->
+                <!--</el-dropdown-item>-->
                 <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</span>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -440,8 +440,8 @@
       handlePrinter(num) {
         let that = this;
         this.pdfLoading = true;
-        businessGeneratePdf({data:{ids: JSON.stringify(this.selectArray)},num:num} ).then(response => {
-          console.log('businessGeneratePdf'+num, response);
+        businessGeneratePdf({data: {ids: JSON.stringify(this.selectArray)}, num: num}).then(response => {
+          console.log('businessGeneratePdf' + num, response);
           const contents = response;
           const blob = new Blob([contents]);
           if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1 || window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
