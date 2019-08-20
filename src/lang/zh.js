@@ -65,7 +65,15 @@ export default {
   Quarter:'季度',//季度
   Year:'年',//年
 
-  selectBuyerBroker:'请选择要添加到该网络的卖家经纪人',//请选择要添加到该网络的卖家经纪人
+
+
+  selectBuyerBroker:'请选择要添加到该网络的买家经纪人',//请选择要添加到该网络的买家经纪人
+  all_Buyer_brokers:'所有买家经纪人',//所有买家经纪人
+  selected_Buyer_brokers:'已选择的买家经纪人',//已选择的买家经纪人
+  setAsBuyerManagerText:'负责人可以查看其他成员的信息',//负责人可以查看其他成员的信息
+  setAsBuyerMemberText:'普通成员不能查看其他成员的信息',//普通成员不能查看其他成员的信息
+
+  selectBusinessBroker:'请选择要添加到该网络的卖家经纪人',//请选择要添加到该网络的卖家经纪人
   all_Business_brokers:'所有卖家经纪人',//所有卖家经纪人
   selected_Business_brokers:'已选择的卖家经纪人',//已选择的卖家经纪人
   netName:'网络名称',//网络名称
@@ -101,7 +109,8 @@ export default {
     buyerOrder: '买家订单',//买家订单
     orderManagement: '订单管理',//订单管理
     myBusiness: '我的企业',//我的企业
-    businessBrokerNet: '商业经纪人网络',//商业经纪人网络
+    businessBrokerNet: '企业经纪人网络',//企业经纪人网络
+    buyerBrokerNet: '买家经纪人网络',//买家经纪人网络
     tipsAndRecommendations: '提示推荐',//提示推荐
   },
   panelGroup:{
@@ -176,6 +185,9 @@ export default {
     Paymented: '已支付',//已支付
     Unpaid: '未支付',//未支付
     PaymentStatus: '支付状态',//支付状态
+
+    RecommendationToBuyerBroker: '推荐给买家经纪人',//推荐给买家经纪人
+
   },
   buyers:{
     buyers: '买家',//买家
@@ -283,6 +295,7 @@ export default {
 
   employeeEdit:{
     TagName:'标签名称',//标签名称
+    business_category:'企业分类',//企业分类
     companyName:'企业名称',//企业名称
     title:'标题',//标题
     Listing:'编号',//编号
@@ -290,7 +303,7 @@ export default {
     Location:'地理位置',//地理位置
     Profitability:'是否盈利',//是否盈利
     RealEstate:'是否包含房地产',//是否包含房地产
-    Franchise:'是否连锁店',//是否连锁店
+    Franchise:'是否加盟店',//是否加盟店
     BuildingSF:'营业面积',//营业面积
     EmployeeCount:'员工人数',//员工人数
     GrossIncome:'营业额',//营业额
@@ -309,11 +322,11 @@ export default {
     ListingDate:'待售开始日期',//待售开始日期
     ReasonForSelling:'出售原因',//出售原因
     business_description:'业务描述',//业务描述
-    financial_performance:'待售商业资产',//待售商业资产
+    financial_performance:'财务绩效',//财务绩效
     financial_reports:'财务报表',//财务报表
     tax_returns:'报税记录',//报税记录
     employee_info:'员工信息',//员工信息
-    business_assets:'商业资产',//商业资产
+    businessAssetForSale:'待售商业资产',//待售商业资产
 
 
     emploteesEdit:'雇员编辑',//雇员编辑
@@ -325,7 +338,7 @@ export default {
     selectDate : '选择日期', //选择日期
 
     EnterpriseState : '企业状态', //企业状态
-    noVerified : '未核实', //未核实
+    noVerified : '待核实', //待核实
   },
 
 

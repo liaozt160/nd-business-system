@@ -46,25 +46,22 @@
       <el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
                  @click="handleCreate">{{ $t('table.add') }}
       </el-button>
+      <!--<el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary"-->
+                 <!--@click="handleRecommendation">{{ $t('table.RecommendationToBuyerBroker') }}-->
+      <!--</el-button>-->
       <div class="filter-item el-select--medium" style="margin-left: 10px" v-if="role==1">
         <el-dropdown trigger="click">
           <el-button size="small" type="primary" plain>
             {{$t('order.Print')}}<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('1')">{{$t('order.PrintOne')}}</span>
-            </el-dropdown-item>
-            <el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('2')">{{$t('order.PrintTwo')}}</span>
-            </el-dropdown-item>
-            <el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('3')">{{$t('order.PrintThree')}}</span>
-            </el-dropdown-item>
-            <!--<el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('')">{{$t('order.PrintFour')}}</span>-->
-            <!--</el-dropdown-item>-->
+            <el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('1')">{{$t('order.PrintOne')}}</span></el-dropdown-item>
+            <el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('2')">{{$t('order.PrintTwo')}}</span></el-dropdown-item>
+            <el-dropdown-item :disabled="selectArray.length==0" class="menuItem"><span @click.stop="handlePrinter('3')">{{$t('order.PrintThree')}}</span></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
     </div>
-
 
     <!--列表-->
     <div class="companyTable">
@@ -98,10 +95,10 @@
                 <!--标价-->
                 <span>$ {{ toThousands(props.row.price) }}</span>
               </el-form-item>
-              <!--<el-form-item :label="$t('employeeEdit.Location')">-->
-              <!--&lt;!&ndash;地理位置&ndash;&gt;-->
-              <!--<span>{{ props.row.address }}</span>-->
-              <!--</el-form-item>-->
+              <el-form-item :label="$t('employeeEdit.Location')">
+              <!--地理位置-->
+              <span>{{ props.row.address }}</span>
+              </el-form-item>
               <el-form-item :label="$t('employeeEdit.Profitability')">
                 <!--是否盈利-->
                 <span>{{ props.row.profitability==1?$t('yes'):$t('no') }}</span>
@@ -110,10 +107,10 @@
                 <!--是否包含房地产-->
                 <span>{{ props.row.real_estate ==1?$t('yes'):$t('no')}}</span>
               </el-form-item>
-              <!--<el-form-item :label="$t('employeeEdit.Franchise')">-->
-              <!--&lt;!&ndash;是否连锁店&ndash;&gt;-->
-              <!--<span>{{ props.row.real_estate==1?$t('yes'):$t('no') }}</span>-->
-              <!--</el-form-item>-->
+              <el-form-item :label="$t('employeeEdit.Franchise')">
+                <!--是否包加盟店-->
+                <span>{{ props.row.franchise==1?$t('yes'):props.row.franchise==2?$t('no'):$t('NA') }}</span>
+              </el-form-item>
               <el-form-item :label="$t('employeeEdit.BuildingSF')">
                 <!--营业面积-->
                 <span>{{ props.row.building_sf }}</span>
@@ -171,10 +168,6 @@
                 <!--卖家融资-->
                 <span>{{ props.row.buyer_financing }}</span>
               </el-form-item>
-              <!--<el-form-item :label="$t('employeeEdit.BusinessDescription')">-->
-              <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
-              <!--<span>{{ props.row.business_description }}</span>-->
-              <!--</el-form-item>-->
               <el-form-item :label="$t('employeeEdit.USBroker')">
                 <!--美国中介-->
                 <span>{{ props.row.us_broker }}</span>
@@ -209,6 +202,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="company"
+          align="center"
+          :label="$t('employeeEdit.companyName')"
+          min-width="200">
+        </el-table-column>
+        <el-table-column
           prop="title"
           align="center"
           :label="$t('employeeEdit.title')"
@@ -221,12 +220,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="company"
-          align="center"
-          :label="$t('employeeEdit.companyName')"
-          min-width="200">
-        </el-table-column>
-        <el-table-column
           prop="price"
           align="center"
           :label="$t('table.price')+'($)'"
@@ -237,21 +230,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="updated_at"
-          align="center"
-          :label="$t('table.entryTime')"
-          sortable
-          min-width="160">
-        </el-table-column>
-        <el-table-column
           prop="address"
           align="center"
           :label="$t('table.location')"
           min-width="150">
           <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" :content="scope.row.address" placement="top-start">
+            <el-tooltip class="item" effect="dark" :content="scope.row.location" placement="top-start">
                 <span
-                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{scope.row.address}}</span>
+                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{scope.row.location}}</span>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -259,7 +245,7 @@
           prop="state"
           align="center"
           :label="$t('table.status')"
-          min-width="100">
+          min-width="110">
           <template slot-scope="{row}">
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
             <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
@@ -561,6 +547,9 @@
       },
       handleCreate() {
         this.$router.push({path: `/employerEdit/index`});
+      },
+      handleRecommendation() {
+
       },
 
       // 获取待售企业列表

@@ -185,6 +185,18 @@ export const asyncRoutes = [
   //     }
   //   ]
   // },
+  // {
+  //   path: '/buyerBrokerNet',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/buyerBrokerNet/buyerBrokerNet'),
+  //       name: 'buyerBrokerNet',
+  //       meta: { title: 'buyerBrokerNet', icon: 'buyerNet', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/businessBrokerNet',
     component: Layout,
@@ -193,7 +205,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/businessBrokerNet/businessBrokerNet'),
         name: 'businessBrokerNet',
-        meta: { title: 'businessBrokerNet', icon: 'net', noCache: true }
+        meta: { title: 'businessBrokerNet', icon: 'businessNet', noCache: true }
       }
     ]
   },

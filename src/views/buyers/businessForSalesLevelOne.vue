@@ -42,6 +42,16 @@
         <el-table-column
           prop="title"
           align="center"
+          :label="$t('employeeEdit.companyName')"
+          min-width="200"><template slot-scope="scope">
+          <el-tooltip class="item" effect="dark" :content="scope.row.company" placement="top-start">
+            <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.company}}</span>
+          </el-tooltip>
+        </template>
+        </el-table-column>
+        <el-table-column
+          prop="title"
+          align="center"
           :label="$t('employeeEdit.title')"
           min-width="200"><template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
@@ -60,17 +70,16 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="updated_at"
+          prop="location"
           align="center"
-          :label="$t('table.entryTime')"
-          sortable
-          min-width="160">
+          :label="$t('table.location')"
+          min-width="250">
         </el-table-column>
         <el-table-column
           prop="state"
           align="center"
           :label="$t('table.status')"
-          min-width="100">
+          min-width="110">
           <template slot-scope="{row}">
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
             <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
@@ -125,70 +134,25 @@
           <!--是否盈利-->
           <span>{{ attentionData.profitability==1?$t('yes'):attentionData.profitability==2?$t('no'):$t('NA') }}</span>
         </el-form-item>
+        <el-form-item :label="$t('employeeEdit.Franchise')+'：'">
+          <!--是否包加盟店-->
+          <span>{{ attentionData.franchise==1?$t('yes'):attentionData.franchise==2?$t('no'):$t('NA') }}</span>
+        </el-form-item>
         <el-form-item :label="$t('employeeEdit.RealEstate')+'：'">
           <!--是否包含房地产-->
           <span>{{ attentionData.real_estate==1?$t('yes'):attentionData.real_estate==2?$t('no'):$t('NA') }}</span>
         </el-form-item>
-        <!--<el-form-item :label="$t('employeeEdit.BuildingSF')+'：'">-->
-          <!--&lt;!&ndash;营业面积&ndash;&gt;-->
-          <!--<span>{{ attentionData.building_sf }}</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.GrossIncome')+'：'">-->
-          <!--&lt;!&ndash;毛利润&ndash;&gt;-->
-          <!--<span>-->
-            <!--$ {{ toThousands(attentionData.gross_income) }}-->
-             <!--/ {{attentionData.gross_income_unit==1?$t('week'):attentionData.gross_income_unit==2?$t('Month'):attentionData.gross_income_unit==3?$t('Quarter'):attentionData.gross_income_unit==4?$t('Year'):''}}-->
-          <!--</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.EBITDA')+'：'">-->
-          <!--&lt;!&ndash;税息折扣及摊销前利润&ndash;&gt;-->
-          <!--<span>{{ attentionData.ebitda }}</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.FFandE')+'：'">-->
-          <!--&lt;!&ndash;硬件资产价值&ndash;&gt;-->
-          <!--<span>{{ attentionData.ff_e }}</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.Inventory')+'：'">-->
-          <!--&lt;!&ndash;库存&ndash;&gt;-->
-          <!--<span>{{ attentionData.inventory }}</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.NetIncome')+'：'">-->
-          <!--&lt;!&ndash;净利润&ndash;&gt;-->
-          <!--<span>-->
-            <!--$ {{ toThousands(attentionData.net_income) }}-->
-             <!--/ {{attentionData.net_income_unit==1?$t('week'):attentionData.net_income_unit==2?$t('Month'):attentionData.net_income_unit==3?$t('Quarter'):attentionData.net_income_unit==4?$t('Year'):''}}-->
-          <!--</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.Lease')+'：'">-->
-          <!--&lt;!&ndash;租金&ndash;&gt;-->
-          <!--<span>-->
-            <!--$ {{toThousands(attentionData.lease) }}-->
-            <!--/ {{attentionData.lease_unit==1?$t('week'):attentionData.lease_unit==2?$t('Month'):attentionData.lease_unit==3?$t('Quarter'):attentionData.lease_unit==4?$t('Year'):''}}-->
-          <!--</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.LeaseTerm')+'：'">-->
-          <!--&lt;!&ndash;租约有效期&ndash;&gt;-->
-          <!--<span>{{ attentionData.lease_term }}</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item :label="$t('employeeEdit.Est')+'：'">-->
-          <!--&lt;!&ndash;房地产估价&ndash;&gt;-->
-          <!--<span>{{ attentionData.value_of_real_estate }}</span>-->
-        <!--</el-form-item>-->
         <el-form-item :label="$t('employeeEdit.ServiceFee')+'：'" v-if="!isBuyer">
           <!--服务费-->
           <span>{{ attentionData.commission }}</span>
         </el-form-item>
-        <!--<el-form-item :label="$t('employeeEdit.BuyerFinancing')+'：'">-->
-          <!--&lt;!&ndash;卖家融资&ndash;&gt;-->
-          <!--<span>{{ attentionData.buyer_financing }}</span>-->
-        <!--</el-form-item>-->
         <el-form-item :label="$t('table.status')+'：'">
           <!--状态-->
           <span>{{ attentionData.status==1? $t('table.forSale'):attentionData.status==2?$t('table.soldOut'): $t('employeeEdit.noVerified')  }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Location')+'：'">
           <!--地理位置-->
-          <span>{{ attentionData.address }}</span>
+          <span>{{ attentionData.location }}</span>
         </el-form-item>
           <!--业务描述-->
         <b style="font-size: 14px;line-height: 45px;display: block;">{{$t('employeeEdit.business_description')+'：'}}</b>
@@ -198,17 +162,17 @@
             type="textarea"
             readonly
             :autosize="{ minRows: 4}"
-            v-model="attentionData.business_assets">
+            v-model="attentionData.business_description">
           </el-input>
           <!--待售商业资产-->
-        <b style="font-size: 14px;line-height: 45px;display: block;">{{$t('employeeEdit.financial_performance')+'：'}}</b>
+        <b style="font-size: 14px;line-height: 45px;display: block;">{{$t('employeeEdit.businessAssetForSale')+'：'}}</b>
           <el-input
             class="texareaBox"
             style="display:block;width: 100%;"
             type="textarea"
             readonly
             :autosize="{ minRows: 4}"
-            v-model="attentionData.business_description">
+            v-model="attentionData.business_assets">
           </el-input>
       </el-form>
 

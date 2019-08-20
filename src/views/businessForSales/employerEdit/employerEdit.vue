@@ -7,7 +7,17 @@
       <el-tab-pane :label="$t('english')" id="taben">
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
-            <!--公司名称-->
+            <!--企业分类-->
+            <span class="formItemSpan">{{$t('employeeEdit.business_category')}}</span>
+            <el-select v-model="formDataEn.category_id" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
+                       class="filter-item">
+              <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
+            </el-select>
+          </div>
+        </div>
+        <div class="formRow">
+          <div class="formItem filter-item el-select--medium">
+            <!--企业名称-->
             <span class="formItemSpan">{{$t('employeeEdit.companyName')}}</span>
             <el-input v-model="formDataEn.company" :placeholder="$t('employeeEdit.companyName')" style="width: 70%;margin-bottom: 20px;" class="filter-item"></el-input>
           </div>
@@ -79,7 +89,7 @@
         </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
-          <!--是否连锁店-->
+          <!--是否加盟店-->
           <span class="formItemSpan">{{$t('employeeEdit.Franchise')}}</span>
           <el-select v-model="formDataEn.franchise" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;" class="filter-item">
           <el-option :label="$t('yes')" :value="1" />
@@ -233,7 +243,7 @@
         </div>
         <!--主体部分-->
         <div class="formContainer">
-          <!--商业描述-->
+          <!--BUSINESS DESCRIPTION 商业描述-->
           <div class="itemBox">
             <div class="formTitle">{{$t('employeeEdit.business_description')}}</div>
             <div>
@@ -242,6 +252,42 @@
                 :autosize="{ minRows: 4}"
                 :placeholder="$t('employeeEdit.business_description')"
                 v-model="formDataEn.business_description">
+              </el-input>
+            </div>
+          </div>
+          <!--Business Asset For Sale 待售商业资产-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.businessAssetForSale')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.businessAssetForSale')"
+                v-model="formDataEn.business_assets">
+              </el-input>
+            </div>
+          </div>
+          <!--Financial Performance 财务绩效-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.financial_performance')"
+                v-model="formDataEn.financial_performance">
+              </el-input>
+            </div>
+          </div>
+          <!--Employee Info 员工信息-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.employee_info')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.employee_info')"
+                v-model="formDataEn.employee_info">
               </el-input>
             </div>
           </div>
@@ -269,114 +315,6 @@
               </el-input>
             </div>
           </div>
-          <!--财务绩效-->
-          <div class="itemBox">
-            <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
-            <div>
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4}"
-                :placeholder="$t('employeeEdit.financial_performance')"
-                v-model="formDataEn.financial_performance">
-              </el-input>
-            </div>
-          </div>
-          <!--当前每月总收入和净收入-->
-          <!--<div class="itemBox">-->
-          <!--<div class="formTitle">CURRENT MONTHLY GROSS AND NET INCOME</div>-->
-          <!--<div>-->
-          <!--<el-input-->
-          <!--type="textarea"-->
-          <!--:autosize="{ minRows: 4}"-->
-          <!--placeholder="CURRENT MONTHLY GROSS AND NET INCOME"-->
-          <!--v-model="formDataZh.currentMonthlyGrossAndNetIncome">-->
-          <!--</el-input>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--商业资产-->
-          <div class="itemBox">
-            <div class="formTitle">{{$t('employeeEdit.business_assets')}}</div>
-            <div>
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4}"
-                :placeholder="$t('employeeEdit.business_assets')"
-                v-model="formDataEn.business_assets">
-              </el-input>
-            </div>
-          </div>
-          <!--Employee Info 员工信息-->
-          <div class="itemBox">
-            <div class="formTitle">{{$t('employeeEdit.employee_info')}}</div>
-            <div>
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4}"
-                :placeholder="$t('employeeEdit.employee_info')"
-                v-model="formDataEn.employee_info">
-              </el-input>
-            </div>
-          </div>
-          <!--雇员-->
-          <!--<div class="itemBox">-->
-          <!--<div class="formTitle">EMPLOYEES</div>-->
-          <!--<div class="addBtn"><el-button size="mini" type="primary" @click="handleAdd">+ Add</el-button></div>-->
-          <!--<div>-->
-          <!--<el-table-->
-          <!--:data="Employee"-->
-          <!--border-->
-          <!--stripe-->
-          <!--style="width: 100%">-->
-          <!--<el-table-column-->
-          <!--prop="position"-->
-          <!--align="center"-->
-          <!--label="Position"-->
-          <!--min-width="150">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="jobType"-->
-          <!--align="center"-->
-          <!--label="JobType"-->
-          <!--min-width="150">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="entryTime"-->
-          <!--align="center"-->
-          <!--label="Entry Time"-->
-          <!--min-width="150">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="salary"-->
-          <!--align="center"-->
-          <!--label="Salary( per hour)"-->
-          <!--min-width="150">-->
-          <!--<template slot-scope="{row}">-->
-          <!--<el-tag type="success"> $ {{ row.salary }}</el-tag>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="address"-->
-          <!--align="center"-->
-          <!--:label="'option'"-->
-          <!--fixed="right"-->
-          <!--min-width="180">-->
-          <!--<template slot-scope="scope">-->
-          <!--<el-button-->
-          <!--size="mini"-->
-          <!--type="primary"-->
-          <!--@click="handleEdit(scope.$index,scope)">Edit-->
-          <!--</el-button>-->
-          <!--<el-button-->
-          <!--size="mini"-->
-          <!--type="danger"-->
-          <!--@click="handleDelete(scope.$index,scope)">Delete-->
-          <!--</el-button>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
-          <!--</el-table>-->
-          <!--</div>-->
-          <!--</div>-->
-
           <div style="text-align: center;margin: 50px 0;">
             <el-button size="medium" type="primary" @click="formSave">{{$t('save')}}</el-button>
             <el-button size="medium" @click="cancelBtn">{{$t('cancel')}}</el-button>
@@ -386,6 +324,16 @@
       </el-tab-pane>
       <!--中文tab-->
       <el-tab-pane :label="$t('chinese')" id="tabzh">
+        <div class="formRow">
+          <div class="formItem filter-item el-select--medium">
+            <!--企业分类-->
+            <span class="formItemSpan">{{$t('employeeEdit.business_category')}}</span>
+            <el-select v-model="formDataZh.category_id" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
+                       class="filter-item">
+              <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
+            </el-select>
+          </div>
+        </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--公司名称-->
@@ -479,7 +427,6 @@
             </el-input>
           </div>
         </div>
-
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--员工人数-->
@@ -504,7 +451,6 @@
             </el-input>
           </div>
         </div>
-
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--税息折旧及摊销前利润-->
@@ -634,7 +580,7 @@
         </div>
         <!--主体部分-->
         <div class="formContainer">
-          <!--商业描述-->
+          <!--BUSINESS DESCRIPTION 商业描述-->
           <div class="itemBox">
             <div class="formTitle">{{$t('employeeEdit.business_description')}}</div>
             <div>
@@ -643,6 +589,42 @@
                 :autosize="{ minRows: 4}"
                 :placeholder="$t('employeeEdit.business_description')"
                 v-model="formDataZh.business_description">
+              </el-input>
+            </div>
+          </div>
+          <!--Business Asset For Sale 待售商业资产-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.businessAssetForSale')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.businessAssetForSale')"
+                v-model="formDataZh.business_assets">
+              </el-input>
+            </div>
+          </div>
+          <!--Financial Performance 财务绩效-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.financial_performance')"
+                v-model="formDataZh.financial_performance">
+              </el-input>
+            </div>
+          </div>
+          <!--Employee Info 员工信息-->
+          <div class="itemBox">
+            <div class="formTitle">{{$t('employeeEdit.employee_info')}}</div>
+            <div>
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4}"
+                :placeholder="$t('employeeEdit.employee_info')"
+                v-model="formDataZh.employee_info">
               </el-input>
             </div>
           </div>
@@ -670,114 +652,6 @@
               </el-input>
             </div>
           </div>
-          <!--财务绩效-->
-          <div class="itemBox">
-            <div class="formTitle">{{$t('employeeEdit.financial_performance')}}</div>
-            <div>
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4}"
-                :placeholder="$t('employeeEdit.financial_performance')"
-                v-model="formDataZh.financial_performance">
-              </el-input>
-            </div>
-          </div>
-          <!--当前每月总收入和净收入-->
-          <!--<div class="itemBox">-->
-          <!--<div class="formTitle">当前每月总收入和净收入</div>-->
-          <!--<div>-->
-          <!--<el-input-->
-          <!--type="textarea"-->
-          <!--:autosize="{ minRows: 4}"-->
-          <!--placeholder="当前每月总收入和净收入"-->
-          <!--v-model="formDataZh.currentMonthlyGrossAndNetIncome">-->
-          <!--</el-input>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--商业资产-->
-          <div class="itemBox">
-            <div class="formTitle">{{$t('employeeEdit.business_assets')}}</div>
-            <div>
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4}"
-                :placeholder="$t('employeeEdit.business_assets')"
-                v-model="formDataZh.business_assets">
-              </el-input>
-            </div>
-          </div>
-          <!--Employee Info 员工信息-->
-          <div class="itemBox">
-            <div class="formTitle">{{$t('employeeEdit.employee_info')}}</div>
-            <div>
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 4}"
-                :placeholder="$t('employeeEdit.employee_info')"
-                v-model="formDataZh.employee_info">
-              </el-input>
-            </div>
-          </div>
-          <!--雇员-->
-          <!--<div class="itemBox">-->
-          <!--<div class="formTitle">雇员</div>-->
-          <!--<div class="addBtn"><el-button size="mini" type="primary" @click="handleAdd">+ 增加雇员</el-button></div>-->
-          <!--<div>-->
-          <!--<el-table-->
-          <!--:data="Employee"-->
-          <!--border-->
-          <!--stripe-->
-          <!--style="width: 100%">-->
-          <!--<el-table-column-->
-          <!--prop="position"-->
-          <!--align="center"-->
-          <!--label="职位"-->
-          <!--min-width="150">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="jobType"-->
-          <!--align="center"-->
-          <!--label="职位类型"-->
-          <!--min-width="150">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="entryTime"-->
-          <!--align="center"-->
-          <!--label="入职时间"-->
-          <!--min-width="150">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="salary"-->
-          <!--align="center"-->
-          <!--label="薪资(时薪)"-->
-          <!--min-width="150">-->
-          <!--<template slot-scope="{row}">-->
-          <!--<el-tag type="success"> $ {{ row.salary }}</el-tag>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-          <!--prop="address"-->
-          <!--align="center"-->
-          <!--:label="'操作'"-->
-          <!--fixed="right"-->
-          <!--min-width="180">-->
-          <!--<template slot-scope="scope">-->
-          <!--<el-button-->
-          <!--size="mini"-->
-          <!--type="primary"-->
-          <!--@click="handleEdit(scope.$index,scope)">编辑-->
-          <!--</el-button>-->
-          <!--<el-button-->
-          <!--size="mini"-->
-          <!--type="danger"-->
-          <!--@click="handleDelete(scope.$index,scope)">删除-->
-          <!--</el-button>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
-          <!--</el-table>-->
-          <!--</div>-->
-          <!--</div>-->
-
           <div style="text-align: center;margin: 50px 0;">
             <el-button size="medium" type="primary" @click="formSave">{{$t('save')}}</el-button>
             <el-button size="medium" @click="cancelBtn">{{$t('cancel')}}</el-button>
@@ -785,39 +659,6 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <!--雇员编辑弹窗-->
-    <el-dialog :title="EmployeeEdit.position?$t('employeeEdit.emploteesEdit'):$t('employeeEdit.emploteesAdd')"
-               :visible.sync="dialogFormVisible" width="700px" :before-close="dialogClose" :close-on-click-modal="false">
-      <el-form ref="dataForm" :model="EmployeeEdit" label-position="left" label-width="150px"
-               style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('employeeEdit.position')">
-          <el-input v-model="EmployeeEdit.position" :placeholder="$t('employeeEdit.position')" style="width:350px;"
-                    class="filter-item"/>
-        </el-form-item>
-        <el-form-item :label="$t('employeeEdit.positionType')">
-          <el-select v-model="EmployeeEdit.jobType" class="filter-item" :placeholder="$t('select')"
-                     style="width:350px;">
-            <el-option :label="'全职'" :value="1"/>
-            <el-option :label="'兼职'" :value="2"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('employeeEdit.InitiationTime')" prop="timestamp">
-          <el-date-picker v-model="EmployeeEdit.entryTime" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                          :placeholder="$t('employeeEdit.selectDate')" style="width:350px;"></el-date-picker>
-        </el-form-item>
-        <el-form-item :label="$t('employeeEdit.salary')" prop="title">
-          <el-input :placeholder="$t('employeeEdit.salary')" maxLength="8" v-model="EmployeeEdit.salary" style="width: 350px;"
-                    class="filter-item">
-            <template slot="prepend">$</template>
-          </el-input>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="EmployeeEditSave">{{ $t('table.confirm') }}</el-button>
-      </div>
-    </el-dialog>
 
   </div>
 </template>
@@ -831,7 +672,8 @@
     showBusinessEn,
     showBusinessZh,
     getLocation,
-    editBusinessZh
+    editBusinessZh,
+    getBusinessCategoryArr
   } from '@/api/business'
 
   export default {
@@ -852,8 +694,11 @@
         cities: [],//城市
         locationLoading: false,
 
+        business_category_arr:[],
+
         formDataEn: {
           lang:'en',
+          category_id: '',
           company: '',
           title: '',
           listing: '',
@@ -896,6 +741,7 @@
         },
         formDataZh: {
           lang:'zh',
+          category_id: '',
           company: '',
           title: '',
           listing: '',
@@ -936,34 +782,25 @@
           tax_returns: '',
           employee_info: '',
         },
-        Employee: [
-          {
-            position: 'Operations Manager',
-            entryTime: '2008-11-21',
-            salary: '33',//per hour
-            jobType: 'Full time',
-          },
-          {
-            position: 'Lead Tooling Engineer',
-            entryTime: '1998-09-02',
-            salary: '31',//per hour
-            jobType: 'Full time',
-          },
-        ],
-        EmployeeEdit: {
-          position: '',
-          entryTime: '',
-          salary: '',//
-          jobType: '',
-        }
       }
     },
     mounted() {
       this.businessId=this.$route.query.id;
+      this.get_business_category_arr();
       this.getBusinessEn();
       this.tablang='en';
     },
     methods: {
+      get_business_category_arr(){
+        let that = this;
+        getBusinessCategoryArr().then(response => {
+          console.log('getBusinessCategoryArr',response);
+          that.business_category_arr = response.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+      // 员工人数选择NA
       employee_countBlur(){
         let that=this;
         setTimeout(function() {
@@ -1021,7 +858,8 @@
               that.getlocation('provinces', data.states).then(_ => {
                 that.formDataEn.city = data.city;
               })
-            })
+            });
+          that.get_business_category_arr();
         }).catch(err => {
           that.listLoading = false;
           console.log(err);
@@ -1049,6 +887,7 @@
               })
             })
           }
+          that.get_business_category_arr();
         }).catch(err => {
           that.listLoading = false;
           console.log(err);
@@ -1076,54 +915,6 @@
         }else{
           this.tablang = e.index == 0 ? 'en' : 'zh';
         }
-      },
-      // 弹出框
-      dialogClose(done) {
-        this.EmployeeEdit = {
-          position: '',
-          entryTime: '',
-          salary: '',
-          jobType: '',
-        };
-        done();
-      },
-      // 雇员添加
-      handleAdd() {
-        this.dialogFormVisible = true;
-        this.EmployeeEdit = {
-          position: '',
-          entryTime: '',
-          salary: '',
-          jobType: '',
-        };
-      },
-      //雇员编辑
-      handleEdit(index, row) {
-        console.log(index, row);
-        this.EmployeeEdit = row.row;
-        this.dialogFormVisible = true;
-      },
-      // 雇员删除
-      handleDelete(index, row) {
-        let that = this;
-        console.log(index, row);
-        this.$confirm(that.$t('delMsg'), that.$t('Confirmation'), {
-          distinguishCancelAndClose: true,
-          confirmButtonText: that.$t('confirm'),
-          cancelButtonText: that.$t('cancel')
-        }).then(() => {
-          that.Employee.splice(index, 1);
-          that.$notify({
-            showClose: true,
-            message: that.$t('deleted'),
-            type: 'success'
-          });
-        }).catch(action => {
-        });
-      },
-      // 雇员保存
-      EmployeeEditSave() {
-        console.log(this.EmployeeEdit)
       },
 
       // 企业编辑保存

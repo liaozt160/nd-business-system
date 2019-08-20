@@ -2,7 +2,7 @@
 <template>
   <div class="app-container">
     <aside>
-      <h3 style="text-align: center;">{{$t('route.businessBrokerNet')}}</h3>
+      <h3 style="text-align: center;">{{$t('route.buyerBrokerNet')}}</h3>
     </aside>
     <div class="filter-container">
       <div class="filter-item el-select--medium">
@@ -65,14 +65,14 @@
       <el-form ref="dataForm" :model="netData" :rules="rules" label-position="right" label-width="120px" label-lineHight="20px"  v-loading="netLoading">
         <div>
           <!--请选择要添加到该网络的卖家经纪人-->
-          <p style="text-align: center;">{{$t('selectBusinessBroker')}}</p>
+          <p style="text-align: center;">{{$t('selectBuyerBroker')}}</p>
           <div style="text-align: center;" v-loading="editBrokerNetLoading">
             <el-transfer
               class="netTransfer"
               style="text-align: left; display: inline-block;margin-bottom: 30px;"
               v-model="netData.broker_id"
               filterable
-              :titles="[ $t('all_Business_brokers'), $t('selected_Business_brokers')]"
+              :titles="[ $t('all_Buyer_brokers'), $t('selected_Buyer_brokers')]"
               :data="business_brokers">
             </el-transfer>
           </div>
@@ -110,7 +110,7 @@
         <el-table-column
           prop="account"
           align="center"
-          :label="$t('userEdit.businessBroker')"
+          :label="$t('userEdit.buyerBroker')"
           min-width="200">
           <template slot-scope="{row}">
             <span>{{row.account.name}}</span>
@@ -122,10 +122,10 @@
           :label="$t('role')"
           min-width="200">
           <template slot-scope="{row}">
-            <el-tooltip v-if="row.manager==1" class="item" effect="dark" :content="$t('setAsManagerText')" placement="top">
+            <el-tooltip v-if="row.manager==1" class="item" effect="dark" :content="$t('setAsBuyerManagerText')" placement="top">
               <el-tag >{{$t('manager')}}</el-tag>
             </el-tooltip>
-            <el-tooltip v-if="row.manager==0" class="item" effect="dark" :content="$t('setAsMemberText')" placement="top">
+            <el-tooltip v-if="row.manager==0" class="item" effect="dark" :content="$t('setAsBuyerMemberText')" placement="top">
               <el-tag  type="info">{{$t('member')}}</el-tag>
             </el-tooltip>
           </template>
@@ -137,9 +137,9 @@
           min-width="120">
           <template slot-scope="{row}">
             <el-switch :disabled="disSwitch"
-              @change="setAsManager(row)"
-              v-model="row.manager"
-              active-color="#13ce66">
+                       @change="setAsManager(row)"
+                       v-model="row.manager"
+                       active-color="#13ce66">
             </el-switch>
           </template>
         </el-table-column>
@@ -154,7 +154,7 @@
   import Pagination from '@/components/Pagination'
   import { getBusinessBrokerNetList,addBusinessBrokerNet,getBusinessBrokerNet,editBusinessBrokerNet,delBusinessBrokerNet,getBrokerMembersList,getBrokerList,setMembersRole } from '@/api/businessBrokerNet'
   export default {
-    name: "businessBrokernet",
+    name: "buyerBrokerNet",
     components: {
       Pagination
     },
@@ -170,11 +170,11 @@
         business_brokers: [],
         netVisible: false,
         netLoading:false,
-       netData: {
+        netData: {
           id: '',
-         broker_id: [],
-         name: '',
-         remark: '',
+          broker_id: [],
+          name: '',
+          remark: '',
         },
         // <!--成员弹窗-->
         memberVisible: false,
@@ -303,20 +303,20 @@
         //   cancelButtonText: that.$t('cancel')
         // }).then(() => {
         that.disSwitch=true;
-          setMembersRole ({id:row.id,manager:row.manager}).then(response => {
-            console.log('setMembersRole',response);
-            that.disSwitch=false;
-            // that.getBrokerMembersList(that.BrokerNetId);
-            that.listQuery.page=1;
-            that.$notify({
-              showClose: true,
-              message: that.$t('Successful'),
-              type: 'success'
-            });
-          }).catch(err => {
-            that.disSwitch=true;
-            console.log(err);
-          })
+        setMembersRole ({id:row.id,manager:row.manager}).then(response => {
+          console.log('setMembersRole',response);
+          that.disSwitch=false;
+          // that.getBrokerMembersList(that.BrokerNetId);
+          that.listQuery.page=1;
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+        }).catch(err => {
+          that.disSwitch=true;
+          console.log(err);
+        })
         // }).catch(action => {});
       },
       // 获取卖家经纪人网络列表

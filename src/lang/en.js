@@ -64,7 +64,13 @@ export default {
   Year:'Year',//年
 
 
-  selectBuyerBroker:'Please select the business broker to add to the net',//请选择要添加到该网络的卖家经纪人
+  selectBuyerBroker:'Please select the buyer broker to add to the net',//请选择要添加到该网络的买家经纪人
+  all_Buyer_brokers:'All buyer Brokers',//所有买家经纪人
+  selected_Buyer_brokers:'Selected',//已选择的买家经纪人
+  setAsBuyerManagerText:'Manager can view the information of other members',//负责人可以查看其他成员的信息
+  setAsBuyerMemberText:'Member cannot view the information of other members',//普通成员不能查看其他成员的信息
+
+  selectBusinessBroker:'Please select the business broker to add to the net',//请选择要添加到该网络的卖家经纪人
   all_Business_brokers:'All business Brokers',//所有卖家经纪人
   selected_Business_brokers:'Selected',//已选择的卖家经纪人
   netName:'Net Name',//网络名称
@@ -74,9 +80,7 @@ export default {
   member:'Member',//成员
   broker:'Broker',//所属经纪人
   setAsManager:'Set As Manager',//设置为负责人
-  setAsManagerMsg:'Setting as manager will allow you to view the business information of other members, Are you sure that the broker will be set up as a manager?',//设置为负责人将可以查看其他成员的企业信息，确定把该经纪人设置为负责人吗？
   setAsMember:'Set As Member',//设置为普通成员
-  setAsMemberMsg:'Setting as member will not be able to view the enterprise information of other members, Are you sure that the broker will be set up as a member?',//设置为普通成员将不能查看其他成员的企业信息，确定要把该经纪人设置为普通成员吗？
   role:'Role',//角色
   netMembersList:'List Of Net Members',//网络成员列表
   setAsManagerText:'Manager can view the business information of other members',//负责人可以查看其他成员的企业信息
@@ -102,6 +106,7 @@ export default {
     orderManagement: 'Order Management',//订单管理
     myBusiness: 'My Business',//我的企业
     businessBrokerNet: 'Business Broker Net',//商业经纪人网络
+    buyerBrokerNet: 'Buyer Broker Net',//买家经纪人网络
     tipsAndRecommendations: 'Tips and Recommendations',//提示推荐
   },
   panelGroup:{
@@ -151,7 +156,7 @@ export default {
     edit: 'Edit',//编辑
     release: 'Release',//发布
     forSale: 'For Sale',//待售
-    soldOut: 'Sold Out',//已售
+    soldOut: 'Sold',//已售
     title: 'Title',
     changeBroker: 'Change Broker',//更改经纪人
     changeBrokerText: 'Choose to change the broker',//选择更改经纪人
@@ -179,6 +184,8 @@ export default {
     Paymented: 'Paid',//已支付
     Unpaid: 'Unpaid',//未支付
     PaymentStatus: 'Payment Status',//支付状态
+
+    RecommendationToBuyerBroker: 'Recommendation to buyer broker',//推荐给买家经纪人
   },
   buyers:{
     buyers: 'Buyers',//买家
@@ -283,6 +290,7 @@ export default {
 
   employeeEdit:{
     TagName:'Tag Name',//标签名称
+    business_category:'Business Category',//企业分类
     companyName:'Business Name',//企业名称
     title:'Title',//标题
     Listing:'Listing',//编号
@@ -290,8 +298,8 @@ export default {
     Location:'Location',//地理位置
     Profitability:'Profitability',//是否盈利
     RealEstate:'Real Estate',//是否包含房地产
-    Franchise:'Franchise',//是否连锁店
-    BuildingSF:'Building SF',//营业面积
+    Franchise:'Franchise',//是否加盟店
+    BuildingSF:'Facility Square Footage',//营业面积
     EmployeeCount:'Employee Count',//员工人数
     GrossIncome:'Gross Revenue',//营业额
     EBITDA:'EBITDA(Earning Before Interest, Tax, Depreciation & Amortization)',//税息折扣及摊销前利润
@@ -302,18 +310,18 @@ export default {
     LeaseTerm:'Lease Term',//租约有效期
     Est:'Est. Value of Real Estate',//房地产估价
     ServiceFee:'Service Fee',//服务费
-    BuyerFinancing:'Buyer Financing',//卖家融资
+    BuyerFinancing:'Seller Financing',//卖家融资
     BusinessDescription:'Business Description',//生意介绍信息
     USBroker:'US Broker',//美国经纪人
     USBrokerContactInfo:'US Broker Contact Info',//美国经纪人联系方式
     ListingDate:'Listing Date',//待售开始日期
     ReasonForSelling:'Reason for Selling',//出售原因
     business_description:'BUSINESS DESCRIPTION',//业务描述
-    financial_performance:'BUSINESS ASSET FOR SALE',//待售商业资产
+    financial_performance:'FINANCIAL PERFORMANCE',//财务绩效
     financial_reports:'FINANCIAL REPORTS',//财务报表
     tax_returns:'TAX RETURNS',//报税记录
     employee_info:'EMPLOYEE INFO',//员工信息
-    business_assets:'BUSINESS ASSETS',//商业资产
+    businessAssetForSale:'BUSINESS ASSET FOR SALE',//待售商业资产
 
     emploteesEdit:'Emplotees Edit',//雇员编辑
     emploteesAdd:'Emplotees Add',//增加雇员
@@ -324,7 +332,7 @@ export default {
     selectDate : 'Select Date', //选择日期
 
     EnterpriseState : 'Enterprise State', //企业状态
-    noVerified : 'no verified', //未核实
+    noVerified : 'Not verified', //待核实
   },
 
 

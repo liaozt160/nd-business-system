@@ -144,6 +144,14 @@ export function getLocation (data) {
     data
   })
 }
+//获取企业分类数组数据
+export function getBusinessCategoryArr (data) {
+  return request({
+    url: '/api/category/query',
+    method: 'post',
+    data
+  })
+}
 // 根据所传business id，生成1级企业资料pdf文件
 export function businessGeneratePdfOne (data) {
   return request({
