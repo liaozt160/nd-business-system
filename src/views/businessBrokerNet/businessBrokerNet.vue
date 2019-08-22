@@ -373,6 +373,7 @@
 <style>
   .netTransfer .el-checkbox__label{
     font-size: 14px!important;
+    min-width: 200px;
   }
 </style>
 <style scoped>
