@@ -113,7 +113,7 @@
           :label="$t('userEdit.buyerBroker')"
           min-width="200">
           <template slot-scope="{row}">
-            <span>{{row.account.name}}</span>
+            <span v-if="row.account">{{row.account.name}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -152,7 +152,7 @@
 <script>
   import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { getBusinessBrokerNetList,addBusinessBrokerNet,getBusinessBrokerNet,editBusinessBrokerNet,delBusinessBrokerNet,getBrokerMembersList,getBrokerList,setMembersRole } from '@/api/businessBrokerNet'
+  import { getBuyerBrokerNetList,addBuyerBrokerNet,getBuyerBrokerNet,editBuyerBrokerNet,delBuyerBrokerNet,getBuyerBrokerMembersList,getBuyerBrokerList,setBuyerMembersRole } from '@/api/buyerBrokerNet'
   export default {
     name: "buyerBrokerNet",
     components: {
@@ -212,8 +212,8 @@
             let data = Object.assign({}, that.netData);
             data.broker_id=JSON.stringify( data.broker_id);
             if (id) {
-              editBusinessBrokerNet(data).then(response => {
-                console.log('editBusinessBrokerNet', response);
+              editBuyerBrokerNet(data).then(response => {
+                console.log('editBuyerBrokerNet', response);
                 that.netVisible = false;
                 that.getList();
                 that.$notify({
@@ -225,8 +225,8 @@
                 console.log(err);
               })
             } else {
-              addBusinessBrokerNet(data).then(response => {
-                console.log('addBusinessBrokerNet', response);
+              addBuyerBrokerNet(data).then(response => {
+                console.log('addBuyerBrokerNet', response);
                 that.netVisible = false;
                 that.getList();
                 that.$notify({
@@ -256,7 +256,7 @@
           name: '',
           remark: '',
         };
-        this.getBusinessBrokerList(this.listQuery);
+        this.getBuyerBrokerList(this.listQuery);
       },
       // 打开编辑网络弹窗
       handleEdit(row) {
@@ -264,12 +264,11 @@
         that.business_brokers=[];
         this.netVisible=true;
         this.editBrokerNetLoading=true;
-        getBusinessBrokerNet ({id:row.row.id}).then(response => {
+        getBuyerBrokerNet ({id:row.row.id}).then(response => {
           that.editBrokerNetLoading=false;
-          console.log('getBusinessBrokerNet',response);
+          console.log('getBuyerBrokerNet',response);
           that.netData=response.data;
           that.business_brokers=response.data.free_brokers;
-          console.log(that.netData)
         }).catch(err => {
           that.editBrokerNetLoading=false;
           console.log(err);
@@ -285,9 +284,9 @@
       getBrokerMembersList(id){
         let that=this;
         this.memberListLoading=true;
-        getBrokerMembersList({net_id:id}).then(response => {
+        getBuyerBrokerMembersList({net_id:id}).then(response => {
           that.memberListLoading=false;
-          console.log('getBrokerMembersList',response);
+          console.log('getBuyerBrokerMembersList',response);
           that.memberList=response.data;
         }).catch(err => {
           that.memberListLoading=false;
@@ -297,16 +296,10 @@
       // 设置负责人
       setAsManager(row){
         let that = this;
-        // that.$confirm(that.$t('setAsManagerMsg'), that.$t('Confirmation'), {
-        //   distinguishCancelAndClose: true,
-        //   confirmButtonText: that.$t('confirm'),
-        //   cancelButtonText: that.$t('cancel')
-        // }).then(() => {
         that.disSwitch=true;
-        setMembersRole ({id:row.id,manager:row.manager}).then(response => {
-          console.log('setMembersRole',response);
+        setBuyerMembersRole ({id:row.id,manager:row.manager}).then(response => {
+          console.log('setBuyerMembersRole',response);
           that.disSwitch=false;
-          // that.getBrokerMembersList(that.BrokerNetId);
           that.listQuery.page=1;
           that.$notify({
             showClose: true,
@@ -317,13 +310,12 @@
           that.disSwitch=true;
           console.log(err);
         })
-        // }).catch(action => {});
       },
       // 获取卖家经纪人网络列表
       getList(data) {
         let that=this;
         this.listLoading = true;
-        getBusinessBrokerNetList (data).then(response => {
+        getBuyerBrokerNetList (data).then(response => {
           that.listLoading = false;
           that.total=response.data.total;
           that.tableData=response.data.data;
@@ -332,12 +324,12 @@
           that.listLoading = false
         })
       },
-      // 穿梭框获取可选企业经纪人列表
-      getBusinessBrokerList(data){
+      // 穿梭框获取可选买家经纪人列表
+      getBuyerBrokerList(data){
         let that=this;
         this.editBrokerNetLoading=true;
-        getBrokerList(data).then(response => {
-          console.log('getBrokerList',response);
+        getBuyerBrokerList(data).then(response => {
+          console.log('getBuyerBrokerList',response);
           that.business_brokers=response.data;
           that.editBrokerNetLoading=false;
         }).catch(err => {
@@ -352,8 +344,8 @@
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
-          delBusinessBrokerNet ({id:scope.row.id}).then(response => {
-            console.log('delBusinessBrokerNet',response);
+          delBuyerBrokerNet ({id:scope.row.id}).then(response => {
+            console.log('delBuyerBrokerNet',response);
             that.getList();
             that.listQuery.page=1;
             that.$notify({

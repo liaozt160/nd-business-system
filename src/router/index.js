@@ -185,18 +185,18 @@ export const asyncRoutes = [
   //     }
   //   ]
   // },
-  // {
-  //   path: '/buyerBrokerNet',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/buyerBrokerNet/buyerBrokerNet'),
-  //       name: 'buyerBrokerNet',
-  //       meta: { title: 'buyerBrokerNet', icon: 'buyerNet', noCache: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/buyerBrokerNet',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyerBrokerNet/buyerBrokerNet'),
+        name: 'buyerBrokerNet',
+        meta: { title: 'buyerBrokerNet', icon: 'buyerNet', noCache: true }
+      }
+    ]
+  },
   {
     path: '/businessBrokerNet',
     component: Layout,

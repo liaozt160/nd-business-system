@@ -4,6 +4,12 @@
       <h3 style="text-align: center;">{{$t('route.buyersManagement')}}</h3>
     </aside>
     <div class="filter-container">
+      <div class="filter-item el-select--medium" v-if="role==1">
+        <el-select size="small" v-model="listQuery.broker_id" :placeholder="$t('userEdit.buyerBroker')" style="width: 180px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter" clearable>
+          <el-option :label="$t('table.all')" value="0" />
+          <el-option v-for="item in buyer_brokerListData" :label="item.label" :value="item.key" />
+        </el-select>
+      </div>
       <div class="filter-item el-select--medium">
         <!--资金已核实-->
         <span style="color: #717171;font-size: 14px;margin-left: 10px;">{{$t('fundsVerified')}}</span>
@@ -42,7 +48,6 @@
         stripe
         style="width: 100%">
         <el-table-column
-          v-if="role==1"
           prop="name"
           align="center"
           :label="$t('userEdit.buyerBroker')"
@@ -230,6 +235,7 @@
   import store from '@/store'
   import Pagination from '@/components/Pagination'
   import { getBuyerList,addBuyer,editBuyer,delBuyer,showBuyer,changeServiceCharge } from '@/api/buyers'
+  import { getBuyerBrokerList } from '@/api/buyerBrokerNet'
   import {getLocation} from '@/api/business'
   export default {
     name: "buyers",
@@ -268,8 +274,10 @@
           address: '',
         },
 
+        buyer_brokerListData: [],
         listQuery: {
           page: 1,
+          broker_id: '',
           funds_available_from: '',
           funds_available_to: '',
           funds_verified: '0',
@@ -295,8 +303,21 @@
     mounted(){
       this.role = store.getters && store.getters.role;
       this.getList();
+      if(this.role==1){
+        this.getBuyerBorkerListFun();
+      }
     },
     methods: {
+      // 获取买家经纪人列表
+      getBuyerBorkerListFun() {
+        let that=this;
+        getBuyerBrokerList ().then(response => {
+          console.log('getBuyerBrokerList',response);
+          that.buyer_brokerListData=response.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
       // 获取地址三级联动数据
       getlocation(type, value) {
         let that = this;

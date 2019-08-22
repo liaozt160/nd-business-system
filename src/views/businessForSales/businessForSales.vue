@@ -14,6 +14,11 @@
           <el-option :label="$t('table.soldOut')" value="2"/>
           <el-option :label="$t('employeeEdit.noVerified')" value="3"/>
         </el-select>
+        <el-select size="small" v-model="listQuery.category_id" :placeholder="$t('employeeEdit.business_category')"
+                   style="width: 180px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter"
+                   clearable>
+          <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
+        </el-select>
       </div>
       <div class="filter-item el-select--medium" v-if="businessBrokerList.length>1">
         <span style="color: #717171;font-size: 14px;">{{$t('broker')}}</span>
@@ -202,6 +207,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="category"
+          align="center"
+          :label="$t('employeeEdit.business_category')"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
           prop="company"
           align="center"
           :label="$t('employeeEdit.companyName')"
@@ -354,6 +365,19 @@
         </el-button>
       </div>
     </el-dialog>
+
+    <!--// 推荐给买家经纪人选择买家经纪人弹窗-->
+    <el-dialog :title="$t('table.RecommendationToBuyerBroker')" :visible.sync="selectBuyerBroker" width="500px" center
+               :close-on-click-modal="false">
+      <el-select v-model="buyer_id" clearable style="width: 100%" class="filter-item" v-loading="buyerBrokerListLoading">
+        <el-option v-for="item in buyerBrokerList" :label="item.name" :value="item.buyer_id"/>
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="selectBuyerBroker = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="changeBuyerBrokerSave(business_id,buyer_id)">{{ $t('table.RecommendationToBuyerBroker') }}
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -373,6 +397,7 @@
     getBusinessbrokersList,
     changeBusinessbrokerSave,
     businessGeneratePdf,
+    getBusinessCategoryArr,
   } from '@/api/business'
   import {attentionPdf} from '@/api/buyers'
 
@@ -387,8 +412,11 @@
         selectArray: [],
         role: '',
 
+        business_category_arr:[],
+
         listQuery: {
           broker_id: '',
+          category_id: '',
           page: 1,
           status: '',
           price_from: '',
@@ -413,15 +441,73 @@
         selectBusinessBroker: false,
         BusinessBrokerList: [],
         owner_id: '',//卖家经纪人id
+
+        // 选择买家经纪人弹窗
+        buyerBrokerListLoading: false,
+        selectBuyerBroker: false,
+        buyerBrokerList: [],
+        buyer_id: '',//买家经纪人id
       }
     },
     mounted() {
       this.listQuery.page = 1;
       this.getList();
       this.getBrokersList();
+      this.get_business_category_arr();
       this.role = store.getters && store.getters.role
     },
     methods: {
+      //推荐给买家经纪人选择买家经纪人弹窗
+      handleRecommendation() {
+        let that = this;
+        if (that.selectArray.length!=0) {
+          this.business_id = that.selectArray;
+        }
+        this.selectBuyerBroker = true;
+        this.buyerBrokerListLoading = true;
+        getBusinessbrokersList().then(response => {
+          that.buyerBrokerListLoading = false;
+          console.log('getBusinessbrokersList', response);
+          that.buyerBrokerList = response.data;
+        }).catch(err => {
+          that.buyerBrokerListLoading = false;
+          console.log(err);
+        })
+      },
+      // 推荐给买家选择买家经纪人提交
+      changeBuyerBrokerSave(business_id, buyer_id){
+        let that = this;
+        if (!buyer_id) {
+          that.$notify.error({
+            showClose: true,
+            message: that.$t('table.changeBrokerText'),
+          });
+          return;
+        }
+        changeBusinessbrokerSave({business_id: business_id, buyer_id: buyer_id}).then(response => {
+          that.selectBuyerBroker = false;
+          that.getList();
+          console.log('changeBusinessbrokerSave', response);
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+        }).catch(err => {
+          that.selectBuyerBroker = false;
+          console.log(err);
+        })
+      },
+      // 获取企业分类列表
+      get_business_category_arr(){
+        let that = this;
+        getBusinessCategoryArr().then(response => {
+          console.log('getBusinessCategoryArr',response);
+          that.business_category_arr = response.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
       // 打印
       handlePrinter(num) {
         let that = this;
@@ -547,9 +633,6 @@
       },
       handleCreate() {
         this.$router.push({path: `/employerEdit/index`});
-      },
-      handleRecommendation() {
-
       },
 
       // 获取待售企业列表
