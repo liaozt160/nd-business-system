@@ -14,7 +14,16 @@
         :data="tableData"
         border
         stripe
+        @sort-change="sortChange"
+        @selection-change="handleSelectionChange"
         style="width: 100%">
+        <el-table-column
+          v-if="role==1"
+          type="selection"
+          align="center"
+          fixed="left"
+          width="50">
+        </el-table-column>
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand" label-width="200px">
@@ -32,7 +41,7 @@
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Location')">
                 <!--地理位置-->
-                <span>{{ props.row.location }}</span>
+                <span>{{ props.row.address }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Profitability')">
                 <!--是否盈利-->
@@ -43,12 +52,12 @@
                 <span>{{ props.row.real_estate ==1?$t('yes'):$t('no')}}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.Franchise')">
-                <!--是否连锁店-->
-                <span>{{ props.row.real_estate==1?$t('yes'):$t('no') }}</span>
+                <!--是否包加盟店-->
+                <span>{{ props.row.franchise==1?$t('yes'):props.row.franchise==2?$t('no'):$t('NA') }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.BuildingSF')">
                 <!--营业面积-->
-                <span>{{ props.row.building_sf }} </span>
+                <span>{{ props.row.building_sf }}</span>
               </el-form-item>
               <el-form-item :label="$t('employeeEdit.EmployeeCount')">
                 <!--员工人数-->
@@ -83,7 +92,7 @@
               <el-form-item :label="$t('employeeEdit.Lease')">
                 <!--租金-->
                 <span>
-                  $ {{ toThousands(props.row.lease) }}
+                  $ {{toThousands(props.row.lease) }}
                   / {{props.row.lease_unit==1?$t('week'):props.row.lease_unit==2?$t('Month'):props.row.lease_unit==3?$t('Quarter'):props.row.lease_unit==4?$t('Year'):''}}
                 </span>
               </el-form-item>
@@ -103,10 +112,6 @@
                 <!--卖家融资-->
                 <span>{{ props.row.buyer_financing }}</span>
               </el-form-item>
-              <!--<el-form-item :label="$t('employeeEdit.BusinessDescription')">-->
-              <!--&lt;!&ndash;生意介绍信息&ndash;&gt;-->
-              <!--<span>{{ props.row.business_description }}</span>-->
-              <!--</el-form-item>-->
               <el-form-item :label="$t('employeeEdit.USBroker')">
                 <!--美国中介-->
                 <span>{{ props.row.us_broker }}</span>
@@ -130,11 +135,21 @@
           prop="account.name"
           align="center"
           :label="$t('broker')"
-          min-width="200">
+          min-width="150">
           <template slot-scope="{row}">
-            <span v-if="row.account_name">{{row.account_name}}</span>
+            <el-tooltip v-if="row.account_name" class="item" effect="dark" :content="row.account_name"
+                        placement="top-start">
+                <span
+                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{row.account_name}}</span>
+            </el-tooltip>
             <span v-else>{{$t('Unknown')}}</span>
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="category"
+          align="center"
+          :label="$t('employeeEdit.business_category')"
+          min-width="180">
         </el-table-column>
         <el-table-column
           prop="company"
@@ -143,37 +158,49 @@
           min-width="200">
         </el-table-column>
         <el-table-column
+          prop="title"
+          align="center"
+          :label="$t('employeeEdit.title')"
+          min-width="200">
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
+                <span
+                  style="display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:200px">{{scope.row.title}}</span>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="price"
           align="center"
           :label="$t('table.price')+'($)'"
+          sortable
           min-width="150">
           <template slot-scope="{row}">
             <span>{{toThousands(row.price)}}</span>
           </template>
         </el-table-column>
-
         <el-table-column
           prop="address"
           align="center"
           :label="$t('table.location')"
-          min-width="200">
+          min-width="150">
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="scope.row.location" placement="top-start">
+                <span
+                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{scope.row.location}}</span>
+            </el-tooltip>
+          </template>
         </el-table-column>
         <el-table-column
           prop="state"
           align="center"
           :label="$t('table.status')"
-          min-width="100">
+          min-width="110">
           <template slot-scope="{row}">
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
             <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
             <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="updated_at"
-          align="center"
-          :label="$t('table.entryTime')"
-          min-width="160">
         </el-table-column>
       </el-table>
     </div>

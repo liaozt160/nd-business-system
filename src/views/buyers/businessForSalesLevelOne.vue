@@ -63,7 +63,6 @@
           prop="price"
           align="center"
           :label="$t('table.price')+'($)'"
-          sortable
           min-width="150">
           <template slot-scope="{row}">
             <span>{{toThousands(row.price)}}</span>
@@ -118,13 +117,17 @@
     <!--// 打开企业详情弹窗-->
     <el-dialog :title="$t('detail')" :visible.sync="dialogView" v-if="dialogView" width="900px" center :close-on-click-modal="false">
       <el-form label-position="left" inline  class="demo-table-expand"  v-loading="ViewLoading">
-        <el-form-item :label="$t('employeeEdit.title')+'：'">
-          <!--标题-->
-          <span>{{ attentionData.title }}</span>
-        </el-form-item>
         <el-form-item :label="$t('employeeEdit.Listing')+'：'">
           <!--编号-->
           <span>{{ attentionData.listing }}</span>
+        </el-form-item>
+        <el-form-item :label="$t('employeeEdit.companyName')+'：'">
+          <!--企业名称-->
+          <span>{{ attentionData.company }}</span>
+        </el-form-item>
+        <el-form-item :label="$t('employeeEdit.title')+'：'">
+          <!--标题-->
+          <span>{{ attentionData.title }}</span>
         </el-form-item>
         <el-form-item :label="$t('employeeEdit.Price')+'：'">
           <!--标价-->

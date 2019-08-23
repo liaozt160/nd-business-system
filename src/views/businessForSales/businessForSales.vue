@@ -217,6 +217,12 @@
           align="center"
           :label="$t('employeeEdit.companyName')"
           min-width="200">
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="scope.row.company" placement="top-start">
+                <span
+                  style="display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:200px">{{scope.row.company}}</span>
+            </el-tooltip>
+          </template>
         </el-table-column>
         <el-table-column
           prop="title"
