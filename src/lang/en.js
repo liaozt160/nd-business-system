@@ -150,7 +150,11 @@ export default {
     price: 'Price',//标价
     location: 'Location',//地理位置
     entryTime: 'Entry Time',//录入时间
+    time: 'Time',//时间
     inputPerson: 'Input Person',//录入经手人
+    publicationStatus: 'Publication Status',//发布状态
+    published: 'Published',//已发布
+    unpublished: 'Unpublished',//未发布
     status: 'Status',//状态
     operate: 'Operate',//操作
     edit: 'Edit',//编辑
@@ -160,6 +164,12 @@ export default {
     title: 'Title',
     changeBroker: 'Change Broker',//更改经纪人
     changeBrokerText: 'Choose to change the broker',//选择更改经纪人
+
+    recommendedListDetail: 'Recommended List Detail',//推荐清单详情
+    list_nameText: 'Please enter the name of the recommended list',//请输入推荐清单名称
+    selectBuyerBrokerText: 'Please select the buyer\'s broker',//请选择买家经纪人
+    selectRecommendedListText: 'Please select the existing list',//请选择已有清单
+    selectBuyerText: 'Please select the buyer',//请选择买家
 
     index: 'Index',//序号
     account: 'Account',//账号
@@ -186,6 +196,11 @@ export default {
     PaymentStatus: 'Payment Status',//支付状态
 
     RecommendationToBuyerBroker: 'Recommendation to buyer broker',//推荐给买家经纪人
+    ListName: 'List Name',//清单名称
+    RecommendedListName: 'Recommended list name',//推荐清单名称
+    RecommendedToExistingLists: 'Recommended to existing lists',//推荐到已有清单
+    NewList: 'New List',//新建清单
+    ExistingList: 'Existing list',//已有清单
   },
   buyers:{
     buyers: 'Buyers',//买家

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" v-loading="pdfLoading" style="z-index: 9999">
     <aside>
       <h3 style="text-align: center;">{{$t('route.tipsAndRecommendations')}}</h3>
     </aside>
@@ -23,99 +23,57 @@
         :data="tableData"
         border
         stripe
-        @sort-change="sortChange"
-        @selection-change="handleSelectionChange"
-        row-key="id"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-        style="width: 100%">
-        <el-table-column
-          prop="account.name"
-          align="center"
-          :label="$t('broker')"
-          min-width="150">
-          <template slot-scope="{row}">
-            <el-tooltip v-if="row.account_name" class="item" effect="dark" :content="row.account_name"
-                        placement="top-start">
-                <span
-                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{row.account_name}}</span>
-            </el-tooltip>
-            <span v-else>{{$t('Unknown')}}</span>
-          </template>
-        </el-table-column>
+        @sort-change="sortChange">
         <el-table-column
           prop="title"
           align="center"
-          :label="$t('employeeEdit.title')"
+          :label="$t('table.ListName')"
           min-width="200">
           <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
+            <el-tooltip class="item" effect="dark" :content="scope.row.name" placement="top-start">
                 <span
-                  style="display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:200px">{{scope.row.title}}</span>
+                  style="display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:200px">{{scope.row.name}}</span>
             </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column
-          prop="company"
+          prop="broker_name"
           align="center"
-          :label="$t('employeeEdit.companyName')"
+          :label="$t('userEdit.buyerBroker')"
           min-width="200">
         </el-table-column>
         <el-table-column
-          prop="price"
+          prop="buyer_name"
           align="center"
-          :label="$t('table.price')+'($)'"
-          sortable
-          min-width="150">
-          <template slot-scope="{row}">
-            <span>{{toThousands(row.price)}}</span>
-          </template>
+          :label="$t('panelGroup.Buyer')"
+          min-width="200">
         </el-table-column>
         <el-table-column
           prop="updated_at"
           align="center"
-          :label="$t('table.entryTime')"
+          :label="$t('table.time')"
           sortable
           min-width="160">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          align="center"
-          :label="$t('table.location')"
-          min-width="150">
-          <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" :content="scope.row.address" placement="top-start">
-                <span
-                  style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width:150px">{{scope.row.address}}</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="state"
-          align="center"
-          :label="$t('table.status')"
-          min-width="100">
-          <template slot-scope="{row}">
-            <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
-            <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
-            <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
-          </template>
         </el-table-column>
         <el-table-column
           prop=""
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="180">
-          <template slot-scope="scope" v-if="!scope.row.companyList">
+          min-width="230">
+          <template slot-scope="scope">
             <el-dropdown trigger="click">
-              <el-button size="mini" type="primary" plain>
-                {{$t('table.moreOperations')}}<i class="el-icon-arrow-down el-icon--right"></i>
+              <el-button size="mini" type="primary" >
+                {{$t('order.Print')}}<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</span>
-                </el-dropdown-item>
+                <el-dropdown-item class="menuItem"><span @click.stop="handlePrinter('1',scope)">{{$t('order.PrintOne')}}</span></el-dropdown-item>
+                <el-dropdown-item v-if="role==1" class="menuItem"><span @click.stop="handlePrinter('2',scope)">{{$t('order.PrintTwo')}}</span></el-dropdown-item>
+                <el-dropdown-item v-if="role==1" class="menuItem"><span @click.stop="handlePrinter('3',scope)">{{$t('order.PrintThree')}}</span></el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
+            <el-button size="mini" type="primary" @click="handleDetail(scope)" style="margin-left: 10px">{{$t('detail')}}</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,6 +94,101 @@
         </el-button>
       </div>
     </el-dialog>
+
+    <!--查看清单详情弹窗-->
+    <el-dialog :title="$t('table.recommendedListDetail')" :visible.sync="dialogListDetail" width="1000px"
+               style="padding-bottom: 50px" center :close-on-click-modal="false">
+      <div style="padding-bottom: 100px" v-loading="listDetailLoading">
+        <div style="font-weight: bold;margin: 20px 0;">推荐的企业列表</div>
+        <el-table
+          v-loading="listLoading"
+          :data="ListDetailData"
+          border
+          stripe
+          @sort-change="sortChange"
+          style="width: 100%">
+          <el-table-column
+            prop="listing"
+            align="center"
+            :label="$t('employeeEdit.Listing')"
+            min-width="150">
+          </el-table-column>
+          <el-table-column
+            prop="category"
+            align="center"
+            :label="$t('employeeEdit.business_category')"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            align="center"
+            :label="$t('employeeEdit.companyName')"
+            min-width="200"><template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="scope.row.company" placement="top-start">
+              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.company}}</span>
+            </el-tooltip>
+          </template>
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            align="center"
+            :label="$t('employeeEdit.title')"
+            min-width="200"><template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top-start">
+              <span style="display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.title}}</span>
+            </el-tooltip>
+          </template>
+          </el-table-column>
+          <el-table-column
+            prop="price"
+            align="center"
+            sortable
+            :label="$t('table.price')+'($)'"
+            min-width="150">
+            <template slot-scope="{row}">
+              <span>{{toThousands(row.price)}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="location"
+            align="center"
+            :label="$t('table.location')"
+            min-width="250">
+          </el-table-column>
+          <el-table-column
+            prop="state"
+            align="center"
+            :label="$t('table.status')"
+            min-width="110">
+            <template slot-scope="{row}">
+              <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
+              <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
+              <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="publicationStatus"
+            align="center"
+            :label="$t('table.publicationStatus')"
+            min-width="160">
+            <template slot-scope="{row}">
+              <el-tag type="success" v-if="row.public==1">{{ $t('table.published') }}</el-tag>
+              <el-tag type="info" v-if="row.public==0">{{ $t('table.unpublished') }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop=""
+            align="center"
+            :label="$t('table.operate')"
+            fixed="right"
+            min-width="100">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger" @click="handleListDetailDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -152,7 +205,12 @@
     getBuyers,
     setAttentionBusiness,
     getBusinessbrokersList,
-    changeBusinessbrokerSave
+    changeBusinessbrokerSave,
+    getRecommendList,
+    recommendListDel,
+    recommendListDetailDel,
+    getRecommendListDetail,
+    businessGeneratePdf,
   } from '@/api/business'
     export default {
         name: "tipsAndRecommendations",
@@ -162,6 +220,10 @@
       data() {
         return {
           role: '',
+
+          dialogListDetail: false,
+          listDetailLoading: false,
+          ListDetailData:'',
 
           listQuery: {
             broker_id: '',
@@ -177,18 +239,7 @@
           listLoading: false,
           total: 1,
           pageSize: 15,
-          tableData:  [
-            {id: 11, listing: "1111111", title: "11111 推荐清单", company: "5 推荐清单", price: "5家企业",
-              children: [
-                {companyList:true,id: 22, listing: "2222222", title: "22222 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000"},
-                {companyList:true,id: 33, listing: "333333", title: "333333 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000"},
-                {companyList:true,id: 44, listing: "333333", title: "333333 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000"},
-                {companyList:true,id: 55, listing: "333333", title: "333333 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000"},
-                {companyList:true,id: 88, listing: "333333", title: "333333 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000"}
-                ]},
-            {id: 66, listing: "LA066666", title: "5 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000",},
-            {id: 77, listing: "LA066666", title: "5 洛杉矶市中心非常繁忙的家电维修", company: "5 家电维修", price: "595000",},
-            ],
+          tableData:  [],
 
           buyerListLoading: false,
           selectBuyer: false,
@@ -197,14 +248,35 @@
           selectBuyerId: '',
           businessBrokerList: [],
 
+          pdfLoading: false,
+          selectArray: [],
+
         }
       },
       mounted() {
         this.listQuery.page = 1;
-        // this.getList();
+        this.getList();
         this.role = store.getters && store.getters.role
       },
       methods:{
+          // 打印清单里的企业信息
+        handlePrinter(num,scope) {
+          let that = this;
+          this.pdfLoading = true;
+          businessGeneratePdf({data: {ids: scope.row.id}, num: num}).then(response => {
+            console.log('businessGeneratePdf' + num, response);
+            const contents = response;
+            const blob = new Blob([contents]);
+            if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1 || window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
+              window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+            } else {
+              window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+            }
+            that.pdfLoading = false;
+          }).catch(err => {
+            console.log(err);
+          })
+        },
         // 选择事件
         handleSelectionChange(selectData) {
           this.selectArray = [];
@@ -217,8 +289,8 @@
         getList(data) {
           let that = this;
           this.listLoading = true;
-          getBusinessList(data).then(response => {
-            console.log('getBusinessList', response);
+          getRecommendList(data).then(response => {
+            console.log('getRecommendList', response);
             that.listLoading = false;
             that.total = response.data.total;
             that.tableData = response.data.data;
@@ -241,47 +313,21 @@
           this.getList(this.listQuery);
         },
 
-        //打开选择意向buyer弹窗
-        openSelectBuyer(row) {
+        // 清单详情
+        handleDetail(scope){
           let that = this;
-          this.selectBuyer = true;
-          if (row) {
-            this.business_id = row.row.id;
-          }
-          this.buyerListLoading = true;
-          getBuyers().then(response => {
-            that.buyerListLoading = false;
-            console.log('getBuyers', response);
-            that.buyerList = response.data;
+          that.listDetailLoading=true;
+          that.dialogListDetail=true;
+          getRecommendListDetail({recommend_id: scope.row.id}).then(response => {
+            console.log('getRecommendListDetail', response);
+            that.listDetailLoading=false;
+            that.ListDetailData=response.data.data;
           }).catch(err => {
-            that.buyerListLoading = false;
+            that.listDetailLoading=false;
             console.log(err);
           })
         },
-        // 提交到意向企业
-        AddAttention(business_id, buyer_id) {
-          let that = this;
-          if (!buyer_id) {
-            that.$notify.error({
-              showClose: true,
-              message: that.$t('ChooseAttentionBuyer'),
-            });
-            return;
-          }
-          setAttentionBusiness({business_id: business_id, buyer_id: buyer_id}).then(response => {
-            console.log('setAttentionBusiness', response);
-            that.selectBuyer = false;
-            that.$notify({
-              showClose: true,
-              message: that.$t('Successful'),
-              type: 'success'
-            });
-          }).catch(err => {
-            that.selectBuyer = false;
-            console.log(err);
-          })
-        },
-
+        // 清单删除
         handleDelete(index, row) {
           let that = this;
           that.$confirm(that.$t('delMsg'), that.$t('Confirmation'), {
@@ -289,10 +335,32 @@
             confirmButtonText: that.$t('confirm'),
             cancelButtonText: that.$t('cancel')
           }).then(() => {
-            delBusiness({id: row.row.id}).then(response => {
-              console.log('delBuyer', response);
+            recommendListDel({id: row.row.id}).then(response => {
+              console.log('recommendListDel', response);
               that.getList();
               that.listQuery.page = 1;
+              that.$notify({
+                showClose: true,
+                message: that.$t('deleted'),
+                type: 'success'
+              });
+            }).catch(err => {
+              console.log(err);
+            })
+          }).catch(action => {
+          });
+        },
+
+        // 清单详情单个企业信息删除
+        handleListDetailDelete(index, row) {
+          let that = this;
+          that.$confirm(that.$t('delMsg'), that.$t('Confirmation'), {
+            distinguishCancelAndClose: true,
+            confirmButtonText: that.$t('confirm'),
+            cancelButtonText: that.$t('cancel')
+          }).then(() => {
+            recommendListDetailDel({ids: row.row.id}).then(response => {
+              console.log('recommendListDetailDel', response);
               that.$notify({
                 showClose: true,
                 message: that.$t('deleted'),

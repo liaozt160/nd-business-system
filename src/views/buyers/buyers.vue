@@ -106,9 +106,10 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="250">
+          min-width="380">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="$router.push({path:'/buyerOrder/index',query:{id:scope.row.id,role:scope.row.account.role}})">{{$t('order.order')}}</el-button>
+            <el-button size="mini" type="primary" plain @click.stop="changeBroker(scope)">{{$t('table.changeBroker')}}</el-button>
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
@@ -228,6 +229,19 @@
       </div>
     </el-dialog>
 
+    <!--// 更改买家经纪人选择买家经纪人弹窗-->
+    <el-dialog :title="$t('table.changeBroker')" :visible.sync="selectBuyerBroker" width="500px" center
+               :close-on-click-modal="false">
+      <el-select v-model="account_id" clearable style="width: 100%" class="filter-item" v-loading="buyerBrokerListLoading">
+        <el-option v-for="item in BuyerBrokerList" :label="item.name" :value="item.account_id"/>
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="selectBuyerBroker = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="changeBuyerBrokerSave(buyer_id,account_id)">{{ $t('table.changeBroker') }}
+        </el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -236,7 +250,7 @@
   import Pagination from '@/components/Pagination'
   import { getBuyerList,addBuyer,editBuyer,delBuyer,showBuyer,changeServiceCharge } from '@/api/buyers'
   import { getBuyerBrokerList } from '@/api/buyerBrokerNet'
-  import {getLocation} from '@/api/business'
+  import {getLocation,getBuyerBrokersList,changeBuyerBrokerSave,} from '@/api/business'
   export default {
     name: "buyers",
     components: {
@@ -297,7 +311,13 @@
           specific_skills_of_buyer: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
           business_management_needs: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
           time_line_to_purchase: [{ required: true, message: this.$t('empty'), trigger: 'blur'}],
-        }
+        },
+
+        selectBuyerBroker:false,
+        buyerBrokerListLoading:false,
+        BuyerBrokerList:[],
+        buyer_id:'',//买家id
+        account_id:'',//买家经纪人id
       }
     },
     mounted(){
@@ -308,6 +328,48 @@
       }
     },
     methods: {
+      //打开更改买家经纪人弹窗
+      changeBroker(row) {
+        let that = this;
+        if (row) {
+          this.buyer_id = row.row.id;
+        }
+        this.selectBuyerBroker = true;
+        this.buyerBrokerListLoading = true;
+        getBuyerBrokersList().then(response => {
+          that.buyerBrokerListLoading = false;
+          console.log('getBuyerBrokersList', response);
+          that.BuyerBrokerList = response.data;
+        }).catch(err => {
+          that.buyerBrokerListLoading = false;
+          console.log(err);
+        })
+      },
+      // 更改买家经纪人提交
+      changeBuyerBrokerSave(buyer_id, account_id) {
+        let that = this;
+        if (!account_id) {
+          that.$notify.error({
+            showClose: true,
+            message: that.$t('table.changeBrokerText'),
+          });
+          return;
+        }
+        changeBuyerBrokerSave({id: buyer_id, account_id: account_id}).then(response => {
+          that.selectBuyerBroker = false;
+          that.getList();
+          console.log('changeBuyerBrokerSave', response);
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+        }).catch(err => {
+          that.selectBuyerBroker = false;
+          console.log(err);
+        })
+      },
+
       // 获取买家经纪人列表
       getBuyerBorkerListFun() {
         let that=this;

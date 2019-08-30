@@ -353,7 +353,7 @@
             <!--标题-->
             <span class="formItemSpan">{{$t('employeeEdit.title')}}</span>
             <el-input v-model="formDataZh.title" :placeholder="$t('employeeEdit.title')" style="width: 70%;margin-bottom: 20px;"
-                      class="filter-item"/>
+                      class="filter-item"></el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--标价-->

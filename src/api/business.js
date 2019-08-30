@@ -114,10 +114,11 @@ export function delBusiness (data) {
   })
 }
 // 买家中介设置意向企业时，加载买家列表
-export function getBuyers () {
+export function getBuyers (data) {
   return request({
     url: '/api/buyer/query',
     method: 'post',
+    data
   })
 }
 // 买家中介设置意向企业 提交
@@ -148,6 +149,78 @@ export function getLocation (data) {
 export function getBusinessCategoryArr (data) {
   return request({
     url: '/api/category/query',
+    method: 'post',
+    data
+  })
+}
+//获取买家经纪人列表
+export function getBuyerBrokersList (data) {
+  return request({
+    url: '/api/buyer/broker/query',
+    method: 'post',
+    data
+  })
+}
+//推荐给买家经纪人添加待售企业清单保存
+export function addRecommendSave (data) {
+  return request({
+    url: '/api/recommend/add',
+    method: 'post',
+    data
+  })
+}
+//更改买家经纪人保存
+export function changeBuyerBrokerSave (data) {
+  return request({
+    url: '/api/buyer/broker/change',
+    method: 'post',
+    data
+  })
+}
+//获取提示推荐清单列表
+export function getRecommendList (data) {
+  return request({
+    url: '/api/recommend/list',
+    method: 'post',
+    data
+  })
+}
+//获取全部已有提示推荐清单列表
+export function getAllRecommendList (data) {
+  return request({
+    url: '/api/recommend/query',
+    method: 'post',
+    data
+  })
+}
+//提示推荐清单列表删除
+export function recommendListDel (data) {
+  return request({
+    url: '/api/recommend/del',
+    method: 'post',
+    data
+  })
+}
+//提示推荐清单详细企业删除
+export function recommendListDetailDel (data) {
+  return request({
+    url: '/api/recommend/remove',
+    method: 'post',
+    data
+  })
+}
+//已有提示推荐清单添加企业
+export function haverecommendListAppend (data) {
+  return request({
+    url: '/api/recommend/append',
+    method: 'post',
+    data
+  })
+}
+//获取提示推荐清单详情
+export function getRecommendListDetail (data) {
+  return request({
+    url: '/api/recommend/details',
     method: 'post',
     data
   })

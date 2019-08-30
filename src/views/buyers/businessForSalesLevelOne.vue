@@ -11,6 +11,16 @@
         <el-option :label="$t('table.soldOut')" value="2" />
         <el-option :label="$t('employeeEdit.noVerified')" value="3" />
       </el-select>
+      <el-select size="small" v-model="listQuery.category_id" :placeholder="$t('employeeEdit.business_category')"
+                 style="width: 180px;margin-right: 15px;" class="filter-item" @change="handleFilter"
+                 clearable>
+        <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
+      </el-select>
+      <el-select size="small" v-model="listQuery.state" :placeholder="$t('employeeEdit.Location')"
+                 style="width: 180px;margin-right: 15px;" class="filter-item" @change="handleFilter"
+                 clearable>
+        <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
+      </el-select>
 
       <div class="filter-item el-select--medium">
         <span style="color: #717171;font-size: 14px;">{{$t('table.price')}} ($)</span>
@@ -40,6 +50,12 @@
           min-width="150">
         </el-table-column>
         <el-table-column
+          prop="category"
+          align="center"
+          :label="$t('employeeEdit.business_category')"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
           prop="title"
           align="center"
           :label="$t('employeeEdit.companyName')"
@@ -62,6 +78,7 @@
         <el-table-column
           prop="price"
           align="center"
+          sortable
           :label="$t('table.price')+'($)'"
           min-width="150">
           <template slot-scope="{row}">
@@ -83,6 +100,16 @@
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
             <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
             <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="publicationStatus"
+          align="center"
+          :label="$t('table.publicationStatus')"
+          min-width="160">
+          <template slot-scope="{row}">
+            <el-tag type="success" v-if="row.public==1">{{ $t('table.published') }}</el-tag>
+            <el-tag type="info" v-if="row.public==0">{{ $t('table.unpublished') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -201,7 +228,7 @@
 
 <script>
   import Pagination from '@/components/Pagination'
-  import { buyerGetBusinessOneList,showBusiness,showLevelOne,getBuyers,setAttentionBusiness } from '@/api/business'
+  import { buyerGetBusinessOneList,showBusiness,showLevelOne,getBuyers,setAttentionBusiness,getBusinessCategoryArr,getLocation, } from '@/api/business'
   export default {
     name: "businessForSalesLevelOne",
     components:{
@@ -218,8 +245,11 @@
         buyerList:[],
         selectBuyerId:'',
 
+        business_category_arr:[],
         listQuery: {
           page: 1,
+          state: '',
+          category_id: '',
           status: '',
           price_from:'',
           price_to:'',
@@ -236,8 +266,37 @@
     },
     mounted(){
       this.getList();
+      this.get_business_category_arr();
+      this.getlocation('country', 'USA');
     },
     methods:{
+      // 获取地址三级联动数据
+      getlocation(type, value) {
+        let that = this;
+        return new Promise(function (resolve, reject) {
+          if (type && value) {
+            let paramsData = {code: value, lang: that.$store.getters.language};
+            getLocation(paramsData).then(response => {
+              if (type == 'country') {
+                that.provinces = response.data;
+                resolve();
+              }
+            }).catch(err => {
+              console.log(err);
+            })
+          }
+        })
+      },
+      // 获取企业分类列表
+      get_business_category_arr(){
+        let that = this;
+        getBusinessCategoryArr().then(response => {
+          console.log('getBusinessCategoryArr',response);
+          that.business_category_arr = response.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
       // 排序
       sortChange(e){
         console.log(e);

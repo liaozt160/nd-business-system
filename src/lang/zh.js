@@ -149,7 +149,11 @@ export default {
     price: '标价',//标价
     location: '地理位置',//地理位置
     entryTime: '录入时间',//录入时间
+    time: '时间',//时间
     inputPerson: '录入经手人',//录入经手人
+    publicationStatus: '发布状态',//发布状态
+    published: '已发布',//已发布
+    unpublished: '未发布',//未发布
     status: '状态',//状态
     operate: '操作',//操作
     edit: '编辑',//编辑
@@ -162,6 +166,12 @@ export default {
     add: '添加',
     changeBroker: '更改经纪人',//更改经纪人
     changeBrokerText: '选择更改经纪人',//选择更改经纪人
+
+    recommendedListDetail: '推荐清单详情',//推荐清单详情
+    list_nameText: '请输入推荐清单名称',//请输入推荐清单名称
+    selectBuyerBrokerText: '请选择买家经纪人',//请选择买家经纪人
+    selectRecommendedListText: '请选择已有清单',//请选择已有清单
+    selectBuyerText: '请选择买家',//请选择买家
 
     index: '序号',//序号
     account: '账号',//账号
@@ -187,6 +197,11 @@ export default {
     PaymentStatus: '支付状态',//支付状态
 
     RecommendationToBuyerBroker: '推荐给买家经纪人',//推荐给买家经纪人
+    ListName: '清单名称',//清单名称
+    RecommendedListName: '推荐清单名称',//推荐清单名称
+    RecommendedToExistingLists: '推荐到已有清单',//推荐到已有清单
+    NewList: '新建清单',//新建清单
+    ExistingList: '已有清单',//已有清单
 
   },
   buyers:{

@@ -19,6 +19,11 @@
                    clearable>
           <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
         </el-select>
+        <el-select size="small" v-model="listQuery.state" :placeholder="$t('employeeEdit.Location')"
+                   style="width: 180px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter"
+                   clearable>
+          <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
+        </el-select>
       </div>
       <div class="filter-item el-select--medium" v-if="businessBrokerList.length>1">
         <span style="color: #717171;font-size: 14px;">{{$t('broker')}}</span>
@@ -51,9 +56,9 @@
       <el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
                  @click="handleCreate">{{ $t('table.add') }}
       </el-button>
-      <!--<el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary"-->
-                 <!--@click="handleRecommendation">{{ $t('table.RecommendationToBuyerBroker') }}-->
-      <!--</el-button>-->
+      <el-button v-if="role==1" :disabled="selectArray.length==0" size="small" class="filter-item" style="margin-left: 10px;" type="primary"
+                 @click="handleRecommendation">{{ $t('table.RecommendationToBuyerBroker') }}
+      </el-button>
       <div class="filter-item el-select--medium" style="margin-left: 10px" v-if="role==1">
         <el-dropdown trigger="click">
           <el-button size="small" type="primary" plain>
@@ -259,7 +264,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="state"
+          prop="status"
           align="center"
           :label="$t('table.status')"
           min-width="110">
@@ -267,6 +272,16 @@
             <el-tag type="primary" v-if="row.status==1">{{ $t('table.forSale') }}</el-tag>
             <el-tag type="info" v-if="row.status==2">{{ $t('table.soldOut') }}</el-tag>
             <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="publicationStatus"
+          align="center"
+          :label="$t('table.publicationStatus')"
+          min-width="160">
+          <template slot-scope="{row}">
+            <el-tag type="success" v-if="row.public==1">{{ $t('table.published') }}</el-tag>
+            <el-tag type="info" v-if="row.public==0">{{ $t('table.unpublished') }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -295,50 +310,6 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <!--<el-button-->
-            <!--v-if="role==1"-->
-            <!--size="medium"-->
-            <!--type="primary"-->
-            <!--:title="$t('table.changeBroker')"-->
-            <!--icon="el-icon-user" circle-->
-            <!--@click="changeBroker(scope)">-->
-            <!--</el-button>-->
-            <!--<el-button-->
-            <!--v-if="role!=3"-->
-            <!--size="medium"-->
-            <!--type="success"-->
-            <!--:title="$t('AddAttention')"-->
-            <!--icon="el-icon-star-off" circle-->
-            <!--@click="openSelectBuyer(scope)">-->
-            <!--</el-button>-->
-            <!--<el-button-->
-            <!--size="medium"-->
-            <!--type="primary"-->
-            <!--:title="$t('table.edit')"-->
-            <!--icon="el-icon-edit" circle-->
-            <!--@click="handleEdit(scope.$index,scope)">-->
-            <!--</el-button>-->
-            <!--<el-button-->
-            <!--size="medium"-->
-            <!--type="info"-->
-            <!--:title="$t('table.soldOut')"-->
-            <!--icon="el-icon-s-release" circle-->
-            <!--@click="handleChangeStatus(scope)" v-if="scope.row.status==1">-->
-            <!--</el-button>-->
-            <!--<el-button-->
-            <!--size="medium"-->
-            <!--type="primary"-->
-            <!--:title="$t('table.forSale')"-->
-            <!--icon="el-icon-s-claim" circle-->
-            <!--@click="handleChangeStatus(scope)" v-else>-->
-            <!--</el-button>-->
-            <!--<el-button-->
-            <!--size="medium"-->
-            <!--type="danger"-->
-            <!--:title="$t('table.delete')"-->
-            <!--icon="el-icon-delete" circle-->
-            <!--@click="handleDelete(scope.$index,scope)">-->
-            <!--</el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -373,15 +344,45 @@
     </el-dialog>
 
     <!--// 推荐给买家经纪人选择买家经纪人弹窗-->
-    <el-dialog :title="$t('table.RecommendationToBuyerBroker')" :visible.sync="selectBuyerBroker" width="500px" center
+    <el-dialog :title="$t('table.RecommendationToBuyerBroker')" :visible.sync="selectBuyerBroker" width="600px" center
                :close-on-click-modal="false">
-      <el-select v-model="buyer_id" clearable style="width: 100%" class="filter-item" v-loading="buyerBrokerListLoading">
-        <el-option v-for="item in buyerBrokerList" :label="item.name" :value="item.buyer_id"/>
-      </el-select>
+      <div style="margin-bottom: 20px;text-align: center">
+        <el-radio v-model="listRadio" label="1" border size="mini">{{$t('table.NewList')}}</el-radio>
+        <el-radio v-model="listRadio" label="2" border size="mini">{{$t('table.ExistingList')}}</el-radio>
+      </div>
+      <div v-show="listRadio==1">
+        <div class="filter-item el-select--medium">
+          <span style="display:inline-block; text-align:right;width:120px;color: #717171;font-size: 14px;margin-right: 10px">{{$t('table.RecommendedListName')}}</span>
+          <el-input v-model="list_name" :placeholder="$t('table.RecommendedListName')" style="width: 70%;"
+                    class="filter-item"></el-input>
+        </div>
+        <div class="filter-item el-select--medium" style="margin-top: 15px;">
+          <span style="display:inline-block; text-align:right;width:120px;color: #717171;font-size: 14px;margin-right: 10px">{{$t('userEdit.buyerBroker')}}</span>
+          <el-select v-model="buyer_broker_id" @change="selectBuyerBrokerFun" clearable style="width: 70%" class="filter-item" v-loading="buyerBrokerListLoading">
+            <el-option v-for="item in buyerBrokerList" :label="item.name" :value="item.account_id"/>
+          </el-select>
+        </div>
+        <div class="filter-item el-select--medium" style="margin-top: 15px;">
+          <span style="display:inline-block;text-align:right;width:120px;color: #717171;font-size: 14px;margin-right: 10px">{{$t('route.buyers')}}</span>
+          <el-select v-model="buyer_id" clearable style="width: 70%" class="filter-item" v-loading="buyersListLoading">
+            <el-option v-for="item in buyersList" :label="item.label" :value="item.key"/>
+          </el-select>
+        </div>
+      </div>
+      <div v-show="listRadio==2">
+        <div class="filter-item el-select--medium">
+          <span style="display:inline-block; text-align:right;width:120px;color: #717171;font-size: 14px;margin-right: 10px">{{$t('table.RecommendedToExistingLists')}}</span>
+          <el-select v-model="recommended_list_id" clearable style="width: 70%" class="filter-item" v-loading="recommendedListLoading">
+            <el-option v-for="item in recommended_list" :label="item.name" :value="item.id"/>
+          </el-select>
+        </div>
+      </div>
+
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="selectBuyerBroker = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="changeBuyerBrokerSave(business_id,buyer_id)">{{ $t('table.RecommendationToBuyerBroker') }}
-        </el-button>
+        <el-button v-if="listRadio==1" type="primary" @click="changeBuyerBrokerSave(selectArray,list_name,buyer_broker_id,buyer_id)">{{ $t('confirm') }}</el-button>
+        <el-button v-if="listRadio==2" type="primary" @click="changeBuyerBrokerHaveListSave(recommended_list_id,selectArray)">{{ $t('confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -404,6 +405,11 @@
     changeBusinessbrokerSave,
     businessGeneratePdf,
     getBusinessCategoryArr,
+    getLocation,
+    getBuyerBrokersList,
+    addRecommendSave,
+    getAllRecommendList,
+    haverecommendListAppend,
   } from '@/api/business'
   import {attentionPdf} from '@/api/buyers'
 
@@ -418,10 +424,15 @@
         selectArray: [],
         role: '',
 
+        listRadio:'1',
+
         business_category_arr:[],
+
+        provinces:[],
 
         listQuery: {
           broker_id: '',
+          state: '',
           category_id: '',
           page: 1,
           status: '',
@@ -449,10 +460,17 @@
         owner_id: '',//卖家经纪人id
 
         // 选择买家经纪人弹窗
-        buyerBrokerListLoading: false,
-        selectBuyerBroker: false,
-        buyerBrokerList: [],
-        buyer_id: '',//买家经纪人id
+        buyerBrokerListLoading: false,//买家经纪人列表loading
+        buyersListLoading: false,//买家列表loading
+        recommendedListLoading: false,//已有清单列表loading
+        selectBuyerBroker: false,//选择买家经纪人弹窗状态
+        list_name: '',//清单名称
+        buyer_broker_id: '',//买家经纪人id
+        buyerBrokerList: [],//可选买家经纪人列表
+        buyer_id: '',//买家id
+        buyersList: [],//买家经纪人下的可选买家列表
+        recommended_list_id: '',//已有清单id
+        recommended_list: [],//可选已有清单列表
       }
     },
     mounted() {
@@ -460,20 +478,67 @@
       this.getList();
       this.getBrokersList();
       this.get_business_category_arr();
+      this.getlocation('country', 'USA');
       this.role = store.getters && store.getters.role
     },
     methods: {
+      // 获取全部推荐清单列表
+      getRecommendedList(){
+        let that = this;
+        that.recommendedListLoading = true;
+        getAllRecommendList().then(response => {
+          that.recommendedListLoading = false;
+          console.log('getAllRecommendList', response);
+          that.recommended_list = response;
+        }).catch(err => {
+          that.recommendedListLoading = false;
+          console.log(err);
+        })
+      },
+      // 选择买家经纪人
+      selectBuyerBrokerFun(buyer_broker_id){
+        let that = this;
+        // 根据买家经纪人获取所属买家
+        that.buyersListLoading = true;
+        getBuyers({id:buyer_broker_id}).then(response => {
+          that.buyersListLoading = false;
+          console.log('getBuyersList', response);
+          that.buyersList = response.data;
+        }).catch(err => {
+          that.buyersListLoading = false;
+          console.log(err);
+        })
+      },
+      // 获取地址三级联动数据
+      getlocation(type, value) {
+        let that = this;
+        return new Promise(function (resolve, reject) {
+          if (type && value) {
+            let paramsData = {code: value, lang: that.$store.getters.language};
+            getLocation(paramsData).then(response => {
+              if (type == 'country') {
+                that.provinces = response.data;
+                resolve();
+              }
+            }).catch(err => {
+              console.log(err);
+            })
+          }
+        })
+      },
       //推荐给买家经纪人选择买家经纪人弹窗
       handleRecommendation() {
         let that = this;
+        this.getRecommendedList();
         if (that.selectArray.length!=0) {
           this.business_id = that.selectArray;
         }
         this.selectBuyerBroker = true;
         this.buyerBrokerListLoading = true;
-        getBusinessbrokersList().then(response => {
+        // 获取买家经纪人列表
+        getBuyerBrokersList().then(response => {
           that.buyerBrokerListLoading = false;
-          console.log('getBusinessbrokersList', response);
+          console.log('getBuyerBrokersList', response);
           that.buyerBrokerList = response.data;
         }).catch(err => {
           that.buyerBrokerListLoading = false;
@@ -481,19 +546,66 @@
         })
       },
       // 推荐给买家选择买家经纪人提交
-      changeBuyerBrokerSave(business_id, buyer_id){
+      changeBuyerBrokerSave(business_id,list_name,buyer_broker_id, buyer_id){
         let that = this;
-        if (!buyer_id) {
+        if (!list_name) {
           that.$notify.error({
             showClose: true,
-            message: that.$t('table.changeBrokerText'),
+            message: that.$t('table.list_nameText'),
           });
           return;
         }
-        changeBusinessbrokerSave({business_id: business_id, buyer_id: buyer_id}).then(response => {
+        if (!buyer_broker_id) {
+          that.$notify.error({
+            showClose: true,
+            message: that.$t('table.selectBuyerBrokerText'),
+          });
+          return;
+        }
+        // if (!buyer_id) {
+        //   that.$notify.error({
+        //     showClose: true,
+        //     message: that.$t('table.selectBuyerText'),
+        //   });
+        //   return;
+        // }
+        let saveData={
+          name: list_name,
+          business_ids: JSON.stringify(business_id),
+          broker_id:buyer_broker_id,
+          buyer_id: buyer_id,
+        };
+        addRecommendSave(saveData).then(response => {
           that.selectBuyerBroker = false;
-          that.getList();
-          console.log('changeBusinessbrokerSave', response);
+          // that.getList();
+          console.log('addRecommendSave', response);
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+        }).catch(err => {
+          that.selectBuyerBroker = false;
+          console.log(err);
+        })
+      },
+      changeBuyerBrokerHaveListSave(recommended_list_id,selectArray){
+        let that = this;
+        if (!recommended_list_id) {
+          that.$notify.error({
+            showClose: true,
+            message: that.$t('table.selectRecommendedListText'),
+          });
+          return;
+        }
+        let saveData={
+          // ids: JSON.stringify(selectArray),
+          ids: selectArray,
+          recommend_id:recommended_list_id,
+        };
+        haverecommendListAppend(saveData).then(response => {
+          that.selectBuyerBroker = false;
+          console.log('haverecommendListAppend', response);
           that.$notify({
             showClose: true,
             message: that.$t('Successful'),
@@ -538,7 +650,7 @@
         for (let i = 0, len = selectData.length; i < len; i++) {
           this.selectArray.push(selectData[i].id);
         }
-        console.log(selectData, this.selectArray)
+        console.log('selectData', this.selectArray)
       },
       //打开更改经纪人弹窗
       changeBroker(row) {
