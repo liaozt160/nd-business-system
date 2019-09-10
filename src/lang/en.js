@@ -88,7 +88,7 @@ export default {
   Unknown:'Unknown',//未知
   netDelMsg:'Clear all members of the net before deleting',//删除前请清空网络内的所以成员
 
-
+  addLandingPage: 'Add To Landing Page',//添加到登录页展示
 
   route: {
     dashboard: 'Dashboard',
@@ -108,6 +108,7 @@ export default {
     businessBrokerNet: 'Business Broker Net',//商业经纪人网络
     buyerBrokerNet: 'Buyer Broker Net',//买家经纪人网络
     tipsAndRecommendations: 'Tips and Recommendations',//提示推荐
+    landingPageBusiness: 'landing Page Business',//登录页展示企业
   },
   panelGroup:{
     Buyer:'Buyer',//买家
@@ -154,17 +155,19 @@ export default {
     inputPerson: 'Input Person',//录入经手人
     publicationStatus: 'Publication Status',//发布状态
     published: 'Published',//已发布
-    unpublished: 'Unpublished',//未发布
+    unpublished: 'Not Published',//未发布
     status: 'Status',//状态
     operate: 'Operate',//操作
     edit: 'Edit',//编辑
     release: 'Release',//发布
+    withdrawRelease: 'Withdraw Release',//撤回发布
     forSale: 'For Sale',//待售
     soldOut: 'Sold',//已售
     title: 'Title',
     changeBroker: 'Change Broker',//更改经纪人
     changeBrokerText: 'Choose to change the broker',//选择更改经纪人
 
+    listOfRecommendedBusinesses: 'List of recommended businesses',//推荐的企业列表
     recommendedListDetail: 'Recommended List Detail',//推荐清单详情
     list_nameText: 'Please enter the name of the recommended list',//请输入推荐清单名称
     selectBuyerBrokerText: 'Please select the buyer\'s broker',//请选择买家经纪人

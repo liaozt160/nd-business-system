@@ -59,6 +59,9 @@
       <el-button v-if="role==1" :disabled="selectArray.length==0" size="small" class="filter-item" style="margin-left: 10px;" type="primary"
                  @click="handleRecommendation">{{ $t('table.RecommendationToBuyerBroker') }}
       </el-button>
+      <el-button v-if="role==1" :disabled="selectArray.length==0" size="small" class="filter-item" style="margin-left: 10px;" type="primary"
+                 @click="handleAddLandingPage">{{ $t('addLandingPage') }}
+      </el-button>
       <div class="filter-item el-select--medium" style="margin-left: 10px" v-if="role==1">
         <el-dropdown trigger="click">
           <el-button size="small" type="primary" plain>
@@ -296,16 +299,15 @@
                 {{$t('table.moreOperations')}}<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item class="menuItem" v-if="role==1"><span @click.stop="changeBroker(scope)">{{$t('table.changeBroker')}}</span>
-                </el-dropdown-item>
-                <el-dropdown-item class="menuItem" v-if="role!=3"><span @click.stop="openSelectBuyer(scope)">{{$t('AddAttention')}}</span>
-                </el-dropdown-item>
-                <el-dropdown-item class="menuItem"><span @click.stop="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</span>
-                </el-dropdown-item>
-                <!--<el-dropdown-item class="menuItem" v-if="scope.row.status==1"><span-->
-                  <!--@click.stop="handleChangeStatus(scope)">{{$t('table.soldOut')}}</span></el-dropdown-item>-->
-                <!--<el-dropdown-item class="menuItem" v-else><span @click.stop="handleChangeStatus(scope)">{{$t('table.forSale')}}</span>-->
-                <!--</el-dropdown-item>-->
+                <el-dropdown-item class="menuItem" v-if="role==1"><span @click.stop="changeBroker(scope)">{{$t('table.changeBroker')}}</span></el-dropdown-item>
+
+                <el-dropdown-item class="menuItem" v-if="role!=3"><span @click.stop="openSelectBuyer(scope)">{{$t('AddAttention')}}</span></el-dropdown-item>
+
+                <el-dropdown-item class="menuItem" v-if="scope.row.public==1&&role==1"><span @click.stop="handleChangePublic(scope)">{{$t('table.withdrawRelease')}}</span></el-dropdown-item>
+                <el-dropdown-item class="menuItem" v-if="scope.row.public==0&&role==1"><span @click.stop="handleChangePublic(scope)">{{$t('table.release')}}</span></el-dropdown-item>
+
+                <el-dropdown-item class="menuItem"><span @click.stop="handleEdit(scope.$index,scope)">{{$t('table.edit')}}</span></el-dropdown-item>
+
                 <el-dropdown-item class="menuItem"><span @click.stop="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</span>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -410,8 +412,11 @@
     addRecommendSave,
     getAllRecommendList,
     haverecommendListAppend,
+    changePublic,
+    AddToLandingPage,
   } from '@/api/business'
   import {attentionPdf} from '@/api/buyers'
+  import { adminGetLandingPageData,appendLandingPageBusiness,removeLandingPageBusiness } from '@/api/landingPage'
 
   export default {
     name: "CompanyForSales",
@@ -526,6 +531,22 @@
           }
         })
       },
+      //添加企业到登录页展示
+      handleAddLandingPage() {
+        let that = this;
+        if (that.selectArray.length!=0) {
+          appendLandingPageBusiness({ids:that.selectArray}).then(response => {
+            console.log('appendLandingPageBusiness', response);
+            that.$notify({
+              showClose: true,
+              message: that.$t('Successful'),
+              type: 'success'
+            });
+          }).catch(err => {
+            console.log(err);
+          })
+        }
+      },
       //推荐给买家经纪人选择买家经纪人弹窗
       handleRecommendation() {
         let that = this;
@@ -589,6 +610,7 @@
           console.log(err);
         })
       },
+      // 推荐给买家选择买家经纪人已有清单提交
       changeBuyerBrokerHaveListSave(recommended_list_id,selectArray){
         let that = this;
         if (!recommended_list_id) {
@@ -782,17 +804,17 @@
         console.log(123123, row);
         this.$router.push({path: '/employerEdit/index', query: {id: row.row.id}});
       },
-      handleChangeStatus(row) {
+      handleChangePublic(row) {
         let that = this;
-        let data = {id: row.row.id, status: row.row.status == 1 ? 2 : 1};
+        let data = {business_id: row.row.id, public: row.row.public == 1 ? 0 : 1};
         that.$confirm(that.$t('changeMsg'), that.$t('Confirmation'), {
           distinguishCancelAndClose: true,
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
         }).then(() => {
           this.listLoading = true;
-          changeStatus(data).then(response => {
-            console.log('changeStatus', response);
+          changePublic(data).then(response => {
+            console.log('修改发布状态', response);
             that.getList();
             that.listLoading = false;
             that.$notify({

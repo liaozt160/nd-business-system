@@ -60,7 +60,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="230">
+          min-width="260">
           <template slot-scope="scope">
             <el-dropdown trigger="click">
               <el-button size="mini" type="primary" >
@@ -72,7 +72,7 @@
                 <el-dropdown-item v-if="role==1" class="menuItem"><span @click.stop="handlePrinter('3',scope)">{{$t('order.PrintThree')}}</span></el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <el-button size="mini" type="primary" @click="handleDetail(scope)" style="margin-left: 10px">{{$t('detail')}}</el-button>
+            <el-button size="mini" type="primary" @click="handleDetail(scope.row.id)" style="margin-left: 10px">{{$t('detail')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
         </el-table-column>
@@ -99,7 +99,7 @@
     <el-dialog :title="$t('table.recommendedListDetail')" :visible.sync="dialogListDetail" width="1000px"
                style="padding-bottom: 50px" center :close-on-click-modal="false">
       <div style="padding-bottom: 100px" v-loading="listDetailLoading">
-        <div style="font-weight: bold;margin: 20px 0;">推荐的企业列表</div>
+        <div style="font-weight: bold;margin: 20px 0;">{{$t('table.listOfRecommendedBusinesses')}}</div>
         <el-table
           v-loading="listLoading"
           :data="ListDetailData"
@@ -211,6 +211,7 @@
     recommendListDetailDel,
     getRecommendListDetail,
     businessGeneratePdf,
+    recommendPdf,
   } from '@/api/business'
     export default {
         name: "tipsAndRecommendations",
@@ -223,7 +224,7 @@
 
           dialogListDetail: false,
           listDetailLoading: false,
-          ListDetailData:'',
+          ListDetailData:[],
 
           listQuery: {
             broker_id: '',
@@ -250,6 +251,7 @@
 
           pdfLoading: false,
           selectArray: [],
+          recommend_id: '',
 
         }
       },
@@ -263,8 +265,9 @@
         handlePrinter(num,scope) {
           let that = this;
           this.pdfLoading = true;
-          businessGeneratePdf({data: {ids: scope.row.id}, num: num}).then(response => {
-            console.log('businessGeneratePdf' + num, response);
+          console.log(123,num,scope);
+          recommendPdf({data: {id: scope.row.id}, num: num}).then(response => {
+            console.log('recommendPdf' + num, response);
             const contents = response;
             const blob = new Blob([contents]);
             if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1 || window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
@@ -277,15 +280,7 @@
             console.log(err);
           })
         },
-        // 选择事件
-        handleSelectionChange(selectData) {
-          this.selectArray = [];
-          for (let i = 0, len = selectData.length; i < len; i++) {
-            this.selectArray.push(selectData[i].id);
-          }
-          console.log(selectData, this.selectArray)
-        },
-        // 获取待售企业列表
+        // 获取提示推荐清单列表
         getList(data) {
           let that = this;
           this.listLoading = true;
@@ -314,11 +309,12 @@
         },
 
         // 清单详情
-        handleDetail(scope){
+        handleDetail(recommend_id){
           let that = this;
           that.listDetailLoading=true;
           that.dialogListDetail=true;
-          getRecommendListDetail({recommend_id: scope.row.id}).then(response => {
+          that.recommend_id=recommend_id;
+          getRecommendListDetail({recommend_id: recommend_id}).then(response => {
             console.log('getRecommendListDetail', response);
             that.listDetailLoading=false;
             that.ListDetailData=response.data.data;
@@ -359,13 +355,14 @@
             confirmButtonText: that.$t('confirm'),
             cancelButtonText: that.$t('cancel')
           }).then(() => {
-            recommendListDetailDel({ids: row.row.id}).then(response => {
+            recommendListDetailDel({recommend_id: that.recommend_id,ids: [row.row.id]}).then(response => {
               console.log('recommendListDetailDel', response);
               that.$notify({
                 showClose: true,
                 message: that.$t('deleted'),
                 type: 'success'
               });
+              that.handleDetail(that.recommend_id);
             }).catch(err => {
               console.log(err);
             })

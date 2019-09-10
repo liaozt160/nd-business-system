@@ -209,6 +209,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/landingPageBusiness',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/landingPageBusiness/landingPageBusiness'),
+        name: 'landingPageBusiness',
+        meta: { title: 'landingPageBusiness', icon: 'businessNet', noCache: true }
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
@@ -259,6 +271,18 @@ export const buyerRoutes = [
     ]
   },
   {
+    path: '/businessForSalesLevelOne',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/buyers/businessForSalesLevelOne'),
+        name: 'businessForSalesLevelOne',
+        meta: { title: 'businessForSales', icon: 'daishou', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/attentionBusiness',
     component: Layout,
     children: [
@@ -279,18 +303,6 @@ export const buyerRoutes = [
         component: () => import('@/views/tipsAndRecommendations/tipsAndRecommendations'),
         name: 'tipsAndRecommendations',
         meta: { title: 'tipsAndRecommendations', icon: 'tipsAndRecommendations', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/businessForSalesLevelOne',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/buyers/businessForSalesLevelOne'),
-        name: 'businessForSalesLevelOne',
-        meta: { title: 'businessForSales', icon: 'daishou', noCache: true }
       }
     ]
   },

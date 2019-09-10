@@ -51,14 +51,33 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+                 @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
       </el-button>
     </el-form>
 
+
+    <!--上下滚动-->
+    <div style="position: relative;height: 100px;margin: 0 auto;">
+      <div id="slide">
+        <div id="slide1">
+          <p v-for="item in slideData" @click="itemClick(item.id)">
+            <span>{{item.listing}}</span>
+            <span>{{item.category}}</span>
+            <span>{{item.title}}</span>
+            <span>$ {{item.price}}</span>
+            <span>{{item.status==1?$t('table.forSale'):item.status==2?$t('table.soldOut'):item.status==3?$t('employeeEdit.noVerified'):''}}</span>
+            <span>{{item.location}}</span>
+          </p>
+        </div>
+        <div id=slide2></div>
+      </div>
+    </div>
+
     <!--<div style="text-align: center;color: #fff;font-size: 14px" v-if="locationOrigin.indexOf('dev')!==-1||locationOrigin.indexOf('192.168.9.26:8090')!==-1">-->
-      <!--<p>管理员账号：jason@ylbservices.com  密码：111111</p>-->
-      <!--<p>买方中介账号：buyer@ylbservices.com  密码：111111</p>-->
-      <!--<p>卖方中介账号：business@ylbservices.com  密码：111111</p>-->
+    <!--<p>管理员账号：jason@ylbservices.com  密码：111111</p>-->
+    <!--<p>买方中介账号：buyer@ylbservices.com  密码：111111</p>-->
+    <!--<p>卖方中介账号：business@ylbservices.com  密码：111111</p>-->
     <!--</div>-->
 
   </div>
@@ -66,6 +85,7 @@
 
 <script>
   import LangSelect from '@/components/LangSelect'
+  import { getLandingPageData } from '@/api/landingPage'
 
   export default {
     name: 'Login',
@@ -73,20 +93,23 @@
     data() {
       let passwordReg = new RegExp("^([a-zA-Z0-9]+|[~!@#$%^&*()_+\-=]+){6,15}$");
       const validatePassword = (rule, value, callback) => {
-        if(!passwordReg.test(value)){
+        if (!passwordReg.test(value)) {
           callback(new Error(this.$t('login.pwdError')));
         } else {
           callback()
         }
       };
       return {
-        locationOrigin:window.location.origin,
+        locationOrigin: window.location.origin,
         loginForm: {
           email: '',
           password: ''
         },
         loginRules: {
-          email: [{ required: true, message: this.$t('empty')},{ type: 'email', message: this.$t('userEdit.inputEmail')}],
+          email: [{required: true, message: this.$t('empty')}, {
+            type: 'email',
+            message: this.$t('userEdit.inputEmail')
+          }],
           password: [{required: true, trigger: 'blur', validator: validatePassword}]
         },
         passwordType: 'password',
@@ -94,7 +117,9 @@
         loading: false,
         showDialog: false,
         redirect: undefined,
-        otherQuery: {}
+        otherQuery: {},
+
+        slideData: [],
       }
     },
     watch: {
@@ -115,8 +140,50 @@
       } else if (this.loginForm.password === '') {
         this.$refs.password.focus()
       }
+      this.getList();
     },
     methods: {
+      // 获取登录页展示企业列表
+      getList() {
+        let that = this;
+        getLandingPageData().then(response => {
+          console.log('getLandingPageData', response);
+          that.slideData = response.data.data;
+          setTimeout(function(){
+            that.slideFun();
+          },1000);
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+
+      slideFun(){
+        var speed = 60;
+        var slide = document.getElementById("slide");
+        var slide2 = document.getElementById("slide2");
+        var slide1 = document.getElementById("slide1");
+        slide2.innerHTML = slide1.innerHTML;
+
+        function Marquee() {
+          if (slide2.offsetTop - slide.scrollTop <= 0){
+            // slide.scrollTop -= slide1.offsetHeight+5;
+            slide.scrollTop = 0;
+          } else {
+            slide.scrollTop++
+          }
+        }
+        var MyMar = setInterval(Marquee, speed);
+        slide.onmouseover = function () {
+          clearInterval(MyMar)
+        };
+        slide.onmouseout = function () {
+          MyMar = setInterval(Marquee, speed)
+        }
+      },
+      itemClick(id) {
+        console.log(id);
+      },
+
       checkCapslock({shiftKey, key} = {}) {
         if (key && key.length === 1) {
           if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
@@ -144,12 +211,12 @@
           if (valid) {
             this.loading = true;
             this.$store.dispatch('user/login', this.loginForm).then((res) => {
-               // console.log(123123,res);
+              // console.log(123123,res);
               this.$router.push({path: '/', query: this.otherQuery});
-                this.loading = false
-              }).catch(() => {
-                this.loading = false
-              })
+              this.loading = false
+            }).catch(() => {
+              this.loading = false
+            })
           } else {
             console.log('error submit!!');
             return false
@@ -167,6 +234,44 @@
     }
   }
 </script>
+
+<style scoped>
+  #slide {
+    position: absolute;
+    height: 170px;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    color: #d9d9d9;
+    text-align: center;
+  }
+
+  #slide p span {
+    display: inline-block;
+    margin: 0 20px;
+    text-align: center;
+  }
+
+  #slide1, #slide2 {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #slide1 > p, #slide2 > p {
+    padding: 5px 0;
+    /*border-bottom: 1px solid #bbb;*/
+    cursor: pointer;
+  }
+
+  #slide1 > p:hover, #slide2 > p:hover {
+    color: #ff6537 !important;
+  }
+
+  #slide1:last-child, #slide1:first-child {
+    /*border-top: 1px solid #bbb;*/
+  }
+
+</style>
 
 <style lang="scss">
   /* 修复input 背景不协调 和光标变色 */

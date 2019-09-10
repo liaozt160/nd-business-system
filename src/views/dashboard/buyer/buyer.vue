@@ -66,6 +66,16 @@
             <el-tag type="info" v-if="row.status==3">{{ $t('employeeEdit.noVerified') }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="publicationStatus"
+          align="center"
+          :label="$t('table.publicationStatus')"
+          min-width="160">
+          <template slot-scope="{row}">
+            <el-tag type="success" v-if="row.public==1">{{ $t('table.published') }}</el-tag>
+            <el-tag type="info" v-if="row.public==0">{{ $t('table.unpublished') }}</el-tag>
+          </template>
+        </el-table-column>
       </el-table>
       <!--<el-table-->
         <!--v-loading="listLoading"-->

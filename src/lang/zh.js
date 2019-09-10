@@ -93,6 +93,7 @@ export default {
   Unknown:'未知',//未知
   netDelMsg:'删除前请清空网络内的所以成员',//删除前请清空网络内的所以成员
 
+  addLandingPage: '添加到登录页展示',//添加到登录页展示
 
   route: {
     dashboard: '首页',
@@ -112,6 +113,7 @@ export default {
     businessBrokerNet: '企业经纪人网络',//企业经纪人网络
     buyerBrokerNet: '买家经纪人网络',//买家经纪人网络
     tipsAndRecommendations: '提示推荐',//提示推荐
+    landingPageBusiness: '登录页展示企业',//登录页展示企业
   },
   panelGroup:{
     Buyer:'买家',//买家
@@ -158,6 +160,7 @@ export default {
     operate: '操作',//操作
     edit: '编辑',//编辑
     release: '发布',//发布
+    withdrawRelease: '撤回发布',//撤回发布
     forSale: '待售',//待售
     soldOut: '已售',//已售
     title: '标题',
@@ -167,6 +170,7 @@ export default {
     changeBroker: '更改经纪人',//更改经纪人
     changeBrokerText: '选择更改经纪人',//选择更改经纪人
 
+    listOfRecommendedBusinesses: '推荐的企业列表',//推荐的企业列表
     recommendedListDetail: '推荐清单详情',//推荐清单详情
     list_nameText: '请输入推荐清单名称',//请输入推荐清单名称
     selectBuyerBrokerText: '请选择买家经纪人',//请选择买家经纪人

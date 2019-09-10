@@ -343,6 +343,7 @@
           distinguishCancelAndClose: true,
           confirmButtonText: that.$t('confirm'),
           cancelButtonText: that.$t('cancel')
+
         }).then(() => {
           delBuyerBrokerNet ({id:scope.row.id}).then(response => {
             console.log('delBuyerBrokerNet',response);

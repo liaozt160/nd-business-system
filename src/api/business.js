@@ -225,37 +225,35 @@ export function getRecommendListDetail (data) {
     data
   })
 }
-// 根据所传business id，生成1级企业资料pdf文件
-export function businessGeneratePdfOne (data) {
+//更改发布状态
+export function changePublic (data) {
   return request({
-    url: '/api/account/business/pdf/1',
+    url: 'api/business/public',
     method: 'post',
-    responseType: 'blob',
     data
   })
 }
-// 根据所传business id，生成2级企业资料pdf文件
-export function businessGeneratePdfTwo (data) {
+//添加到登录页展示
+export function AddToLandingPage (data) {
   return request({
-    url: '/api/account/business/pdf/2',
+    url: 'api/business/LandingPage ',
     method: 'post',
-    responseType: 'blob',
     data
   })
 }
-// 根据所传business id，生成3级企业资料pdf文件
-export function businessGeneratePdfThree (data) {
-  return request({
-    url: '/api/account/business/pdf/3',
-    method: 'post',
-    responseType: 'blob',
-    data
-  })
-}
-// 根据所传business id，生成不同等级企业资料pdf文件
+// 根据所传business id，生成不同等级企业资料pdf文件，data.num---要打印的信息级别
 export function businessGeneratePdf (data) {
   return request({
     url: '/api/account/business/pdf/'+data.num,
+    method: 'post',
+    responseType: 'blob',
+    data:data.data
+  })
+}
+// 根据所传recommend id，生成不同等级企业资料pdf文件，data.num---要打印的信息级别
+export function recommendPdf (data) {
+  return request({
+    url: '/api/recommend/pdf/'+data.num,
     method: 'post',
     responseType: 'blob',
     data:data.data

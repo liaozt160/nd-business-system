@@ -49,7 +49,7 @@
 
 
     <!--用户信息编辑弹窗-->
-    <el-dialog :title="$t('userEdit.userEdit')" :visible.sync="dialogFormVisible1" width="650px" center :close-on-click-modal="false">
+    <el-dialog :title="$t('navbar.profile')" :visible.sync="dialogFormVisible1" width="650px" center :close-on-click-modal="false">
 
       <el-form ref="dataForm" :model="userEdit" label-position="left" label-width="110px" style="width: 550px; margin-left:50px;"  class="demo-ruleForm" v-loading="userEditLoading">
         <el-form-item :label="$t('table.name')" prop="name" :rules="[ { required: true, message: $t('empty')}]">
