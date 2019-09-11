@@ -271,10 +271,6 @@
 
   }
 
-  .tableH  span:nth-child(1) {
-    /*border-left: 1px solid #898989;*/
-  }
-
   .tableH   span:nth-child(2) {
     border-left: 1px solid #898989;
   }
@@ -285,9 +281,6 @@
   .tableH   span:nth-child(4) {
     border-left: 1px solid #898989;
     border-right: 1px solid #898989;
-  }
-  .tableH   span:nth-child(5) {
-    /*border-right: 1px solid #898989;*/
   }
 
   .tableH span {
@@ -305,10 +298,6 @@
 
   }
 
-  .tableB  span:nth-child(1) {
-    /*border-left: 1px solid #898989;*/
-  }
-
   .tableB   span:nth-child(2) {
     border-left: 1px solid #898989;
   }
@@ -320,16 +309,13 @@
     border-left: 1px solid #898989;
     border-right: 1px solid #898989;
   }
-  .tableB   span:nth-child(5) {
-    /*border-right: 1px solid #898989;*/
-  }
 
   .tableB span {
     display: inline-block;
     border-top: 1px solid #898989;
     width: 50%;
     text-align: center;
-    padding: 10px 0;
+    padding: 15px 0;
   }
   .tableB:hover{
     color: #ff6537;
