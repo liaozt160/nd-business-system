@@ -74,7 +74,8 @@
           <span>{{$t('table.status')}}</span>
         </li>
       </ul>
-      <ul id="slide">
+      <div v-if="slideData.length==0" style="color:#d9d9d9;text-align: center;line-height: 80px;">{{$t('NoData')}}</div>
+      <ul id="slide" v-else>
         <li class="tableB" id="slide1" v-for="item in slideData" @click="itemClick(item.id)">
             <span>{{item.listing}}</span>
             <span>{{item.category}}</span>
@@ -160,9 +161,11 @@
         getLandingPageData().then(response => {
           // console.log('getLandingPageData', response);
           that.slideData = response.data.data;
-          setTimeout(function () {
-            that.slideFun();
-          }, 1000);
+          if(that.slideData.length!==0){
+            setTimeout(function () {
+              that.slideFun();
+            }, 500);
+          }
         }).catch(err => {
           console.log(err);
         })

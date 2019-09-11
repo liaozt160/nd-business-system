@@ -89,6 +89,7 @@ export default {
   netDelMsg:'Clear all members of the net before deleting',//删除前请清空网络内的所以成员
 
   addLandingPage: 'Add To Landing Page',//添加到登录页展示
+  NoData: 'No Data',//暂无数据
 
   route: {
     dashboard: 'Dashboard',

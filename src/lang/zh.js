@@ -95,6 +95,8 @@ export default {
 
   addLandingPage: '添加到登录页展示',//添加到登录页展示
 
+  NoData: '暂无数据',//暂无数据
+
   route: {
     dashboard: '首页',
     businessForSales: '待售企业',//待售企业
