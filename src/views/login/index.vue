@@ -173,7 +173,7 @@
         var slide = document.getElementById("slide");
         var slide2 = document.getElementById("slide2");
         var slide1 = document.getElementById("slide1");
-        slide2.innerHTML = slide1.innerHTML;
+          // slide2.innerHTML = slide1.innerHTML;
 
         function Marquee() {
           if (slide2.offsetTop - slide.scrollTop <= 0) {
@@ -257,9 +257,9 @@
   .beijing{
     position: relative;
     max-width: 1000px;
-    height: 251px;
+    height: 270px;
     margin: 0 auto;
-    border-bottom: 1px solid #898989;
+    border: 1px solid #898989;
   }
 
   .tableH {
@@ -269,7 +269,7 @@
   }
 
   .tableH  span:nth-child(1) {
-    border-left: 1px solid #898989;
+    /*border-left: 1px solid #898989;*/
   }
 
   .tableH   span:nth-child(2) {
@@ -284,7 +284,7 @@
     border-right: 1px solid #898989;
   }
   .tableH   span:nth-child(5) {
-    border-right: 1px solid #898989;
+    /*border-right: 1px solid #898989;*/
   }
 
   .tableH span {
@@ -303,7 +303,7 @@
   }
 
   .tableB  span:nth-child(1) {
-    border-left: 1px solid #898989;
+    /*border-left: 1px solid #898989;*/
   }
 
   .tableB   span:nth-child(2) {
@@ -318,7 +318,7 @@
     border-right: 1px solid #898989;
   }
   .tableB   span:nth-child(5) {
-    border-right: 1px solid #898989;
+    /*border-right: 1px solid #898989;*/
   }
 
   .tableB span {
