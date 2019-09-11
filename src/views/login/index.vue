@@ -58,34 +58,45 @@
 
 
     <!--上下滚动-->
-    <div style="position: relative;height: 100px;margin: 0 auto;">
-      <div id="slide">
-        <div id="slide1">
-          <p v-for="item in slideData" @click="itemClick(item.id)">
+    <div class="beijing">
+      <p style="color: #d9d9d9;font-size: 18px;text-align: center;">{{$t('panelGroup.newEnterprises')}}</p>
+      <ul>
+        <li class="tableH">
+          <!--编号-->
+          <span>{{$t('employeeEdit.Listing')}}</span>
+          <!--企业分类-->
+          <span>{{$t('employeeEdit.business_category')}}</span>
+          <!--标题-->
+          <span>{{$t('employeeEdit.title')}}</span>
+          <!--标价-->
+          <span>{{$t('table.price')+'($)'}}</span>
+          <!--状态-->
+          <span>{{$t('table.status')}}</span>
+        </li>
+      </ul>
+      <ul id="slide">
+        <li class="tableB" id="slide1" v-for="item in slideData" @click="itemClick(item.id)">
             <span>{{item.listing}}</span>
             <span>{{item.category}}</span>
             <span>{{item.title}}</span>
             <span>$ {{item.price}}</span>
             <span>{{item.status==1?$t('table.forSale'):item.status==2?$t('table.soldOut'):item.status==3?$t('employeeEdit.noVerified'):''}}</span>
-            <span>{{item.location}}</span>
-          </p>
-        </div>
-        <div id=slide2></div>
-      </div>
+        </li>
+        <li class="tableB" id="slide2" v-for="item in slideData" @click="itemClick(item.id)">
+            <span>{{item.listing}}</span>
+            <span>{{item.category}}</span>
+            <span>{{item.title}}</span>
+            <span>$ {{item.price}}</span>
+            <span>{{item.status==1?$t('table.forSale'):item.status==2?$t('table.soldOut'):item.status==3?$t('employeeEdit.noVerified'):''}}</span>
+        </li>
+      </ul>
     </div>
-
-    <!--<div style="text-align: center;color: #fff;font-size: 14px" v-if="locationOrigin.indexOf('dev')!==-1||locationOrigin.indexOf('192.168.9.26:8090')!==-1">-->
-    <!--<p>管理员账号：jason@ylbservices.com  密码：111111</p>-->
-    <!--<p>买方中介账号：buyer@ylbservices.com  密码：111111</p>-->
-    <!--<p>卖方中介账号：business@ylbservices.com  密码：111111</p>-->
-    <!--</div>-->
-
   </div>
 </template>
 
 <script>
   import LangSelect from '@/components/LangSelect'
-  import { getLandingPageData } from '@/api/landingPage'
+  import {getLandingPageData} from '@/api/landingPage'
 
   export default {
     name: 'Login',
@@ -147,17 +158,17 @@
       getList() {
         let that = this;
         getLandingPageData().then(response => {
-          console.log('getLandingPageData', response);
+          // console.log('getLandingPageData', response);
           that.slideData = response.data.data;
-          setTimeout(function(){
+          setTimeout(function () {
             that.slideFun();
-          },1000);
+          }, 1000);
         }).catch(err => {
           console.log(err);
         })
       },
 
-      slideFun(){
+      slideFun() {
         var speed = 60;
         var slide = document.getElementById("slide");
         var slide2 = document.getElementById("slide2");
@@ -165,13 +176,14 @@
         slide2.innerHTML = slide1.innerHTML;
 
         function Marquee() {
-          if (slide2.offsetTop - slide.scrollTop <= 0){
+          if (slide2.offsetTop - slide.scrollTop <= 0) {
             // slide.scrollTop -= slide1.offsetHeight+5;
             slide.scrollTop = 0;
           } else {
             slide.scrollTop++
           }
         }
+
         var MyMar = setInterval(Marquee, speed);
         slide.onmouseover = function () {
           clearInterval(MyMar)
@@ -236,6 +248,90 @@
 </script>
 
 <style scoped>
+  .beijing > ul {
+    font-size: 15px;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+  }
+  .beijing{
+    position: relative;
+    max-width: 1000px;
+    height: 251px;
+    margin: 0 auto;
+    border-bottom: 1px solid #898989;
+  }
+
+  .tableH {
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .tableH  span:nth-child(1) {
+    border-left: 1px solid #898989;
+  }
+
+  .tableH   span:nth-child(2) {
+    border-left: 1px solid #898989;
+  }
+  .tableH   span:nth-child(3) {
+    border-left: 1px solid #898989;
+  }
+
+  .tableH   span:nth-child(4) {
+    border-left: 1px solid #898989;
+    border-right: 1px solid #898989;
+  }
+  .tableH   span:nth-child(5) {
+    border-right: 1px solid #898989;
+  }
+
+  .tableH span {
+    display: inline-block;
+    border-top: 1px solid #898989;
+    border-bottom: 1px solid #898989;
+    width: 50%;
+    text-align: center;
+    line-height: 40px;
+  }
+  .tableB {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+  }
+
+  .tableB  span:nth-child(1) {
+    border-left: 1px solid #898989;
+  }
+
+  .tableB   span:nth-child(2) {
+    border-left: 1px solid #898989;
+  }
+  .tableB   span:nth-child(3) {
+    border-left: 1px solid #898989;
+  }
+
+  .tableB   span:nth-child(4) {
+    border-left: 1px solid #898989;
+    border-right: 1px solid #898989;
+  }
+  .tableB   span:nth-child(5) {
+    border-right: 1px solid #898989;
+  }
+
+  .tableB span {
+    display: inline-block;
+    border-top: 1px solid #898989;
+    width: 50%;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .tableB:hover{
+    color: #ff6537;
+  }
+
   #slide {
     position: absolute;
     height: 170px;
@@ -246,30 +342,12 @@
     text-align: center;
   }
 
-  #slide p span {
-    display: inline-block;
-    margin: 0 20px;
-    text-align: center;
-  }
 
   #slide1, #slide2 {
     width: 100%;
     margin: 0 auto;
   }
 
-  #slide1 > p, #slide2 > p {
-    padding: 5px 0;
-    /*border-bottom: 1px solid #bbb;*/
-    cursor: pointer;
-  }
-
-  #slide1 > p:hover, #slide2 > p:hover {
-    color: #ff6537 !important;
-  }
-
-  #slide1:last-child, #slide1:first-child {
-    /*border-top: 1px solid #bbb;*/
-  }
 
 </style>
 
