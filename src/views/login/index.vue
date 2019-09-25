@@ -51,7 +51,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;"
                  @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
       </el-button>
     </el-form>
@@ -59,7 +59,7 @@
 
     <!--上下滚动-->
     <div class="beijing">
-      <p style="color: #d9d9d9;font-size: 18px;text-align: center;">{{$t('panelGroup.newEnterprises')}}</p>
+      <p style="color: #595959;font-size: 18px;text-align: center;">{{$t('panelGroup.newEnterprises')}}</p>
       <ul>
         <li class="tableH">
           <!--编号-->
@@ -153,6 +153,7 @@
         this.$refs.password.focus()
       }
       this.getList();
+
     },
     methods: {
       // 获取登录页展示企业列表
@@ -253,7 +254,7 @@
 <style scoped>
   .beijing > ul {
     font-size: 15px;
-    color: #d9d9d9;
+    color: #595959;
     margin: 0;
     padding: 0;
   }
@@ -262,31 +263,35 @@
     max-width: 1000px;
     height: 270px;
     margin: 0 auto;
-    border: 1px solid #898989;
+    border: 1px solid transparent;
+    background-color: #fff;
+    border-radius:5px;
+    box-shadow: 0 0 10px #ccc;
   }
 
   .tableH {
     display: flex;
     justify-content: center;
+    background-color: #f1f1f1;
 
   }
 
   .tableH   span:nth-child(2) {
-    border-left: 1px solid #898989;
+    /*border-left: 1px solid #595959;*/
   }
   .tableH   span:nth-child(3) {
-    border-left: 1px solid #898989;
+    /*border-left: 1px solid #595959;*/
   }
 
   .tableH   span:nth-child(4) {
-    border-left: 1px solid #898989;
-    border-right: 1px solid #898989;
+    /*border-left: 1px solid #595959;*/
+    /*border-right: 1px solid #595959;*/
   }
 
   .tableH span {
     display: inline-block;
-    border-top: 1px solid #898989;
-    border-bottom: 1px solid #898989;
+    /*border-top: 1px solid #595959;*/
+    /*border-bottom: 1px solid #595959;*/
     width: 50%;
     text-align: center;
     line-height: 40px;
@@ -298,21 +303,24 @@
 
   }
 
-  .tableB   span:nth-child(2) {
-    border-left: 1px solid #898989;
+  #slide li:nth-child(2n) {
+    background: #f0f9eb;
+  }
+  .tableB span:nth-child(2) {
+    /*border-left: 1px solid #595959;*/
   }
   .tableB   span:nth-child(3) {
-    border-left: 1px solid #898989;
+    /*border-left: 1px solid #595959;*/
   }
 
-  .tableB   span:nth-child(4) {
-    border-left: 1px solid #898989;
-    border-right: 1px solid #898989;
+  .tableB span:nth-child(4) {
+    /*border-left: 1px solid #595959;*/
+    /*border-right: 1px solid #595959;*/
   }
 
   .tableB span {
     display: inline-block;
-    border-top: 1px solid #898989;
+    /*border-top: 1px solid #595959;*/
     width: 50%;
     text-align: center;
     padding: 15px 0;
@@ -327,7 +335,7 @@
     width: 100%;
     overflow: hidden;
     margin: 0 auto;
-    color: #d9d9d9;
+    color: #898989;
     text-align: center;
   }
 
@@ -349,9 +357,16 @@
   $cursor: #fff;
 
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container .el-input input {
-      color: $cursor;
+    .login-container .el-input {
+      height: 35px!important;
     }
+    .login-container .el-input input {
+      padding: 10px 5px 10px 15px!important;
+      height: 40px!important;
+    }
+  }
+  .el-form-item__content{
+    line-height: 25px!important;
   }
 
   /* reset element-ui css */
@@ -367,13 +382,10 @@
         -webkit-appearance: none;
         border-radius: 0px;
         padding: 12px 5px 12px 15px;
-        color: $light_gray;
         height: 47px;
-        caret-color: $cursor;
 
         &:-webkit-autofill {
-          box-shadow: 0 0 0px 1000px $bg inset !important;
-          -webkit-text-fill-color: $cursor !important;
+          box-shadow: 0 0 0px 1000px #e5e5e5 inset !important;
         }
       }
     }
@@ -396,21 +408,27 @@
   .login-container {
     min-height: 100%;
     width: 100%;
-    background-color: $bg;
+    background-image: url("../../assets/bgp.png");
+    background-position: center;
     overflow: hidden;
 
     .login-form {
       position: relative;
-      width: 520px;
+      width: 450px;
       max-width: 100%;
-      padding: 200px 35px 0;
-      margin: 0 auto;
+      /*padding: 200px 35px 0;*/
+      /*margin: 0 auto;*/
       overflow: hidden;
+      background-color: #fff;
+      padding: 35px;
+      border-radius: 10px;
+      margin: 100px auto 40px auto;
+      box-shadow: 0 0 10px #ccc;
     }
 
     .tips {
       font-size: 14px;
-      color: #fff;
+      /*color: #fff;*/
       margin-bottom: 10px;
 
       span {
@@ -422,7 +440,6 @@
 
     .svg-container {
       padding: 6px 5px 6px 15px;
-      color: $dark_gray;
       vertical-align: middle;
       width: 30px;
       display: inline-block;
@@ -432,15 +449,13 @@
       position: relative;
 
       .title {
-        font-size: 26px;
-        color: $light_gray;
+        font-size: 23px;
         margin: 0px auto 40px auto;
         text-align: center;
         font-weight: bold;
       }
 
       .set-language {
-        color: #fff;
         position: absolute;
         top: 3px;
         font-size: 18px;
@@ -454,7 +469,6 @@
       right: 10px;
       top: 7px;
       font-size: 16px;
-      color: $dark_gray;
       cursor: pointer;
       user-select: none;
     }
