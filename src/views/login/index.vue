@@ -361,8 +361,8 @@
       height: 35px!important;
     }
     .login-container .el-input input {
-      padding: 10px 5px 10px 15px!important;
-      height: 40px!important;
+      padding: 5px 5px 5px 15px!important;
+      height: 30px!important;
     }
   }
   .el-form-item__content{
@@ -395,7 +395,7 @@
       background: rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       color: #454545;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
   }
 </style>
@@ -416,19 +416,16 @@
       position: relative;
       width: 450px;
       max-width: 100%;
-      /*padding: 200px 35px 0;*/
-      /*margin: 0 auto;*/
       overflow: hidden;
       background-color: #fff;
-      padding: 35px;
+      padding: 20px 30px;
       border-radius: 10px;
-      margin: 100px auto 40px auto;
+      margin: 80px auto 30px auto;
       box-shadow: 0 0 10px #ccc;
     }
 
     .tips {
       font-size: 14px;
-      /*color: #fff;*/
       margin-bottom: 10px;
 
       span {
@@ -449,7 +446,7 @@
       position: relative;
 
       .title {
-        font-size: 23px;
+        font-size: 21px;
         margin: 0px auto 40px auto;
         text-align: center;
         font-weight: bold;
