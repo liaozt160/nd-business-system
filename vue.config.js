@@ -21,7 +21,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: 'https://dev.newdreamservices.com/',
+  publicPath: 'http://web.business.newdreamservices.com.s3-website-ap-northeast-1.amazonaws.com/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
