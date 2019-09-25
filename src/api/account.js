@@ -80,4 +80,27 @@ export function getPanelDataApi () {
     method: 'post',
   })
 }
+//联系我们提交表单
+export function contactUsApi (data) {
+  return request({
+    url: '/api/contact',
+    method: 'post',
+    data
+  })
+}
+//联系我们表单列表
+export function contactUsListApi () {
+  return request({
+    url: '/api/contact/list',
+    method: 'post',
+  })
+}
+//删除联系我们表单列表
+export function delContactUsListApi (data) {
+  return request({
+    url: '/api/contact/del',
+    method: 'post',
+    data
+  })
+}
 

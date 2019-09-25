@@ -1,104 +1,138 @@
 <template>
-  <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
-             label-position="left">
+  <div class="allbox">
+    <div class="login-container">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
+               label-position="left">
 
-      <div class="title-container">
-        <h3 class="title">
-          {{ $t('login.title') }}
-        </h3>
-        <lang-select class="set-language"/>
-      </div>
+        <div class="title-container">
+          <h3 class="title">
+            {{ $t('login.title') }}
+          </h3>
+          <lang-select class="set-language"/>
+        </div>
 
-      <el-form-item prop="email">
+        <el-form-item prop="email">
         <span class="svg-container">
           <svg-icon icon-class="user"/>
         </span>
-        <el-input
-          ref="email"
-          v-model="loginForm.email"
-          :placeholder="$t('login.account')"
-          name="email"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-      </el-form-item>
+          <el-input
+            ref="email"
+            v-model="loginForm.email"
+            :placeholder="$t('login.account')"
+            name="email"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+        </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
+        <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password"/>
           </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            :placeholder="$t('login.password')"
-            name="password"
-            tabindex="2"
-            maxlength="15"
-            auto-complete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              :placeholder="$t('login.password')"
+              name="password"
+              tabindex="2"
+              maxlength="15"
+              auto-complete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="handleLogin"
+            />
+            <span class="show-pwd" @click="showPwd">
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
           </span>
-        </el-form-item>
-      </el-tooltip>
+          </el-form-item>
+        </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;"
-                 @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
-      </el-button>
-    </el-form>
-
-
-    <!--上下滚动-->
-    <div class="beijing">
-      <p style="color: #595959;font-size: 18px;text-align: center;">{{$t('panelGroup.newEnterprises')}}</p>
-      <ul>
-        <li class="tableH">
-          <!--编号-->
-          <span>{{$t('employeeEdit.Listing')}}</span>
-          <!--企业分类-->
-          <span>{{$t('employeeEdit.business_category')}}</span>
-          <!--标题-->
-          <span>{{$t('employeeEdit.title')}}</span>
-          <!--标价-->
-          <span>{{$t('table.price')+'($)'}}</span>
-          <!--状态-->
-          <span>{{$t('table.status')}}</span>
-        </li>
-      </ul>
-      <div v-if="slideData.length==0" style="color:#d9d9d9;text-align: center;line-height: 80px;">{{$t('NoData')}}</div>
-      <ul id="slide" v-else>
-        <li class="tableB" id="slide1" v-for="item in slideData" @click="itemClick(item.id)">
+        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;"
+                   @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
+        </el-button>
+      </el-form>
+      <!--上下滚动-->
+      <div class="beijing">
+        <p style="color: #595959;font-size: 18px;text-align: center;">{{$t('panelGroup.newEnterprises')}}</p>
+        <ul>
+          <li class="tableH">
+            <!--编号-->
+            <span>{{$t('employeeEdit.Listing')}}</span>
+            <!--企业分类-->
+            <span>{{$t('employeeEdit.business_category')}}</span>
+            <!--标题-->
+            <span>{{$t('employeeEdit.title')}}</span>
+            <!--标价-->
+            <span>{{$t('table.price')+'($)'}}</span>
+            <!--状态-->
+            <span>{{$t('table.status')}}</span>
+          </li>
+        </ul>
+        <div v-if="slideData.length==0" style="color:#d9d9d9;text-align: center;line-height: 80px;">{{$t('NoData')}}</div>
+        <ul id="slide" v-else>
+          <li class="tableB" id="slide1" v-for="item in slideData" @click="itemClick(item.id)">
             <span>{{item.listing}}</span>
             <span>{{item.category}}</span>
             <span>{{item.title}}</span>
             <span>$ {{item.price}}</span>
             <span>{{item.status==1?$t('table.forSale'):item.status==2?$t('table.soldOut'):item.status==3?$t('employeeEdit.noVerified'):''}}</span>
-        </li>
-        <li class="tableB" id="slide2" v-for="item in slideData" @click="itemClick(item.id)">
+          </li>
+          <li class="tableB" id="slide2" v-for="item in slideData" @click="itemClick(item.id)">
             <span>{{item.listing}}</span>
             <span>{{item.category}}</span>
             <span>{{item.title}}</span>
             <span>$ {{item.price}}</span>
             <span>{{item.status==1?$t('table.forSale'):item.status==2?$t('table.soldOut'):item.status==3?$t('employeeEdit.noVerified'):''}}</span>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <!--联系我们填写信息弹窗-->
+    <el-dialog :title="$t('contactUs')" center :visible.sync="dialogFormVisible" v-if='dialogFormVisible'
+               width="650px" :before-close="dialogClose" :close-on-click-modal="false">
+
+      <el-form ref="dataForm" :model="userEdit" label-position="left" label-width="110px" style="width: 400px; margin-left:40px;"  class="demo-ruleForm">
+        <el-form-item :label="$t('table.name')" prop="name" :rules="[ { required: true, message: $t('empty')}]">
+          <el-input v-model="userEdit.name" :placeholder="$t('table.name')" style="width:410px;"
+                    class="filter-item"/>
+        </el-form-item>
+        <el-form-item :label="$t('table.email')" prop="email" :rules="[{ required: true, message: $t('empty')},{ type: 'email', message: $t('userEdit.inputEmail')}]">
+          <el-input v-model="userEdit.email" :placeholder="$t('table.email')" style="width:410px;"
+                    class="filter-item"/>
+        </el-form-item>
+        <el-form-item :label="$t('table.phone')" prop="phone" :rules="[{ required: true, message: $t('empty')},{ type: 'number', message: $t('userEdit.inputPhoneNumber')}]">
+          <el-input v-model.number="userEdit.phone" :placeholder="$t('table.phone')" style="width:410px;" class="filter-item"/>
+        </el-form-item>
+        <el-form-item :label="$t('Identity')" :rules="[ { required: true, message: $t('empty')}]">
+          <el-select v-model="userEdit.role" prop="level" :placeholder="$t('Identity')" clearable class="filter-item" style="width:410px;">
+            <el-option :label="$t('intentionBuyer')" :value="1" />
+            <el-option :label="$t('buyerAdvisor')" :value="2" />
+            <el-option :label="$t('sellerIntermediary')" :value="3" />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('userEdit.UserNotes')">
+          <el-input style="width:410px;" type="textarea" :autosize="{ minRows: 2}" :placeholder="$t('userEdit.UserNotes')" v-model="userEdit.remark"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="userEditSave()">{{ $t('submit') }}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import LangSelect from '@/components/LangSelect'
   import {getLandingPageData} from '@/api/landingPage'
-
+  import { contactUsApi } from '@/api/account'
   export default {
     name: 'Login',
     components: {LangSelect},
@@ -112,6 +146,16 @@
         }
       };
       return {
+        dialogFormVisible: false,
+        userEdit: {
+          name: '',
+          email: '',
+          phone: '',
+          role: 1,
+          remark: '',
+        },
+
+
         locationOrigin: window.location.origin,
         loginForm: {
           email: '',
@@ -156,6 +200,36 @@
 
     },
     methods: {
+      // 弹出框关闭前
+      dialogClose(done) {
+        this.userEdit = {};
+        done();
+      },
+      // 弹出框保存 // 添加用户
+      userEditSave(){
+        let that=this;
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            contactUsApi (that.userEdit).then(response => {
+                console.log('submit',response);
+                that.dialogFormVisible=false;
+                that.userEdit = {};
+                that.$notify({
+                  showClose: true,
+                  message: that.$t('Successful'),
+                  type: 'success'
+                });
+              }).catch(err => {
+                console.log(err);
+              })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+
+
       // 获取登录页展示企业列表
       getList() {
         let that = this;
@@ -198,6 +272,7 @@
       },
       itemClick(id) {
         console.log(id);
+        this.dialogFormVisible=true;
       },
 
       checkCapslock({shiftKey, key} = {}) {
@@ -252,6 +327,13 @@
 </script>
 
 <style scoped>
+  .allbox{
+    min-height: 100%;
+    width: 100%;
+    background-image: url("../../assets/bgp.png");
+    background-position: center;
+    overflow: hidden;
+  }
   .beijing > ul {
     font-size: 15px;
     color: #595959;
@@ -260,7 +342,7 @@
   }
   .beijing{
     position: relative;
-    max-width: 1000px;
+    max-width: 1100px;
     height: 270px;
     margin: 0 auto;
     border: 1px solid transparent;
@@ -365,7 +447,7 @@
       height: 30px!important;
     }
   }
-  .el-form-item__content{
+  .login-container .el-form-item__content{
     line-height: 25px!important;
   }
 
@@ -406,12 +488,6 @@
   $light_gray: #eee;
 
   .login-container {
-    min-height: 100%;
-    width: 100%;
-    background-image: url("../../assets/bgp.png");
-    background-position: center;
-    overflow: hidden;
-
     .login-form {
       position: relative;
       width: 450px;

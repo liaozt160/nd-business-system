@@ -91,6 +91,13 @@ export default {
   addLandingPage: 'Add To Landing Page',//添加到登录页展示
   NoData: 'No Data',//暂无数据
 
+  Identity: 'Identity',//身份
+  intentionBuyer: 'Intention buyer',//意向买方
+  buyerAdvisor: 'Buyer advisor',//买方顾问
+  sellerIntermediary: 'Seller intermediary',//卖方中介
+  contactUs          :'Contact Us',//联系我们
+  submit          :'Submit',//提交
+
   route: {
     dashboard: 'Dashboard',
     businessForSales: 'Business For Sales',//待售企业
@@ -110,6 +117,7 @@ export default {
     buyerBrokerNet: 'Buyer Broker Net',//买家经纪人网络
     tipsAndRecommendations: 'Tips and Recommendations',//提示推荐
     landingPageBusiness: 'landing Page Business',//登录页展示企业
+    contactUs          :'Contact Us',//联系我们
   },
   panelGroup:{
     Buyer:'Buyer',//买家

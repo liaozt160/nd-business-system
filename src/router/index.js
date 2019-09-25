@@ -221,6 +221,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/contactUs',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/contactUs/contactUs'),
+        name: 'contactUs',
+        meta: { title: 'contactUs', icon: 'contactUs', noCache: true }
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,

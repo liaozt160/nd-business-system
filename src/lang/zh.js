@@ -97,6 +97,13 @@ export default {
 
   NoData: '暂无数据',//暂无数据
 
+  Identity: '身份',//身份
+  intentionBuyer: '意向买方',//意向买方
+  buyerAdvisor: '买方顾问',//买方顾问
+  sellerIntermediary: '卖方中介',//卖方中介
+  contactUs          :'联系我们',//联系我们
+  submit          :'提交',//提交
+
   route: {
     dashboard: '首页',
     businessForSales: '待售企业',//待售企业
@@ -116,6 +123,7 @@ export default {
     buyerBrokerNet: '买家经纪人网络',//买家经纪人网络
     tipsAndRecommendations: '提示推荐',//提示推荐
     landingPageBusiness: '登录页展示企业',//登录页展示企业
+    contactUs          :'联系我们',//联系我们
   },
   panelGroup:{
     Buyer:'买家',//买家
