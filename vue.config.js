@@ -21,9 +21,10 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: process.env.NODE_ENV === 'development'?'./':process.env.NODE_ENV === 'staging'?'https://newdreamservices-web.s3.ap-northeast-2.amazonaws.com/dev/':'https://newdreamservices-web.s3.ap-northeast-2.amazonaws.com/prod/',
-  outputDir: process.env.NODE_ENV === 'staging'?'distDev':'dist',
-  assetsDir: process.env.NODE_ENV === 'staging'?'staticDev':'static',
+  publicPath: process.env.NODE_ENV === 'development'?'./':'https://newdreamservices-web.s3.ap-northeast-2.amazonaws.com/dev/',
+  // publicPath: process.env.NODE_ENV === 'development'?'./':process.env.NODE_ENV === 'staging'?'https://newdreamservices-web.s3.ap-northeast-2.amazonaws.com/dev/':process.env.NODE_ENV === 'production'?'https://newdreamservices-web.s3.ap-northeast-2.amazonaws.com/prod/':'./',
+  outputDir: 'dist',
+  assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
