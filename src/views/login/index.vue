@@ -55,6 +55,7 @@
         <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;"
                    @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
         </el-button>
+        <div class="contactUsBtn" @click="itemClick">{{$t('contactUs')}}</div>
       </el-form>
       <!--上下滚动-->
       <div class="beijing">
@@ -75,14 +76,14 @@
         </ul>
         <div v-if="slideData.length==0" style="color:#d9d9d9;text-align: center;line-height: 80px;">{{$t('NoData')}}</div>
         <ul id="slide" v-else>
-          <li class="tableB" id="slide1" v-for="item in slideData" @click="itemClick(item.id)">
+          <li class="tableB" id="slide1" v-for="item in slideData" @click="itemClick">
             <span>{{item.listing}}</span>
             <span>{{item.category}}</span>
             <span>{{item.title}}</span>
             <span>$ {{item.price}}</span>
             <span>{{item.status==1?$t('table.forSale'):item.status==2?$t('table.soldOut'):item.status==3?$t('employeeEdit.noVerified'):''}}</span>
           </li>
-          <li class="tableB" id="slide2" v-for="item in slideData" @click="itemClick(item.id)">
+          <li class="tableB" id="slide2" v-for="item in slideData" @click="itemClick">
             <span>{{item.listing}}</span>
             <span>{{item.category}}</span>
             <span>{{item.title}}</span>
@@ -270,8 +271,7 @@
           MyMar = setInterval(Marquee, speed)
         }
       },
-      itemClick(id) {
-        console.log(id);
+      itemClick() {
         this.dialogFormVisible=true;
       },
 
@@ -327,6 +327,15 @@
 </script>
 
 <style scoped>
+  .contactUsBtn{
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .contactUsBtn:hover{
+    color: #1890ff;
+  }
+
   .allbox{
     min-height: 100%;
     width: 100%;

@@ -52,7 +52,7 @@
           prop="role"
           align="center"
           :label="$t('Identity')"
-          min-width="100">
+          min-width="130">
           <template slot-scope="{row}">
             <el-tag type="primary" v-if="row.role==1">{{ $t('intentionBuyer') }}</el-tag>
             <el-tag type="primary" v-if="row.role==2">{{$t('buyerAdvisor') }}</el-tag>
