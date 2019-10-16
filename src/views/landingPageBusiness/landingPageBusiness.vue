@@ -30,6 +30,9 @@
       <el-button size="small" :disabled="selectArray.length==0"  class="filter-item" type="danger" icon="el-icon-delete" @click="handleDelete(selectArrayDel)">
         {{$t('table.delete')}}
       </el-button>
+      <el-button size="small" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
+                 @click="handleCreate">{{ $t('table.add') }}
+      </el-button>
 
     </div>
 
@@ -177,6 +180,9 @@
       this.role = store.getters && store.getters.role
     },
     methods:{
+      handleCreate(){
+        this.$router.push('/businessForSales/index');
+      },
       // 选择事件
       handleSelectionChange(selectData){
         this.selectArray=[];

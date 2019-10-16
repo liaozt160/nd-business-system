@@ -124,6 +124,13 @@ export default {
     tipsAndRecommendations: '提示推荐',//提示推荐
     landingPageBusiness: '登录页展示企业',//登录页展示企业
     contactUs          :'联系我们',//联系我们
+    systemLog          :'系统日志',//系统日志
+  },
+  log:{
+    user:'用户',//用户
+    time:'时间',//时间
+    request:'请求',//请求
+    terminal:'终端',//终端
   },
   panelGroup:{
     Buyer:'买家',//买家

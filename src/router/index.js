@@ -233,6 +233,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/systemLog',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/systemLog/systemLog'),
+        name: 'systemLog',
+        meta: { title: 'systemLog', icon: 'systemLog', noCache: true }
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,

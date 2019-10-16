@@ -98,6 +98,7 @@ export default {
   contactUs          :'Contact Us',//联系我们
   submit          :'Submit',//提交
 
+
   route: {
     dashboard: 'Dashboard',
     businessForSales: 'Business For Sales',//待售企业
@@ -118,6 +119,13 @@ export default {
     tipsAndRecommendations: 'Tips and Recommendations',//提示推荐
     landingPageBusiness: 'landing Page Business',//登录页展示企业
     contactUs          :'Contact Us',//联系我们
+    systemLog          :'System log',//系统日志
+  },
+  log:{
+    user:'User',//用户
+    time:'Time',//时间
+    request:'Request',//请求
+    terminal:'Terminal',//终端
   },
   panelGroup:{
     Buyer:'Buyer',//买家
