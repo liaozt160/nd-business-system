@@ -266,14 +266,22 @@
           let that = this;
           this.pdfLoading = true;
           console.log(123,num,scope);
+
+          // let pdfUrl='https://newdreamservices-web.s3.ap-northeast-2.amazonaws.com/temp/test.pdf?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIIX5OH26BWAJTF3A%2F20191017%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20191017T101234Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=48133380e54eb7378b7d541f1089d6f56a5853167c34e7e6b1754e6be14edec9';
+          // window.open (pdfUrl, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+
+
+
           recommendPdf({data: {id: scope.row.id}, num: num}).then(response => {
             console.log('recommendPdf' + num, response);
             const contents = response;
             const blob = new Blob([contents]);
             if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1 || window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
               window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
             } else {
               window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
             }
             that.pdfLoading = false;
           }).catch(err => {

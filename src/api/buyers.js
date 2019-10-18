@@ -78,7 +78,7 @@ export function attentionPdf (data) {
   return request({
     url: '/api/buyer/attention/pdf',
     method: 'post',
-    responseType: 'blob',
+    // responseType: 'blob',
     data
   })
 }

@@ -126,7 +126,7 @@ export function showDetailPdfApi(data) {
   return request({
     url: '/api/order/detail/pdf',
     method: 'post',
-    responseType: 'blob',
+    // responseType: 'blob',
     data
   })
 }

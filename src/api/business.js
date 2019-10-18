@@ -246,7 +246,7 @@ export function businessGeneratePdf (data) {
   return request({
     url: '/api/account/business/pdf/'+data.num,
     method: 'post',
-    responseType: 'blob',
+    // responseType: 'blob',
     data:data.data
   })
 }
@@ -255,7 +255,7 @@ export function recommendPdf (data) {
   return request({
     url: '/api/recommend/pdf/'+data.num,
     method: 'post',
-    responseType: 'blob',
+    // responseType: 'blob',
     data:data.data
   })
 }
