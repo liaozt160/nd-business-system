@@ -66,13 +66,13 @@
           prop="phone"
           align="center"
           :label="$t('table.phone')"
-          min-width="150">
+          min-width="120">
         </el-table-column>
         <el-table-column
           prop="email"
           align="center"
           :label="$t('table.email')"
-          min-width="200">
+          min-width="230">
         </el-table-column>
         <el-table-column
           prop="funds_available"

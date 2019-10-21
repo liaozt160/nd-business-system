@@ -24,9 +24,6 @@
         {{ $t('table.search') }}
       </el-button>
 
-      <!--<el-button size="small" :disabled="selectArray.length==0"  class="filter-item" type="primary" icon="el-icon-printer" @click="handlePrinter">-->
-        <!--{{$t('order.Print')}}-->
-      <!--</el-button>-->
       <el-button size="small" :disabled="selectArray.length==0"  class="filter-item" type="danger" icon="el-icon-delete" @click="handleDelete(selectArrayDel)">
         {{$t('table.delete')}}
       </el-button>
@@ -192,24 +189,6 @@
           this.selectArrayDel.push(selectData[i].id)
         }
         console.log(selectData,this.selectArray,this.selectArrayDel)
-      },
-      // 打印
-      handlePrinter(){
-        let that = this;
-        this.pdfLoading=true;
-        attentionPdf({ids:JSON.stringify(this.selectArray)}).then(response => {
-          console.log('attentionPdf', response);
-          const contents = response;
-          const blob = new Blob([contents]);
-          if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
-            window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-          } else{
-            window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-          }
-          that.pdfLoading=false;
-        }).catch(err => {
-          console.log(err);
-        })
       },
       // 筛选
       handleFilter() {

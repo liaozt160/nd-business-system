@@ -82,3 +82,19 @@ export function attentionPdf (data) {
     data
   })
 }
+// 根据所传buyer_id，发送给指定买家
+export function attentionEmailPdf (data) {
+  return request({
+    url: '/api/buyer/attention/pdf/email',
+    method: 'post',
+    data
+  })
+}
+// 获取当前账号管理的买家，发送邮件给指定买家
+export function getSendBuyerList (data) {
+  return request({
+    url: '/api/buyer/query/email',
+    method: 'post',
+    data
+  })
+}

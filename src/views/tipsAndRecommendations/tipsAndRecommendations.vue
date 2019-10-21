@@ -277,14 +277,15 @@
             const contents = response;
             const blob = new Blob([contents]);
             if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1 || window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
-              window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-              // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+              // window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
             } else {
-              window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-              // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+              // window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+              window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
             }
             that.pdfLoading = false;
           }).catch(err => {
+            that.pdfLoading = false;
             console.log(err);
           })
         },

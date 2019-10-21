@@ -264,6 +264,8 @@ export default {
     ExcessiveFileSize: 'Excessive file size',//文件过大
     time: 'Time',//时间
     Print: 'Print',//打印
+    sendEmail: 'Send Email',//发送邮件
+    sendToBuyer: 'Send to buyer',//发送给买家
     PrintOne: 'Print one-level',//打印一级信息
     PrintTwo: 'Print two-level',//打印二级信息
     PrintThree: 'Print three-level',//打印三级信息

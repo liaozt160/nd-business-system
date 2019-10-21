@@ -31,6 +31,9 @@
       <el-button size="small" :disabled="selectArray.length==0"  class="filter-item" type="primary" icon="el-icon-printer" @click="handlePrinter">
         {{$t('order.Print')}}
       </el-button>
+      <el-button size="small" :disabled="selectArray.length==0"  class="filter-item" type="primary" icon="el-icon-chat-line-square" @click="openSendEmail">
+        {{$t('order.sendEmail')}}
+      </el-button>
       <el-button size="small" :disabled="selectArray.length==0"  class="filter-item" type="danger" icon="el-icon-delete" @click="handleDelete(selectArrayDel)">
         {{$t('table.delete')}}
       </el-button>
@@ -126,14 +129,29 @@
       </el-table>
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page"  :pageSize.sync="pageSize" @pagination="getList(listQuery)" />
     </div>
+
+
+    <!--// 发送邮件弹窗-->
+    <el-dialog :title="$t('order.sendToBuyer')" :visible.sync="selectBusinessBroker" width="500px" center
+               :close-on-click-modal="false">
+      <el-select v-model="buyer_id_index" :placeholder="$t('table.selectBuyerText')" clearable style="width: 100%" class="filter-item" v-loading="brokerListLoading">
+        <el-option v-for="(item,index) in buyersEmailList" :label="item.label" :value="index" />
+      </el-select>
+      <h3 style="text-align: center;" v-if="buyer_id_index!==''">{{buyersEmailList[buyer_id_index].email}}</h3>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="selectBusinessBroker = false">{{ $t('table.cancel') }}</el-button>
+        <el-button :disabled="buyer_id_index===''" v-loading="sendLoading" type="primary" @click="handleSendEmail(selectArray,buyersEmailList[buyer_id_index].key)">{{ $t('order.sendEmail') }}
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import store from '@/store'
   import Pagination from '@/components/Pagination'
-  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList,attentionPdf,getBuyerList } from '@/api/buyers'
-  import { getBuyers } from '@/api/business'
+  import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList,attentionPdf,getBuyerList,attentionEmailPdf,getSendBuyerList } from '@/api/buyers'
+  import { getBuyers,getBuyersEmail } from '@/api/business'
   export default {
     name: "attentionBusiness",
     components:{
@@ -142,6 +160,13 @@
     data(){
       return{
         pdfLoading: false,
+
+        sendLoading:false,
+        selectBusinessBroker:false,
+        brokerListLoading:false,
+        buyersEmailList: [],
+        buyer_id: '',
+        buyer_id_index: '',
 
         role: '',
         selectArray:[],
@@ -188,13 +213,57 @@
           const contents = response;
           const blob = new Blob([contents]);
           if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
-            window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+            // window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+            window.open (response.data.url, "_blank", "top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
           } else{
-            window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+            // window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+
+            window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
           }
           that.pdfLoading=false;
         }).catch(err => {
+                    console.log(err);
+        })
+      },
+
+      //打开发送邮件弹窗,获取当前账号管理的买家
+      openSendEmail() {
+        let that = this;
+        this.selectBusinessBroker = true;
+        this.brokerListLoading = true;
+        getSendBuyerList().then(response => {
+          that.brokerListLoading = false;
+          console.log('getSendBuyerList', response);
+          that.buyersEmailList = response.data;
+        }).catch(err => {
+          that.brokerListLoading = false;
           console.log(err);
+        })
+      },
+      // 发送邮件
+      handleSendEmail(row,buyer_id){
+        let that = this;
+        let id='';
+        if(Object.prototype.toString.call(row).indexOf('Array')!==-1){
+          id=JSON.stringify(row);
+          console.log('数组',row)
+        }else{
+          id='['+row.row.id+']';
+          console.log('非数组')
+        }
+        that.sendLoading=true;
+        attentionEmailPdf ({ids:id,buyer_id:buyer_id}).then(response => {
+          console.log('attentionEmailPdf',response);
+          that.$notify({
+            showClose: true,
+            message: that.$t('Successful'),
+            type: 'success'
+          });
+          that.sendLoading=false;
+          that.selectBusinessBroker = false;
+        }).catch(err => {
+          console.log(err);
+          that.sendLoading=false;
         })
       },
       // 筛选

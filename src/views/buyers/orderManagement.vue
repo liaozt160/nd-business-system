@@ -665,7 +665,6 @@
           const blob = new Blob([contents]);
           if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
             // window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-            console.log(response.data.url)
             window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
           } else{
             // window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
@@ -673,6 +672,7 @@
           }
           that.pdfLoading=false;
         }).catch(err => {
+          that.pdfLoading=false;
           console.log(err);
         })
       },
@@ -766,8 +766,10 @@
             if(scope.row.name.indexOf('.pdf')!==-1){ //如果是pdf文件，先预览
               if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
                 window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+                // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
               } else{
                 window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+                // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
               }
             }else{ //不是pdf文件，直接下载
               const elink = document.createElement('a');
