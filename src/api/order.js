@@ -108,7 +108,7 @@ export function viewFileApi(params) {
   return request({
     url: '/api/order/payment/file/view',
     method: 'post',
-    responseType: 'blob',
+    // responseType: 'blob',
     data: params,
 
   })

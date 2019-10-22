@@ -759,31 +759,32 @@
         that.payInformationLoading=true;
         viewFileApi({file_id:scope.row.file_id}).then(response => {
           console.log('viewFileApi', response);
-          const contents = response;
-          const blob = new Blob([contents]);
-          const fileName = scope.row.name;
-          if ('download' in document.createElement('a')) { // 非IE下载
-            if(scope.row.name.indexOf('.pdf')!==-1){ //如果是pdf文件，先预览
-              if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
-                window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-                // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
-              } else{
-                window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-                // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
-              }
-            }else{ //不是pdf文件，直接下载
-              const elink = document.createElement('a');
-              elink.download = fileName;
-              elink.style.display = 'none';
-              elink.href = URL.createObjectURL(blob);
-              document.body.appendChild(elink);
-              elink.click();
-              URL.revokeObjectURL(elink.href); // 释放URL 对象
-              document.body.removeChild(elink)
-            }
-          } else { // IE10+下载
-            navigator.msSaveBlob(blob, fileName)
-          }
+          window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+          // const contents = response;
+          // const blob = new Blob([contents]);
+          // const fileName = scope.row.name;
+          // if ('download' in document.createElement('a')) { // 非IE下载
+          //   if(scope.row.name.indexOf('.pdf')!==-1){ //如果是pdf文件，先预览
+          //     if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
+          //       window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+          //       // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+          //     } else{
+          //       window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
+          //       // window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+          //     }
+          //   }else{ //不是pdf文件，直接下载
+          //     const elink = document.createElement('a');
+          //     elink.download = fileName;
+          //     elink.style.display = 'none';
+          //     elink.href = URL.createObjectURL(blob);
+          //     document.body.appendChild(elink);
+          //     elink.click();
+          //     URL.revokeObjectURL(elink.href); // 释放URL 对象
+          //     document.body.removeChild(elink)
+          //   }
+          // } else { // IE10+下载
+          //   navigator.msSaveBlob(blob, fileName)
+          // }
           that.payInformationLoading=false;
         }).catch(err => {
           that.payInformationLoading=false;
