@@ -60,7 +60,7 @@
           align="center"
           :label="$t('table.operate')"
           fixed="right"
-          min-width="260">
+          min-width="320">
           <template slot-scope="scope">
             <el-dropdown trigger="click">
               <el-button size="mini" type="primary" >
@@ -72,7 +72,8 @@
                 <el-dropdown-item v-if="role==1" class="menuItem"><span @click.stop="handlePrinter('3',scope)">{{$t('order.PrintThree')}}</span></el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <el-button size="mini" type="primary" @click="handleDetail(scope.row.id)" style="margin-left: 10px">{{$t('detail')}}</el-button>
+            <el-button size="mini" type="primary" style="margin-left: 5px" @click="openSendEmail(scope)">{{$t('order.sendEmail')}}</el-button>
+            <el-button size="mini" type="primary" @click="handleDetail(scope.row.id)" style="margin-left: 5px">{{$t('detail')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope)">{{$t('table.delete')}}</el-button>
           </template>
         </el-table-column>
@@ -81,16 +82,16 @@
                   @pagination="getList(listQuery)"/>
     </div>
 
-    <!--// 选择买家弹窗-->
-    <el-dialog :title="$t('ChooseAttentionBuyer')" :visible.sync="selectBuyer" width="500px" center
+    <!--// 发送邮件弹窗-->
+    <el-dialog :title="$t('order.sendToBuyer')" :visible.sync="selectBusinessBroker" width="500px" center
                :close-on-click-modal="false">
-      <el-select v-model="selectBuyerId" clearable style="width: 100%" class="filter-item"
-                 v-loading="buyerListLoading">
-        <el-option v-for="item in buyerList" :label="item.label" :value="item.key"/>
+      <el-select v-model="buyer_id_index" :placeholder="$t('table.selectBuyerText')" clearable style="width: 100%" class="filter-item" v-loading="brokerListLoading">
+        <el-option v-for="(item,index) in buyersEmailList" :label="item.label" :value="index" />
       </el-select>
+      <h3 style="text-align: center;" v-if="buyer_id_index!==''">{{buyersEmailList[buyer_id_index].email}}</h3>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="selectBuyer = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="AddAttention(business_id,selectBuyerId)">{{ $t('AddAttention') }}
+        <el-button @click="selectBusinessBroker = false">{{ $t('table.cancel') }}</el-button>
+        <el-button :disabled="buyer_id_index===''" v-loading="sendLoading" type="primary" @click="handleSendEmail(listId,buyersEmailList[buyer_id_index].key)">{{ $t('order.sendEmail') }}
         </el-button>
       </div>
     </el-dialog>
@@ -202,7 +203,6 @@
     delBusiness,
     showBusiness,
     changeStatus,
-    getBuyers,
     setAttentionBusiness,
     getBusinessbrokersList,
     changeBusinessbrokerSave,
@@ -212,7 +212,9 @@
     getRecommendListDetail,
     businessGeneratePdf,
     recommendPdf,
+    getBuyers,
   } from '@/api/business'
+  import { tipsListEmailPdf,getSendBuyerList } from '@/api/buyers'
     export default {
         name: "tipsAndRecommendations",
       components: {
@@ -242,15 +244,17 @@
           pageSize: 15,
           tableData:  [],
 
-          buyerListLoading: false,
-          selectBuyer: false,
-          buyerList: [],
-          business_id: '',
-          selectBuyerId: '',
-          businessBrokerList: [],
+          // 发送邮件弹窗
+          sendLoading:false,
+          selectBusinessBroker:false,
+          brokerListLoading:false,
+          buyersEmailList: [],
+          buyer_id: '',
+          buyer_id_index: '',
+          listId: '',
+
 
           pdfLoading: false,
-          selectArray: [],
           recommend_id: '',
 
         }
@@ -261,6 +265,41 @@
         this.role = store.getters && store.getters.role
       },
       methods:{
+        //打开发送邮件弹窗,获取当前账号管理的买家
+        openSendEmail(scope) {
+          let that = this;
+          this.selectBusinessBroker = true;
+          this.brokerListLoading = true;
+          console.log(scope.row.id);
+          this.listId=scope.row.id;
+          getSendBuyerList().then(response => {
+            that.brokerListLoading = false;
+            console.log('getSendBuyerList', response);
+            that.buyersEmailList = response.data;
+          }).catch(err => {
+            that.brokerListLoading = false;
+            console.log(err);
+          })
+        },
+        // 发送邮件
+        handleSendEmail(id,buyer_id){
+          let that = this;
+          that.sendLoading=true;
+          tipsListEmailPdf ({id:id,buyer_id:buyer_id}).then(response => {
+            console.log('tipsListEmailPdf',response);
+            that.$notify({
+              showClose: true,
+              message: that.$t('Successful'),
+              type: 'success'
+            });
+            that.sendLoading=false;
+            that.selectBusinessBroker = false;
+          }).catch(err => {
+            console.log(err);
+            that.sendLoading=false;
+          })
+        },
+
           // 打印清单里的企业信息
         handlePrinter(num,scope) {
           let that = this;

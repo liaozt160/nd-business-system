@@ -151,7 +151,7 @@
   import store from '@/store'
   import Pagination from '@/components/Pagination'
   import { buyerAttentionList,delBuyerAttention,adminGetBuyerAttentionList,attentionPdf,getBuyerList,attentionEmailPdf,getSendBuyerList } from '@/api/buyers'
-  import { getBuyers,getBuyersEmail } from '@/api/business'
+  import { getBuyers } from '@/api/business'
   export default {
     name: "attentionBusiness",
     components:{

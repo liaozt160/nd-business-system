@@ -90,7 +90,15 @@ export function attentionEmailPdf (data) {
     data
   })
 }
-// 获取当前账号管理的买家，发送邮件给指定买家
+// 根据所传buyer_id，提示推荐的企业清单，发送给指定买家//默认发送一级信息
+export function tipsListEmailPdf (data) {
+  return request({
+    url: '/api/recommend/pdf/email/1',
+    method: 'post',
+    data
+  })
+}
+// 获取当前账号管理的买家
 export function getSendBuyerList (data) {
   return request({
     url: '/api/buyer/query/email',

@@ -31,7 +31,6 @@ module.exports = {
     port: 8090,
     proxy: {
       '/api': {
-        // target: 'https://dev.newdreamservices.com',  // target host
         target: 'http://dream.dev.tt',  // target host
         ws: true,  // proxy websockets
         changeOrigin: true,  // needed for virtual hosted sites
