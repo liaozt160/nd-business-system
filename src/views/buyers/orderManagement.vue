@@ -196,6 +196,8 @@
                   @pagination="getList(listQuery)"/>
     </div>
 
+    <a href="" id="alink" target="_blank" style="display: none"></a>
+
     <!--订单编辑弹窗-->
     <el-dialog :title="orderId? $t('order.modifyOrder'):$t('order.addOrder')" :visible.sync="dialogFormVisible"
                width="800px" :before-close="dialogClose" style="padding-bottom: 50px" center
@@ -655,21 +657,34 @@
       this.role = store.getters && store.getters.role
     },
     methods: {
-      // 导出pdf
+      // 打印，导出pdf
       ExportPDF(scope) {
         let that=this;
         that.pdfLoading=true;
         showDetailPdfApi({order_id:scope.row.id}).then(response => {
           console.log('showDetailPdfApi', response);
-          const contents = response;
-          const blob = new Blob([contents]);
-          if (window.location.origin.indexOf('dev.newdreamservices.com') !== -1||window.location.origin.indexOf('business.newdreamservices.com') !== -1) {
-            // window.open('/web/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-            window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
-          } else{
-            // window.open('/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)));
-            window.open (response.data.url, "newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
-          }
+          // document.getElementById('alink');
+          // document.getElementById('alink').href= url;
+          // document.getElementById('alink').click();
+          // document.getElementById('alink').focus();
+          // return false;
+
+          window.open (response.data.url,"newwindow", " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+
+          // if ('download' in document.createElement('a')) { // 非IE下载
+          //     const elink = document.createElement('a');
+          //     // elink.download = fileName;
+          //     elink.style.display = 'none';
+          //     elink.target = '_new'; //指定在新窗口打开
+          //     elink.href = url;
+          //     document.body.appendChild(elink);
+          //     elink.click();
+          //     URL.revokeObjectURL(elink.href); // 释放URL 对象
+          //     document.body.removeChild(elink)
+          // } else { // IE10+
+          //   console.log(123123)
+          //   window.open (url, " top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+          // }
           that.pdfLoading=false;
         }).catch(err => {
           that.pdfLoading=false;

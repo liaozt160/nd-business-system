@@ -64,7 +64,7 @@ service.interceptors.response.use(
     const res = response.data;
     // console.log('response===',response);
     if(!res.code){//下载文件
-      console.log('文件流===',res);
+      // console.log('文件流===',res);
       return res
     }else if (res.code !== 1001) {
         Message({
