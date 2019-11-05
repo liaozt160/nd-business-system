@@ -93,7 +93,6 @@
         </ul>
       </div>
     </div>
-
     <!--联系我们填写信息弹窗-->
     <el-dialog :title="$t('contactUs')" center :visible.sync="dialogFormVisible" v-if='dialogFormVisible'
                width="650px" :before-close="dialogClose" :close-on-click-modal="false">
@@ -127,6 +126,7 @@
         <el-button type="primary" @click="userEditSave()">{{ $t('submit') }}</el-button>
       </div>
     </el-dialog>
+    <canvas id="canvas" style="position:absolute;top:0px;left:0px;z-index:1;"></canvas>
   </div>
 </template>
 
@@ -198,9 +198,53 @@
         this.$refs.password.focus()
       }
       this.getList();
-
+      this.canvasDrw();
     },
     methods: {
+      canvasDrw(){
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentNode.offsetWidth;
+        canvas.height = canvas.parentNode.offsetHeight;
+        //如果浏览器支持requestAnimFrame则使用requestAnimFrame否则使用setTimeout
+        window.requestAnimFrame = (function(){
+          return window.requestAnimationFrame  ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function( callback ){
+              window.setTimeout(callback, 1000 / 60);
+            };
+        })();
+        // 波浪大小
+        var boHeight = canvas.height / 18;
+        var posHeight = canvas.height / 1.2;
+        //初始角度为0
+        var step = 0;
+        //定义三条不同波浪的颜色
+        var lines = ["rgba(0,222,255, 0.2)", "rgba(157,192,249, 0.2)", "rgba(0,168,255, 0.2)"];
+        function loop(){
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          step++;
+          //画3个不同颜色的矩形
+          for(var j = lines.length - 1; j >= 0; j--) {
+            ctx.fillStyle = lines[j];
+            //每个矩形的角度都不同，每个之间相差45度
+            var angle = (step+j*150)*Math.PI/180;
+            var deltaHeight = Math.sin(angle) * boHeight;
+            var deltaHeightRight = Math.cos(angle) * boHeight;
+            ctx.beginPath();
+            ctx.moveTo(0, posHeight+deltaHeight);
+            ctx.bezierCurveTo(canvas.width/2, posHeight+deltaHeight-boHeight, canvas.width / 2, posHeight+deltaHeightRight-boHeight, canvas.width, posHeight+deltaHeightRight);
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.lineTo(0, posHeight+deltaHeight);
+            ctx.closePath();
+            ctx.fill();
+          }
+          requestAnimFrame(loop);
+        }
+        loop();
+      },
       // 弹出框关闭前
       dialogClose(done) {
         this.userEdit = {};
@@ -339,9 +383,10 @@
   .allbox{
     min-height: 100%;
     width: 100%;
-    background-image: url("../../assets/bgp.png");
-    background-position: center;
+    /*background-image: url("../../assets/bgp.png");*/
+    /*background-position: center;*/
     overflow: hidden;
+    background-color: #eceff1;
   }
   .beijing > ul {
     font-size: 15px;
@@ -358,6 +403,7 @@
     background-color: #fff;
     border-radius:5px;
     box-shadow: 0 0 10px #ccc;
+    z-index: 999;
   }
 
   .tableH {
@@ -507,6 +553,7 @@
       border-radius: 10px;
       margin: 80px auto 30px auto;
       box-shadow: 0 0 10px #ccc;
+      z-index: 999;
     }
 
     .tips {

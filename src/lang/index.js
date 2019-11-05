@@ -20,12 +20,12 @@ const messages = {
 }
 export function getLanguage() {
   const chooseLanguage = Cookies.get('language')
-  localStorage.lang = Cookies.get('language')?Cookies.get('language'):'en'
+  localStorage.lang = Cookies.get('language')?Cookies.get('language'):'zh'
   if (chooseLanguage) return chooseLanguage
 
   // if has not choose language
   // const language = (navigator.language || navigator.browserLanguage).toLowerCase()//获取系统语言
-  const language = 'en'
+  const language = 'zh'
   const locales = Object.keys(messages)
   for (const locale of locales) {
     if (language.indexOf(locale) > -1) {
