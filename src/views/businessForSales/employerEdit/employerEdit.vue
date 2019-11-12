@@ -18,24 +18,24 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--企业名称-->
-            <span class="formItemSpan">{{$t('employeeEdit.companyName')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.companyName')}}</span>
             <el-input v-model="formDataEn.company" :placeholder="$t('employeeEdit.companyName')" style="width: 70%;margin-bottom: 20px;" class="filter-item"></el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--编号-->
-            <span class="formItemSpan">{{$t('employeeEdit.Listing')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.Listing')}}</span>
             <el-input v-model="formDataEn.listing" :placeholder="$t('employeeEdit.Listing')" style="width: 70%;margin-bottom: 20px;" class="filter-item"></el-input>
           </div>
         </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--标题-->
-            <span class="formItemSpan">{{$t('employeeEdit.title')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.title')}}</span>
             <el-input v-model="formDataEn.title" :placeholder="$t('employeeEdit.title')" style="width: 70%;margin-bottom: 20px;" class="filter-item"></el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--标价-->
-            <span class="formItemSpan">{{$t('employeeEdit.Price')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.Price')}}</span>
             <el-input v-enter-number :placeholder="$t('employeeEdit.Price')" maxLength="8" v-model="formDataEn.price" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -337,13 +337,13 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--公司名称-->
-            <span class="formItemSpan">{{$t('employeeEdit.companyName')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.companyName')}}</span>
             <el-input v-model="formDataZh.company" :placeholder="$t('employeeEdit.companyName')" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--编号-->
-            <span class="formItemSpan">{{$t('employeeEdit.Listing')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.Listing')}}</span>
             <el-input v-model="formDataZh.listing" :placeholder="$t('employeeEdit.Listing')" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"/>
           </div>
@@ -351,13 +351,13 @@
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--标题-->
-            <span class="formItemSpan">{{$t('employeeEdit.title')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.title')}}</span>
             <el-input v-model="formDataZh.title" :placeholder="$t('employeeEdit.title')" style="width: 70%;margin-bottom: 20px;"
                       class="filter-item"></el-input>
           </div>
           <div class="formItem filter-item el-select--medium">
             <!--标价-->
-            <span class="formItemSpan">{{$t('employeeEdit.Price')}}</span>
+            <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.Price')}}</span>
             <el-input v-enter-number :placeholder="$t('employeeEdit.Price')" maxLength="8" v-model="formDataZh.price" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
@@ -784,6 +784,168 @@
         },
       }
     },
+    computed: {
+      price() {
+          return this.formDataEn.price.toString();
+      },
+      gross_income() {
+        return this.formDataEn.gross_income.toString();
+      },
+      net_income() {
+        return this.formDataEn.net_income.toString();
+      },
+      lease() {
+        return this.formDataEn.lease.toString();
+      },
+
+      price_zh() {
+          return this.formDataZh.price.toString();
+      },
+      gross_income_zh() {
+        return this.formDataZh.gross_income.toString();
+      },
+      net_income_zh() {
+        return this.formDataZh.net_income.toString();
+      },
+      lease_zh() {
+        return this.formDataZh.lease.toString();
+      },
+    },
+    watch: {
+      price(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataEn.price = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataEn.price = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataEn.price = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataEn.price = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+      gross_income(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataEn.gross_income = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataEn.gross_income = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataEn.gross_income = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataEn.gross_income = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+      net_income(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataEn.net_income = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataEn.net_income = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataEn.net_income = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataEn.net_income = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+      lease(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataEn.lease = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataEn.lease = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataEn.lease = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataEn.lease = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+
+
+
+      price_zh(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataZh.price = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataZh.price = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataZh.price = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataZh.price = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+      gross_income_zh(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataZh.gross_income = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataZh.gross_income = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataZh.gross_income = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataZh.gross_income = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+      net_income_zh(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataZh.net_income = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataZh.net_income = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataZh.net_income = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataZh.net_income = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+      lease_zh(newvalue, oldvalue) {
+        let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
+        if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
+          this.formDataZh.lease = '';  //防止不是数字是input出现NaN提示
+          return false;
+        }
+        if (/\./i.test(newvalue_)) { //判断处理含有.的情况下
+          if (/\.\d\d\d$/.test(newvalue_)) {
+            this.formDataZh.lease = oldvalue; //限制只能输入2位小数点
+          } else {
+            this.formDataZh.lease = newvalue_.replace(/[^\d\.\,]/ig, '') //开始输入小数点之后，只能输入数字
+          }
+        } else {
+          this.formDataZh.lease = ((parseFloat(newvalue_.replace(/,/ig, '')).toLocaleString()).toString()).replace('.00', '');
+        }
+      },
+    },
+
+
     mounted() {
       this.businessId=this.$route.query.id;
       this.get_business_category_arr();
@@ -922,6 +1084,11 @@
         let that = this;
         // let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
         let formData = Object.assign({}, this.tablang == 'en' ? this.formDataEn : this.formDataZh);
+        formData.price=Number(formData.price.replace(/,/g,''));
+        formData.gross_income=Number(formData.gross_income.replace(/,/g,''));
+        formData.net_income=Number(formData.net_income.replace(/,/g,''));
+        formData.lease=Number(formData.lease.replace(/,/g,''));
+
         if(formData.employee_count=='NA'||formData.employee_count=='未知'){formData.employee_count=0;}
         if(!formData.company||!formData.title||!formData.listing||!formData.price){//必填信息不能为空
           this.$alert( this.$t('pleaseImproveBusiness'), this.$t('Confirmation'), {
@@ -933,6 +1100,7 @@
           formData.id=this.businessId;
           formData.business_broker=this.business_broker;
           if(that.tablang == 'en'){
+
             console.log(123,formData)
             editBusiness(formData).then(response => {
               console.log('editBusiness', response);
