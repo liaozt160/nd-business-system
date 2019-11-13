@@ -813,6 +813,7 @@
     },
     watch: {
       price(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataEn.price = '';  //防止不是数字是input出现NaN提示
@@ -829,6 +830,7 @@
         }
       },
       gross_income(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataEn.gross_income = '';  //防止不是数字是input出现NaN提示
@@ -845,6 +847,7 @@
         }
       },
       net_income(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataEn.net_income = '';  //防止不是数字是input出现NaN提示
@@ -861,6 +864,7 @@
         }
       },
       lease(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataEn.lease = '';  //防止不是数字是input出现NaN提示
@@ -880,6 +884,7 @@
 
 
       price_zh(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataZh.price = '';  //防止不是数字是input出现NaN提示
@@ -896,6 +901,7 @@
         }
       },
       gross_income_zh(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataZh.gross_income = '';  //防止不是数字是input出现NaN提示
@@ -912,6 +918,7 @@
         }
       },
       net_income_zh(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataZh.net_income = '';  //防止不是数字是input出现NaN提示
@@ -928,6 +935,7 @@
         }
       },
       lease_zh(newvalue, oldvalue) {
+        if(!newvalue){return false}
         let newvalue_ = (newvalue.indexOf('.00') > 0) ? newvalue.replace('.00', '') : newvalue; //禁止ie8,9自动添加.00的小数点
         if ((isNaN(parseFloat(newvalue_.replace(/,/ig, ''))))) { //如果当前输入的不是数字就停止执行
           this.formDataZh.lease = '';  //防止不是数字是input出现NaN提示
