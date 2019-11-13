@@ -36,7 +36,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--标价-->
             <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.Price')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.Price')" maxLength="8" v-model="formDataEn.price" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.Price')" maxLength="10" v-model="formDataEn.price" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
@@ -118,7 +118,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--营业额-->
             <span class="formItemSpan">{{$t('employeeEdit.GrossIncome')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.GrossIncome')" maxLength="8" v-model="formDataEn.gross_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.GrossIncome')" maxLength="10" v-model="formDataEn.gross_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
               <el-select v-model="formDataEn.gross_income_unit" slot="append" :placeholder="$t('unit')" style="width: 110px">
                 <el-option :label="'/ '+$t('week')"   value="1"></el-option>
@@ -152,7 +152,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--净利润-->
             <span class="formItemSpan">{{$t('employeeEdit.NetIncome')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.NetIncome')" maxLength="8" v-model="formDataEn.net_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.NetIncome')" maxLength="10" v-model="formDataEn.net_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
               <el-select v-model="formDataEn.net_income_unit" slot="append" :placeholder="$t('unit')" style="width: 110px">
                 <el-option :label="'/ '+$t('week')"   value="1"></el-option>
@@ -167,7 +167,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--租金-->
             <span class="formItemSpan">{{$t('employeeEdit.Lease')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.Lease')" maxLength="8" v-model="formDataEn.lease" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.Lease')" maxLength="10" v-model="formDataEn.lease" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
               <el-select v-model="formDataEn.lease_unit" slot="append" :placeholder="$t('unit')" style="width: 110px">
                 <el-option :label="'/ '+$t('week')"   value="1"></el-option>
@@ -358,7 +358,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--标价-->
             <span class="formItemSpan"><span style="font-size:20px;margin-left: -10px;color:red; position: absolute;margin-top: 3px;">*</span>{{$t('employeeEdit.Price')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.Price')" maxLength="8" v-model="formDataZh.price" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.Price')" maxLength="10" v-model="formDataZh.price" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend">$</template>
             </el-input>
           </div>
@@ -440,7 +440,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--营业额-->
             <span class="formItemSpan">{{$t('employeeEdit.GrossIncome')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.GrossIncome')" maxLength="8" v-model="formDataZh.gross_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.GrossIncome')" maxLength="10" v-model="formDataZh.gross_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
               <el-select v-model="formDataZh.gross_income_unit" slot="append" :placeholder="$t('unit')" style="width: 110px">
                 <el-option :label="'/ '+$t('week')"   value="1"></el-option>
@@ -476,7 +476,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--净利润-->
             <span class="formItemSpan">{{$t('employeeEdit.NetIncome')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.NetIncome')" maxLength="8" v-model="formDataZh.net_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.NetIncome')" maxLength="10" v-model="formDataZh.net_income" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
               <el-select v-model="formDataZh.net_income_unit" slot="append" :placeholder="$t('unit')" style="width: 110px">
                 <el-option :label="'/ '+$t('week')"   value="1"></el-option>
@@ -491,7 +491,7 @@
           <div class="formItem filter-item el-select--medium">
             <!--租金-->
             <span class="formItemSpan">{{$t('employeeEdit.Lease')}}</span>
-            <el-input v-enter-number :placeholder="$t('employeeEdit.Lease')" maxLength="8" v-model="formDataZh.lease" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+            <el-input v-enter-number :placeholder="$t('employeeEdit.Lease')" maxLength="10" v-model="formDataZh.lease" style="width: 70%;margin-bottom: 20px;" class="filter-item">
               <template slot="prepend"> $ </template>
               <el-select v-model="formDataZh.lease_unit" slot="append" :placeholder="$t('unit')" style="width: 110px">
                 <el-option :label="'/ '+$t('week')"   value="1"></el-option>
