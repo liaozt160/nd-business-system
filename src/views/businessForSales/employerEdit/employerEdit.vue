@@ -786,29 +786,29 @@
     },
     computed: {
       price() {
-          return this.formDataEn.price.toString();
+          return this.formDataEn.price?this.formDataEn.price.toString():this.formDataEn.price;
       },
       gross_income() {
-        return this.formDataEn.gross_income.toString();
+        return this.formDataEn.gross_income?this.formDataEn.gross_income.toString():this.formDataEn.gross_income;
       },
       net_income() {
-        return this.formDataEn.net_income.toString();
+        return this.formDataEn.net_income?this.formDataEn.net_income.toString():this.formDataEn.net_income;
       },
       lease() {
-        return this.formDataEn.lease.toString();
+        return this.formDataEn.lease?this.formDataEn.lease.toString():this.formDataEn.lease;
       },
 
       price_zh() {
-          return this.formDataZh.price.toString();
+          return this.formDataZh.price?this.formDataZh.price.toString():this.formDataZh.price;
       },
       gross_income_zh() {
-        return this.formDataZh.gross_income.toString();
+        return this.formDataZh.gross_income?this.formDataZh.gross_income.toString():this.formDataZh.gross_income;
       },
       net_income_zh() {
-        return this.formDataZh.net_income.toString();
+        return this.formDataZh.net_income?this.formDataZh.net_income.toString():this.formDataZh.net_income;
       },
       lease_zh() {
-        return this.formDataZh.lease.toString();
+        return this.formDataZh.lease?this.formDataZh.lease.toString():this.formDataZh.lease;
       },
     },
     watch: {
