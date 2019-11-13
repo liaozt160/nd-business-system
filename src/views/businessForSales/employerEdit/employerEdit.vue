@@ -521,14 +521,14 @@
             </el-input>
           </div>
         </div>
-        <div class="formRow">
-          <div class="formItem filter-item el-select--medium">
-            <!--卖家融资-->
-            <span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>
-            <el-input :placeholder="$t('employeeEdit.BuyerFinancing')" v-model="formDataZh.buyer_financing" style="width: 70%;margin-bottom: 20px;" class="filter-item">
-            </el-input>
-          </div>
-        </div>
+        <!--<div class="formRow">-->
+          <!--<div class="formItem filter-item el-select&#45;&#45;medium">-->
+            <!--&lt;!&ndash;卖家融资&ndash;&gt;-->
+            <!--<span class="formItemSpan">{{$t('employeeEdit.BuyerFinancing')}}</span>-->
+            <!--<el-input :placeholder="$t('employeeEdit.BuyerFinancing')" v-model="formDataZh.buyer_financing" style="width: 70%;margin-bottom: 20px;" class="filter-item">-->
+            <!--</el-input>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
             <!--美国中介-->
@@ -786,29 +786,29 @@
     },
     computed: {
       price() {
-          return this.formDataEn.price?this.formDataEn.price.toString():this.formDataEn.price;
+          return this.formDataEn.price||this.formDataEn.price==0?this.formDataEn.price.toString():this.formDataEn.price;
       },
       gross_income() {
-        return this.formDataEn.gross_income?this.formDataEn.gross_income.toString():this.formDataEn.gross_income;
+        return this.formDataEn.gross_income||this.formDataEn.gross_income==0?this.formDataEn.gross_income.toString():this.formDataEn.gross_income;
       },
       net_income() {
-        return this.formDataEn.net_income?this.formDataEn.net_income.toString():this.formDataEn.net_income;
+        return this.formDataEn.net_income||this.formDataEn.net_income==0?this.formDataEn.net_income.toString():this.formDataEn.net_income;
       },
       lease() {
-        return this.formDataEn.lease?this.formDataEn.lease.toString():this.formDataEn.lease;
+        return this.formDataEn.lease||this.formDataEn.lease==0?this.formDataEn.lease.toString():this.formDataEn.lease;
       },
 
       price_zh() {
-          return this.formDataZh.price?this.formDataZh.price.toString():this.formDataZh.price;
+          return this.formDataZh.price||this.formDataEn.price==0?this.formDataZh.price.toString():this.formDataZh.price;
       },
       gross_income_zh() {
-        return this.formDataZh.gross_income?this.formDataZh.gross_income.toString():this.formDataZh.gross_income;
+        return this.formDataZh.gross_income||this.formDataEn.gross_income==0?this.formDataZh.gross_income.toString():this.formDataZh.gross_income;
       },
       net_income_zh() {
-        return this.formDataZh.net_income?this.formDataZh.net_income.toString():this.formDataZh.net_income;
+        return this.formDataZh.net_income||this.formDataEn.net_income==0?this.formDataZh.net_income.toString():this.formDataZh.net_income;
       },
       lease_zh() {
-        return this.formDataZh.lease?this.formDataZh.lease.toString():this.formDataZh.lease;
+        return this.formDataZh.lease||this.formDataEn.lease==0?this.formDataZh.lease.toString():this.formDataZh.lease;
       },
     },
     watch: {
@@ -1098,7 +1098,7 @@
         formData.lease=Number(formData.lease.replace(/,/g,''));
 
         if(formData.employee_count=='NA'||formData.employee_count=='未知'){formData.employee_count=0;}
-        if(!formData.company||!formData.title||!formData.listing||!formData.price){//必填信息不能为空
+        if(!formData.company||!formData.title||!formData.listing||(!formData.price&&formData.price!=0)){//必填信息不能为空
           this.$alert( this.$t('pleaseImproveBusiness'), this.$t('Confirmation'), {
             confirmButtonText: this.$t('confirm'),
           });
