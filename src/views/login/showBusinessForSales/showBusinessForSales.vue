@@ -378,6 +378,7 @@
         this.listLoading = true;
         LoginGetBusinessOneList(data).then(response => {
           that.tableData = response.data.data;
+          that.total = response.data.total;
           that.listLoading = false;
         }).catch(err => {
           console.log(err);
