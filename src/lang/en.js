@@ -328,6 +328,8 @@ export default {
   employeeEdit:{
     TagName:'Tag Name',//标签名称
     business_category:'Business Category',//企业分类
+    immigration_support:'Immigration Support',//移民支持
+
     companyName:'Business Name',//企业名称
     title:'Title',//标题
     Listing:'Listing',//编号

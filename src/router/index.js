@@ -49,6 +49,11 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/showBusinessForSales',
+    name: 'showBusinessForSales',
+    component: () => import('@/views/login/showBusinessForSales/showBusinessForSales.vue'),
+  },
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,

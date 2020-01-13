@@ -55,7 +55,7 @@
         <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;"
                    @click.native.prevent="handleLogin">{{ $t('login.logIn') }}
         </el-button>
-        <div class="contactUsBtn" @click="itemClick">{{$t('contactUs')}}</div>
+        <div class="contactUsBtn" @click="contactUs">{{$t('contactUs')}}</div>
       </el-form>
       <!--上下滚动-->
       <div class="beijing">
@@ -316,6 +316,10 @@
         }
       },
       itemClick() {
+        // this.dialogFormVisible=true;
+        this.$router.push({path: '/showBusinessForSales'})
+      },
+      contactUs() {
         this.dialogFormVisible=true;
       },
 
@@ -397,7 +401,7 @@
   .beijing{
     position: relative;
     max-width: 1100px;
-    height: 270px;
+    height: 316px;
     margin: 0 auto;
     border: 1px solid transparent;
     background-color: #fff;
@@ -468,7 +472,7 @@
 
   #slide {
     position: absolute;
-    height: 170px;
+    height: 218px;
     width: 100%;
     overflow: hidden;
     margin: 0 auto;
@@ -551,7 +555,7 @@
       background-color: #fff;
       padding: 20px 30px;
       border-radius: 10px;
-      margin: 80px auto 30px auto;
+      margin: 30px auto 30px auto;
       box-shadow: 0 0 10px #ccc;
       z-index: 999;
     }

@@ -334,6 +334,7 @@ export default {
   employeeEdit:{
     TagName:'标签名称',//标签名称
     business_category:'企业分类',//企业分类
+    immigration_support:'移民支持',//移民支持
     companyName:'企业名称',//企业名称
     title:'标题',//标题
     Listing:'编号',//编号

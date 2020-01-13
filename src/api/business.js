@@ -259,3 +259,18 @@ export function recommendPdf (data) {
     data:data.data
   })
 }
+//获取移民支持可选列表
+export function geImmigrationSupportTags () {
+  return request({
+    url: '/api/tags/immigration/support',
+    method: 'post',
+  })
+}
+//获取滚动待售企业一级信息列表
+export function LoginGetBusinessOneList (data) {
+  return request({
+    url: '/api/public/business/levelone',
+    method: 'post',
+    data
+  })
+}

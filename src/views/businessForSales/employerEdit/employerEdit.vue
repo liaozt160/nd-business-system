@@ -14,6 +14,18 @@
               <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
             </el-select>
           </div>
+          <div class="formItem filter-item el-select--medium">
+            <!--移民支持 immigration_support-->
+            <span class="formItemSpan">{{$t('employeeEdit.immigration_support')}}</span>
+            <el-select v-model="formDataEn.immigration_supports" multiple :placeholder="$t('employeeEdit.immigration_support')" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
         </div>
         <div class="formRow">
           <div class="formItem filter-item el-select--medium">
@@ -223,13 +235,13 @@
         <div class="filter-item el-select--medium address">
           <!--地理位置-->
           <span class="formItemSpan" style="margin-right: -5px;">{{$t('employeeEdit.Location')}}</span>
-          <el-select v-model="formDataEn.country" id="country"
+          <el-select v-model="formDataEn.country"
                      @change="getlocation('country',formDataEn.country)"
                      style="width: 215px;margin: 0 5px;" class="filter-item">
             <el-option :label="$t('China')" value="1000"/>
             <el-option :label="$t('UnitedStates')" value="USA"/>
           </el-select>
-          <el-select v-model="formDataEn.states" style="width: 215px;margin: 0 5px;" id="provinces"
+          <el-select v-model="formDataEn.states" style="width: 215px;margin: 0 5px;"
                      :disabled="locationLoading"
                      class="filter-item">
             <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
@@ -331,6 +343,18 @@
             <el-select v-model="formDataZh.category_id" :placeholder="$t('select')" style="width: 70%;margin-bottom: 20px;"
                        class="filter-item">
               <el-option v-for="item in business_category_arr" :label="item.category" :value="item.id.toString()"/>
+            </el-select>
+          </div>
+          <div class="formItem filter-item el-select--medium">
+            <!--移民支持 immigration_support-->
+            <span class="formItemSpan">{{$t('employeeEdit.immigration_support')}}</span>
+            <el-select v-model="formDataEn.immigration_supports" multiple :placeholder="$t('employeeEdit.immigration_support')" style="width: 70%;margin-bottom: 20px;" class="filter-item">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
             </el-select>
           </div>
         </div>
@@ -560,13 +584,13 @@
         <div class="filter-item el-select--medium address">
           <span
             style="color: #717171;font-size: 14px;display: inline-block;text-align: right;line-height: 40px;padding-right: 20px;width: 160px;">{{$t('employeeEdit.Location')}}</span>
-          <el-select v-model="formDataZh.country" id="country"
+          <el-select v-model="formDataZh.country"
                      @change="getlocation('country',formDataZh.country)"
                      style="width: 215px;margin: 0 5px;" class="filter-item">
             <el-option :label="$t('China')" value="1000"/>
             <el-option :label="$t('UnitedStates')" value="USA"/>
           </el-select>
-          <el-select v-model="formDataZh.states" style="width: 215px;margin: 0 5px;" id="provinces"
+          <el-select v-model="formDataZh.states" style="width: 215px;margin: 0 5px;"
                      :disabled="locationLoading"
                      class="filter-item">
             <el-option v-for="item in provinces" :label="item.name" :value="item.code"/>
@@ -673,13 +697,16 @@
     showBusinessZh,
     getLocation,
     editBusinessZh,
-    getBusinessCategoryArr
+    getBusinessCategoryArr,
+    geImmigrationSupportTags
   } from '@/api/business'
 
   export default {
     name: "employerEdit",
     data() {
       return {
+        options: [],
+
         employee_countNA: false,
         editStatus: false,
 
@@ -700,6 +727,7 @@
           lang:'en',
           category_id: '',
           company: '',
+          immigration_supports: [],//移民支持
           title: '',
           listing: '',
           industry: '',
@@ -743,6 +771,7 @@
           lang:'zh',
           category_id: '',
           company: '',
+          immigration_supports: [],//移民支持
           title: '',
           listing: '',
           industry: '',
@@ -958,6 +987,7 @@
       this.businessId=this.$route.query.id;
       this.get_business_category_arr();
       this.getBusinessEn();
+      this.geImmigrationSupport();
       this.tablang='en';
     },
     methods: {
@@ -1035,6 +1065,16 @@
           console.log(err);
         })
       },
+      // 获取移民支持可选列表
+      geImmigrationSupport() {
+        let that = this;
+        geImmigrationSupportTags({}).then(response => {
+          console.log('geImmigrationSupportTags', response);
+          that.options=response.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
       // 查看待售企业信息-中文
       getBusinessZh() {
         let that = this;
@@ -1088,14 +1128,14 @@
       },
 
       // 企业编辑保存
-      formSave() {
+      formSave()  {
         let that = this;
         // let formData = this.tablang == 'en' ? this.formDataEn : this.formDataZh;
         let formData = Object.assign({}, this.tablang == 'en' ? this.formDataEn : this.formDataZh);
-        formData.price=Number(formData.price.replace(/,/g,''));
-        formData.gross_income=Number(formData.gross_income.replace(/,/g,''));
-        formData.net_income=Number(formData.net_income.replace(/,/g,''));
-        formData.lease=Number(formData.lease.replace(/,/g,''));
+        formData.price=formData.price?Number(formData.price.replace(/,/g,'')):0;
+        formData.gross_income=formData.gross_income?Number(formData.gross_income.replace(/,/g,'')):0;
+        formData.net_income=formData.net_income?Number(formData.net_income.replace(/,/g,'')):0;
+        formData.lease=formData.lease?Number(formData.lease.replace(/,/g,'')):0;
 
         if(formData.employee_count=='NA'||formData.employee_count=='未知'){formData.employee_count=0;}
         if(!formData.company||!formData.title||!formData.listing||(!formData.price&&formData.price!=0)){//必填信息不能为空
