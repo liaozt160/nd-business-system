@@ -14,6 +14,12 @@
           <el-option :label="$t('table.soldOut')" value="2"/>
           <el-option :label="$t('employeeEdit.noVerified')" value="3"/>
         </el-select>
+        <!--移民支持-->
+        <el-select size="small" v-model="listQuery.support_tag" multiple clearable :placeholder="$t('employeeEdit.immigration_support')"
+                   style="width: 180px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter">
+          <el-option v-for="item in options" :label="item.label" :value="item.value"/>
+        </el-select>
+
         <el-select size="small" v-model="listQuery.category_id" :placeholder="$t('employeeEdit.business_category')"
                    style="width: 180px;margin-right: 15px;margin-bottom: 0;" class="filter-item" @change="handleFilter"
                    clearable>
@@ -414,6 +420,7 @@
     haverecommendListAppend,
     changePublic,
     AddToLandingPage,
+    geImmigrationSupportTags
   } from '@/api/business'
   import {attentionPdf} from '@/api/buyers'
   import { adminGetLandingPageData,appendLandingPageBusiness,removeLandingPageBusiness } from '@/api/landingPage'
@@ -425,6 +432,8 @@
     },
     data() {
       return {
+        options: [],
+
         pdfLoading: false,
         selectArray: [],
         role: '',
@@ -436,6 +445,7 @@
         provinces:[],
 
         listQuery: {
+          support_tag: [],
           broker_id: '',
           state: '',
           category_id: '',
@@ -483,10 +493,21 @@
       this.getList();
       this.getBrokersList();
       this.get_business_category_arr();
+      this.geImmigrationSupport();
       this.getlocation('country', 'USA');
       this.role = store.getters && store.getters.role
     },
     methods: {
+      // 获取移民支持可选列表
+      geImmigrationSupport() {
+        let that = this;
+        geImmigrationSupportTags({}).then(response => {
+          console.log('获取移民支持可选列表', response);
+          that.options=response.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
       // 获取全部推荐清单列表
       getRecommendedList(){
         let that = this;

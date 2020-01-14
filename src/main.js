@@ -80,5 +80,12 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+
+  mounted(){
+    if (window.location.origin.indexOf("dev.newdreamservices.com") !== -1 && (window.location.protocol == "http:"||window.location.protocol == "")) {
+      //强制https
+      window.location.href = "https://" + window.location.href.substring(window.location.protocol.length);
+    }
+  },
+  render: h => h(App),
 })
